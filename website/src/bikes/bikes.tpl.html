@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col-lg-6">
+		<h2>Bordered Table</h2>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Model</th>
+						<th>Conductor</th>
+						<th>stado</th>
+						<th>Pedidos</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="bike in bikesCtrl.bikes">
+						<td>{{bike.model}}</td>
+						<td>{{bike.conductor}}</td>
+						<td>{{bike.state}}</td>
+						<td>{{bike.pedidos}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

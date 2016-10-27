@@ -1,0 +1,23 @@
+{
+    "extends": "eslint-config-airbnb-es5",
+    "globals": {
+        "angular": true
+    },
+    "parserOptions": {
+        "sourceType": "script"
+    },
+    "rules": {
+        "indent": ["error", 4, {
+            "SwitchCase": 1
+        }],
+        "comma-dangle": ["error", "never"],
+        "wrap-iife": ["error", "inside"],
+        "valid-jsdoc": ["error", {
+            "requireReturn": false,
+            "requireReturnDescription": false
+        }],
+        "no-param-reassign": ["error", { 
+            "props": false 
+        }]
+    }
+}

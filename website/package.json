@@ -1,0 +1,40 @@
+{
+  "name": "easybike",
+  "version": "1.0.0",
+  "description": "site to manage order for a bike delivery",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arturo Aguilar Tapia",
+  "license": "ISC",
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-base64": "^2.0.5",
+    "angular-carousel": "^1.0.1",
+    "angular-cookies": "^1.5.8",
+    "angular-local-storage": "^0.5.0",
+    "angular-recaptcha": "^3.0.4",
+    "angular-route": "^1.5.8",
+    "angular-ui-bootstrap": "^2.2.0",
+    "angular-ui-router": "^0.3.1",
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-html2js": "^0.3.6",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-karma": "^2.0.0",
+    "grunt-ng-annotate": "^2.0.2",
+    "grunt-sass": "^1.2.1",
+    "jquery": "^3.1.1",
+    "lodash": "^4.16.4"
+  }
+}

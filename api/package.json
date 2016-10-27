@@ -1,0 +1,19 @@
+{
+  "name": "easybikeapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^2.2.11"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "mongoose": "^4.6.5",
+    "node-restful": "^0.2.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arturo Aguilar",
+  "license": "ISC"
+}

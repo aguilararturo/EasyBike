@@ -1,0 +1,29 @@
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap.scss';
+@import "../node_modules/font-awesome/scss/font-awesome";
+
+.no-padding {
+  padding: 0;
+}
+
+.no-left-padding {
+  padding-left: 0;
+}
+
+.no-right-padding {
+  padding-right: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.row {
+  @extend .no-margin;
+}
+
+.body-content {
+  padding-left: 225px;
+}
+
+@import "menu/menu";
+@import "common";

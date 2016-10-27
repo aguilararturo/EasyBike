@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col-lg-6">
+		<h2>Usuarios</h2>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Membrecia</th>
+						<th>Pedidos</th>
+						<th>Direccion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in userCtrl.users">
+						<td>{{user.name}}</td>
+						<td>{{user.membrecia}}</td>
+						<td>{{user.pedidos}}</td>
+						<td>{{user.direccion}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

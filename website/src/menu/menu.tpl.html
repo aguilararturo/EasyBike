@@ -1,0 +1,8 @@
+<ul class="nav in side-nav" id="side-menu">
+
+	<li ng-repeat="item in menuCtrl.menuItems" class="menu-item">
+		<a href="{{item.href}}" class="menu-item-title">
+			<i class="fa {{item.content}}"></i> {{item.name}}
+		</a>
+	</li>
+</ul>
