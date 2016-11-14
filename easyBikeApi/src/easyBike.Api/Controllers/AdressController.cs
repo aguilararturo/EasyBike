@@ -4,23 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel;
-using easyBike.DataModel.DataClasess;
 using Microsoft.EntityFrameworkCore;
+using easyBike.DataModel.DataClasess;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace easyBikeApi.Controllers
+namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class MenuController : Controller
+    public class addressesController : Controller
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Menu> Get()
+        public IEnumerable<Address> Get()
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Menus
+                var Data = db.Adresses
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
@@ -29,11 +29,11 @@ namespace easyBikeApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Menu Get(int id)
+        public Address Get(int id)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Menus
+                var Data = db.Adresses
                     .Where(item => item.Id == id);
                 return Data.First();
             }
@@ -41,29 +41,25 @@ namespace easyBikeApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Menu value)
-
+        public void Post([FromBody]Address value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                db.Menus.Add(value);
+                db.Adresses.Add(value);
                 db.SaveChanges();
             }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Menu value)
+        public void Put(int id, [FromBody]Address value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var original = db.Menus
+                var original = db.Adresses
                     .Where(item => item.Id == id).FirstOrDefault();
 
-                original.Content = value.Content;
-                original.href = value.href;
-                original.Name = value.Name;
-                original.Order = value.Order;
+                original.Location = value.Location;
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -75,10 +71,10 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Menus
+                var Data = db.Adresses
                     .Where(item => item.Id == id);
 
-                db.Menus.Remove(Data.First());
+                db.Adresses.Remove(Data.First());
                 db.SaveChanges();
             }
         }

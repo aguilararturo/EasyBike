@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace easyBikeApi
+namespace easyBike.Api
 {
     public class Startup
     {
