@@ -1,7 +1,7 @@
 website/.sass-cache/*
 website/.sass-cache
 
-netApi/easyBikeApi/src/easyBikeApi/bin
-netApi/easyBikeApi/src/easyBikeApi/obj
-netApi/easyBikeApi/src/easyBike.DataModel/bin
-netApi/easyBikeApi/src/easyBike.DataModel/obj
+easyBikeApi/src/easyBikeApi/bin
+easyBikeApi/src/easyBikeApi/obj
+easyBikeApi/src/easyBike.DataModel/bin
+easyBikeApi/src/easyBike.DataModel/obj
