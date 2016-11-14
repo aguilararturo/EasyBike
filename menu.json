@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Clientes",
+    "href": "#/user",
+    "order": 0,
+    "content": "fa-user"
+  },
+  {
+    "id": 2,
+    "name": "Ordenes",
+    "href": "#/orders",
+    "order": 0,
+    "content": "fa-shopping-cart"
+  },
+  {
+    "id": 3,
+    "name": "Motos",
+    "href": "#/bike",
+    "order": 0,
+    "content": "fa-taxi"
+  },
+  {
+    "id": 4,
+    "name": "Restaurantes",
+    "href": "#/restorant",
+    "order": 0,
+    "content": "fa-cutlery"
+  },
+  {
+    "id": 5,
+    "name": "Productos",
+    "href": "#/product",
+    "order": 0,
+    "content": "fa-glass"
+  }
+]
