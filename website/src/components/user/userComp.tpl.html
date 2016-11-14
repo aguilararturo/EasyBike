@@ -1,0 +1,48 @@
+<div id="apstMoleculeModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <h2>Datos Usuario</h2>
+    <form class="form-horizontal">
+        <div class="body">
+            <div class="form-group">
+                <label class="control-label col-xs-2">Telefono</label>
+                <div class="controls col-xs-7">
+                    <input type="text" class="form-control" placeholder="Ingrese Telefono">
+                </div>
+                <list-buttons></list-buttons>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">NIT / CI</label>
+                <div class="controls col-xs-9">
+                    <input type="text" class="form-control" placeholder="Ingrese Nit / CI" ng-bind="userCompCtrl.user.nit">
+                </div>
+                <span class="no-width-padding glyphicon glyphicon-info-sign col-xs-1" data-toggle="popover" data-placement="left" title="Help info"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">Nombre</label>
+                <div class="controls col-xs-9">
+                    <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-bind="userCompCtrl.user.name">
+                </div>
+                <span class="no-width-padding glyphicon glyphicon-info-sign col-xs-1" data-toggle="popover" data-placement="left" title="Help info"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">Apellido</label>
+                <div class="controls col-xs-9">
+                    <input type="text" class="form-control" placeholder="Ingrese Apellido" ng-bind="userCompCtrl.user.lastName">
+                </div>
+                <span class="no-width-padding glyphicon glyphicon-info-sign col-xs-1" data-toggle="popover" data-placement="left" title="Help info"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">Direccion</label>
+                <div class="controls col-xs-7">
+                    <input type="text" class="form-control" placeholder="Ingrese Direccion">
+                </div>
+                <list-buttons></list-buttons>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-9"></div>
+                <button type="button" class="btn btn-primary col-xs-2 fa fa-plus-circle">Save changes</button>
+                <div class="col-xs-1"></div>
+            </div>
+        </div>
+    </form>
+</div>

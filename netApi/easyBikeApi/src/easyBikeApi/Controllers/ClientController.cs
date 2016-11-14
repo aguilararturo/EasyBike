@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
+using easyBike.DataModel.DataClasess;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,7 +41,7 @@ namespace easyBikeApi.Controllers
 
         // GET api/values/5
         [HttpGet("{phone}")]
-        public Client GetByPhone(int phone)
+        public Client GetByPhone(Phone phone)
         {
             using (var db = new EasyBikeDataContext())
             {
@@ -85,10 +86,10 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Adress
+                var Data = db.Clients
                     .Where(item => item.Id == id);
 
-                db.Adress.Remove(Data.First());
+                db.Clients.Remove(Data.First());
                 db.SaveChanges();
             }
         }

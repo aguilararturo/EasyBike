@@ -16,6 +16,8 @@
             'EasyBikeApp.Menu',
             'EasyBikeApp.orders',
             'EasyBikeApp.Bikes',
-            'EasyBikeApp.User']);
+            'EasyBikeApp.User',
+            'EasyBikeApp.components'
+        ]);
     console.log('indexmodule');
 })();

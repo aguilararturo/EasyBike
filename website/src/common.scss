@@ -1,3 +1,26 @@
 .fa-cart:before {
     content: "\\f07a";
 }
+
+.add-menu-item {
+    color: #337ab7;
+    font-size: 15px;
+}
+.option-item-link{
+    font-size: 20px;
+    color: #337ab7;
+    i {
+        padding-top: 8px;
+        font-size: 15px;
+        padding-bottom: 8px;
+    }
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.no-width-padding {
+    padding-left: 0px ;
+	padding-right: 0px;
+}

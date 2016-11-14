@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace easyBike.DataModel
-{
+namespace easyBike.DataModel.DataClasess
+{ 
     public class Client
     {
         public int Id { get; set; }
-        public List<int> Phones { get; set; }
+        public int Nit { get; set; }
+        public List<Phone> Phones { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public List<Address> Address { get; set; }

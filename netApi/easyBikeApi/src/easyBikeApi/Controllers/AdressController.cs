@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
+using easyBike.DataModel.DataClasess;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace easyBikeApi.Controllers
 {
     [Route("api/[controller]")]
-    public class AdresstController : Controller
+    public class addressesController : Controller
     {
         // GET: api/values
         [HttpGet]
@@ -19,11 +20,11 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Adress
+                var Data = db.Adresses
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
-            }           
+            }
         }
 
         // GET api/values/5
@@ -32,10 +33,10 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Adress
-                    .Where(item => item.Id==id)                    ;
+                var Data = db.Adresses
+                    .Where(item => item.Id == id);
                 return Data.First();
-            }      
+            }
         }
 
         // POST api/values
@@ -44,7 +45,7 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                                db.Adress.Add(value);
+                db.Adresses.Add(value);
                 db.SaveChanges();
             }
         }
@@ -55,7 +56,7 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var original = db.Adress
+                var original = db.Adresses
                     .Where(item => item.Id == id).FirstOrDefault();
 
                 original.Location = value.Location;
@@ -70,10 +71,10 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Adress
+                var Data = db.Adresses
                     .Where(item => item.Id == id);
 
-                db.Adress.Remove(Data.First());
+                db.Adresses.Remove(Data.First());
                 db.SaveChanges();
             }
         }

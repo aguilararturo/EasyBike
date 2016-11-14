@@ -1,4 +1,4 @@
-﻿namespace easyBike.DataModel
+﻿namespace easyBike.DataModel.DataClasess
 {
     public class MenbershipType
     {

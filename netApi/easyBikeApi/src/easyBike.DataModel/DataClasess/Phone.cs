@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace easyBike.DataModel.DataClasess
 {
-    public class Menbership
+    public class Phone
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public MenbershipType Type { get; set; }
+        public int Number { get; set; }
     }
 }

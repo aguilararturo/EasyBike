@@ -12,6 +12,10 @@ namespace easyBikeApi
     {
         public static void Main(string[] args)
         {
+            using(var db = new easyBike.DataModel.EasyBikeDataContext())
+            {
+                db.Database.EnsureCreated();
+            }
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())

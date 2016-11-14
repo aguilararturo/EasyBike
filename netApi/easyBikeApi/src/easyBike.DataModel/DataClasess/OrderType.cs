@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace easyBike.Data
+namespace easyBike.DataModel.DataClasess
 {
-    public class Program
+    public class OrderType
     {
-        public static void Main(string[] args)
-        {
-        }
     }
 }

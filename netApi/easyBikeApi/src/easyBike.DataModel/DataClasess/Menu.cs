@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace easyBike.DataModel.DataClasess
 {
-    public class Menbership
+    public class Menu
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public MenbershipType Type { get; set; }
+        public string href { get; set; }
+        public int Order { get; set; }
+        public string Content { get; set; }        
     }
 }

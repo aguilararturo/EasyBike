@@ -9,7 +9,7 @@
      */
     function bikesPageConfig($stateProvider) {
         $stateProvider.state('bikes', {
-            url: '/Motos',
+            url: '/bike',
             templateUrl: 'bikes/bikes.tpl.html',
             controller: 'BikesController',
             controllerAs: 'bikesCtrl',

@@ -1,4 +1,4 @@
-﻿{
+{
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
@@ -17,7 +17,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
-    "easyBike.DataModel": "1.0.0-*"
+    "easyBike.DataModel": "1.0.0-*",
+    "Swashbuckle": "6.0.0-beta902"
   },
 
   "tools": {

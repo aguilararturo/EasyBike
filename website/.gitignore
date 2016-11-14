@@ -1,0 +1,15 @@
+# Web
+build/*
+docs/*
+.DS_Store
+*.orig
+.LSOverride
+node_modules/*
+www/*
+.sass-cache/*
+.sass-cache
+
+# Webstorm files
+.idea/*
+# netbeans IDE
+nbproject/*
