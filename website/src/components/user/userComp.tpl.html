@@ -5,9 +5,16 @@
             <div class="form-group">
                 <label class="control-label col-xs-2">Telefono</label>
                 <div class="controls col-xs-7">
-                    <input type="text" class="form-control" placeholder="Ingrese Telefono">
+                    <input type="text" class="form-control" placeholder="Ingrese Telefono" ng-bind="userCompCtrl.newPhone.number">
                 </div>
-                <list-buttons></list-buttons>
+                <list-buttons name="phone" add="userCompCtrl.addPhone(userCompCtrl.newPhone)" ng-model="userCompCtrl.newPhone"></list-buttons>
+            </div>
+            <div class="form-group" ng-repeat="item in userCompCtrl.user.phones">
+                <label class="control-label col-xs-2">Telefono {{$index}}</label>
+                <div class="controls col-xs-7">
+                    <input type="text" class="form-control" placeholder="Ingrese Telefono" ng-bind="item.number">
+                </div>
+                <list-buttons remove="userCompCtrl.removePhone(item)"></list-buttons>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-2">NIT / CI</label>
@@ -35,7 +42,7 @@
                 <div class="controls col-xs-7">
                     <input type="text" class="form-control" placeholder="Ingrese Direccion">
                 </div>
-                <list-buttons></list-buttons>
+                <list-buttons name="address"></list-buttons>
             </div>
 
             <div class="form-group">

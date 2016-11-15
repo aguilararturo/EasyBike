@@ -10,6 +10,12 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
+            userRegCtrl.user = {
+                phones: [],
+                name: '',
+                nit: '',
+                lastName: ''
+            };
         }
 
         userRegCtrl.$onInit = $onInit;

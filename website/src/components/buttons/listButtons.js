@@ -15,9 +15,12 @@
             controller: 'ListButtonsController',
             controllerAs: 'lbCtrl',
             bindToController: {
-                add: '&',
-                remove: '&'
-            }
+                name: '@',
+                add: '&?',
+                edit: '&?',
+                remove: '&?'
+            },
+            scope: true
         };
     }
     /**
@@ -25,18 +28,40 @@
      * @desc Controller to load the brands from Catalog service or search service
      * @param  {Object} _ Lodash lodash
      */
-    function ListButtonsController() {
+    function ListButtonsController(_) {
         var lbCtrl = this;
+
         /**
         * @function $onInit
         * @memberOf ListButtonsController
         * @desc Initializes controller
         */
         function $onInit() {
-            console.log('listButtons');
+            console.log(_.isUndefined(lbCtrl.add), _.isUndefined(lbCtrl.edit), _.isUndefined(lbCtrl.remove));
+
+            lbCtrl.displayAdd = !_.isUndefined(lbCtrl.add);
+            lbCtrl.displayRemove = !_.isUndefined(lbCtrl.remove);
+            lbCtrl.displayEdit = !_.isUndefined(lbCtrl.edit);
+
+            console.log('listButtons', lbCtrl.name);
+        }
+
+        function removeItem() {
+            lbCtrl.remove()();
+        }
+
+        function addItem() {
+            lbCtrl.add()();
+        }
+
+        function editItem() {
+            lbCtrl.edit()();
         }
 
         lbCtrl.$onInit = $onInit;
+        lbCtrl.addItem = addItem;
+        lbCtrl.editItem = editItem;
+        lbCtrl.removeItem = removeItem;
     }
     angular
         .module('EasyBikeApp.components')

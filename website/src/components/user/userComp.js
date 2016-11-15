@@ -16,7 +16,8 @@
             controllerAs: 'userCompCtrl',
             bindToController: {
                 user: '='
-            }
+            },
+            scope: true
         };
     }
     /**
@@ -33,8 +34,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function UserComponetController() {
-
+    function UserComponetController(_) {
         var userCompCtrl = this;
         /**
         * @function $onInit
@@ -43,9 +43,23 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
+            userCompCtrl.newPhone = {
+                id: '',
+                number: ''
+            };
             console.log('userComp');
         }
 
+        function removePhone(phone) {
+            userCompCtrl.user.phones.remove(phone);
+        }
+
+        function addPhone(phone) {
+            userCompCtrl.user.phones.add(phone);
+        }
+
+        userCompCtrl.addPhone = addPhone;
+        userCompCtrl.removePhone = removePhone;
         userCompCtrl.$onInit = $onInit;
     }
     angular

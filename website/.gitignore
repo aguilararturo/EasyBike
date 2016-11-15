@@ -6,7 +6,6 @@ docs/*
 .LSOverride
 node_modules/*
 www/*
-.sass-cache/*
 .sass-cache
 
 # Webstorm files
