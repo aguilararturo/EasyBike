@@ -73,7 +73,7 @@ namespace easyBike.Api.Controllers
                 original.LastName = value.LastName;
                 original.Name = value.Name;
                 original.Phones = value.Phones;
-                original.Address = value.Address;               
+                original.Addresses = value.Addresses;               
                 
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();

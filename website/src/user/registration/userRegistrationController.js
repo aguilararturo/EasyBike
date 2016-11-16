@@ -14,7 +14,8 @@
                 phones: [],
                 name: '',
                 nit: '',
-                lastName: ''
+                lastName: '',
+                addresses: []
             };
         }
 

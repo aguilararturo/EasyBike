@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -43,24 +43,54 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
+            initDummyPhone();
+            initDummyAdress();
+            console.log('userComp');
+        }
+
+        function initDummyPhone() {
             userCompCtrl.newPhone = {
                 id: '',
                 number: ''
             };
-            console.log('userComp');
+        }
+
+        function initDummyAdress() {
+            userCompCtrl.newAdress = {
+                id: '',
+                location: ''
+            };
         }
 
         function removePhone(phone) {
-            userCompCtrl.user.phones.remove(phone);
+            _.remove(userCompCtrl.user.phones, function removePhone(n) {
+                return n.number === phone.number;
+            });
+
+        }
+
+        function addAddress(address) {
+            userCompCtrl.user.addresses.push(_.clone(address));
+            initDummyAdress();
+        }
+
+        function removeAddress(address) {
+            _.remove(userCompCtrl.user.addresses, function removeAddress(n) {
+                return n.location === address.location;
+            });
+
         }
 
         function addPhone(phone) {
-            userCompCtrl.user.phones.add(phone);
+            userCompCtrl.user.phones.push(_.clone(phone));
+            initDummyPhone();
         }
 
+        userCompCtrl.$onInit = $onInit;
         userCompCtrl.addPhone = addPhone;
         userCompCtrl.removePhone = removePhone;
-        userCompCtrl.$onInit = $onInit;
+        userCompCtrl.addAddress = addAddress;
+        userCompCtrl.removeAddress = removeAddress;
     }
     angular
         .module('EasyBikeApp.User')

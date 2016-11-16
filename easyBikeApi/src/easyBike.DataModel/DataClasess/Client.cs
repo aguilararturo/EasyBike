@@ -12,6 +12,6 @@ namespace easyBike.DataModel.DataClasess
         public List<Phone> Phones { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public List<Address> Address { get; set; }
+        public List<Address> Addresses { get; set; }
     }
 }

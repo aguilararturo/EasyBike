@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -46,22 +46,7 @@
             console.log('listButtons', lbCtrl.name);
         }
 
-        function removeItem() {
-            lbCtrl.remove()();
-        }
-
-        function addItem() {
-            lbCtrl.add()();
-        }
-
-        function editItem() {
-            lbCtrl.edit()();
-        }
-
         lbCtrl.$onInit = $onInit;
-        lbCtrl.addItem = addItem;
-        lbCtrl.editItem = editItem;
-        lbCtrl.removeItem = removeItem;
     }
     angular
         .module('EasyBikeApp.components')
