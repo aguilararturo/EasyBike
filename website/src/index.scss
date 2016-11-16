@@ -18,6 +18,10 @@
   margin: 0;
 }
 
+.aligment-left {
+  text-align: left !important;
+}
+
 .row {
   @extend .no-margin;
 }

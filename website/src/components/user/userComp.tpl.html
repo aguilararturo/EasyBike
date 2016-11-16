@@ -1,76 +1,77 @@
-<div id="apstMoleculeModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="apstMoleculeModal" class="reg-user" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <h2>Datos Usuario</h2>
     <form class="form-horizontal">
         <div class="body">
-            <div class="form-group col-md-6">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label col-xs-2">Telefonos</label>
-                    <div class="controls col-xs-8 no-padding">
-                        <div class="controls col-xs-11">
-                            <input type="text" class="form-control" placeholder="Ingrese Telefono" ng-model="userCompCtrl.newPhone.number">
+                    <label class="control-label col-xs-12 col-md-2">Telefonos</label>
+                    <div class="col-xs-12 col-md-10 no-width-padding">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-10 no-width-padding">
+                                <input type="number" class="form-control" placeholder="Ingrese Telefono" ng-model="userCompCtrl.newPhone.number">
+                            </div>
+                            <list-buttons class="col-xs-2 control-label no-padding" name="phone" add="userCompCtrl.addPhone(userCompCtrl.newPhone)" ng-model="userCompCtrl.newPhone"></list-buttons>
                         </div>
-                        <list-buttons name="phone" add="userCompCtrl.addPhone(userCompCtrl.newPhone)" ng-model="userCompCtrl.newPhone"></list-buttons>
-                    </div>
-
-                    <div class="controls col-xs-8 col-xs-offset-2" ng-repeat="item in userCompCtrl.user.phones">
-                        <div class="row phone-item">
-                            <div class="col-xs-11 no-padding">
-                                <input type="text " class="form-control col-xs-9" placeholder="Ingrese Telefono" ng-model="item.number">
+                        <div class="col-xs-12 col-md-6" ng-repeat="item in userCompCtrl.user.phones">
+                            <div class="col-xs-10 no-width-padding">
+                                <input type="number" class="form-control" placeholder="Ingrese Telefono" ng-model="item.number">
                             </div>
-                            <div class="col-xs-1">
-                                <list-buttons remove="userCompCtrl.removePhone(item)"></list-buttons>
-                            </div>
+                            <list-buttons class="col-xs-2 control-label no-padding" remove="userCompCtrl.removePhone(item)"></list-buttons>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-xs-2">NIT / CI</label>
-                    <div class="controls col-xs-9">
-                        <input type="text" class="form-control" placeholder="Ingrese Nit / CI" ng-bind="userCompCtrl.user.nit">
+                    <label class="control-label col-xs-12 col-md-2">NIT / CI</label>
+                    <div class="controls col-xs-12 col-md-10">
+                        <input type="number" class="form-control" placeholder="Ingrese Nit / CI" ng-bind="userCompCtrl.user.nit">
                     </div>
-                    <span class="no-width-padding glyphicon glyphicon-info-sign col-xs-1" data-toggle="popover" data-placement="left" title="Help info"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-xs-2">Nombre</label>
-                    <div class="controls col-xs-9">
+                    <label class="control-label col-xs-12 col-md-2">Nombre</label>
+                    <div class="controls col-xs-12 col-md-10">
                         <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-bind="userCompCtrl.user.name">
                     </div>
-                    <span class="no-width-padding glyphicon glyphicon-info-sign col-xs-1" data-toggle="popover" data-placement="left" title="Help info"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-xs-2">Apellido</label>
-                    <div class="controls col-xs-9">
+                    <label class="control-label col-xs-12 col-md-2">Apellido</label>
+                    <div class="controls col-xs-12 col-md-10">
                         <input type="text" class="form-control" placeholder="Ingrese Apellido" ng-bind="userCompCtrl.user.lastName">
                     </div>
-                    <span class="no-width-padding glyphicon glyphicon-info-sign col-xs-1" data-toggle="popover" data-placement="left" title="Help info"></span>
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="control-label col-xs-2">Direcciones</label>
-                <div class="controls col-xs-8 no-padding">
-                    <div class="controls col-xs-11">
-                        <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="userCompCtrl.newAdress.location">
-                    </div>
-                    <list-buttons name="address" add="userCompCtrl.addAddress(userCompCtrl.newAdress)" ng-model="userCompCtrl.newAdress"></list-buttons>
-                </div>
 
-                <div class="controls col-xs-8 col-xs-offset-2" ng-repeat="item in userCompCtrl.user.addresses">
-                    <div class="row phone-item">
-                        <div class="col-xs-11 no-padding">
-                            <input type="text " class="form-control col-xs-9" placeholder="Ingrese Direccion" ng-model="item.location">
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-md-2">Direcciones</label>
+                    <div class="col-xs-12 col-md-10">
+
+                        <div class="col-xs-10 no-width-padding">
+                            <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="userCompCtrl.newAdress.location">
                         </div>
-                        <div class="col-xs-1">
-                            <list-buttons remove="userCompCtrl.removeAddress(item)"></list-buttons>
+                        <list-buttons class="col-xs-2 control-label aligment-left" name="phone" add="userCompCtrl.addAddress(userCompCtrl.newAdress)"></list-buttons>
+                    </div>
+
+                </div>
+                <div class="form-group" ng-repeat="item in userCompCtrl.user.addresses">
+                    <label class="control-label col-xs-12 col-md-2">Direcciones</label>
+                    <div class="col-xs-12 col-md-10">
+                        <div class="col-xs-10 no-width-padding">
+                            <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="item.location">
                         </div>
+                        <list-buttons class="col-xs-2 control-label aligment-left" remove="userCompCtrl.removeAddress(item)"></list-buttons>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-xs-9"></div>
-                <button type="button" class="btn btn-primary col-xs-2 fa fa-plus-circle">Save changes</button>
-                <div class="col-xs-1"></div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                   
+                    <button type="button" class="form-control btn btn-primary col-offset-2 col-xs-8">Save changes</button>
+                    
+                </div>
             </div>
         </div>
-    </form>
+</div>
+</form>
 </div>
