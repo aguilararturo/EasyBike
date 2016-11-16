@@ -2,6 +2,14 @@
     'use strict';
 
     function CommonService($log, $http, $q, BASE_URL) {
+        var reqHeaders = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        $http.defaults.headers.common.Accept = 'text/plain';
+        $http.defaults.headers.common['Content-Type'] = 'application/json';
+
         console.log('CommonService');
         function getMenu() {
             /**
@@ -36,6 +44,16 @@
                 .catch(errorLoadingScripts);
         }
 
+        function saveUser(client) {
+            var ordersURL = BASE_URL + '/client';
+            return $http.post(ordersURL, client);
+        }
+
+        function saveBike(bike) {
+            var ordersURL = BASE_URL + '/bike';
+            return $http.post(ordersURL, bike);
+        }
+
         function getUser() {
             /**
             * @function successfullRequest
@@ -60,7 +78,7 @@
                 $log.warn(error);
                 return $q.reject(error);
             }
-            var ordersURL = BASE_URL + '/user';
+            var ordersURL = BASE_URL + '/client';
 
             console.log('url', ordersURL);
 
@@ -71,13 +89,13 @@
 
         return {
             getMenu: getMenu,
-            getUser: getUser
+            getUser: getUser,
+            saveUser: saveUser,
+            saveBike: saveBike
         };
     }
 
     angular
         .module('EasyBikeApp.Services')
         .service('CommonService', CommonService);
-
-        console.log('Services');
 })();

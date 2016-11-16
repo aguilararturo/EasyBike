@@ -12,7 +12,7 @@ using easyBike.DataModel.DataClasess;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class addressesController : Controller
+    public class AddressesController : Controller
     {
         // GET: api/values
         [HttpGet]

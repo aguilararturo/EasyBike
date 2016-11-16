@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -16,7 +16,8 @@
             controllerAs: 'userCompCtrl',
             bindToController: {
                 user: '=',
-                textTitle: '='
+                textTitle: '=',
+                saveAction: '&?'
             },
             scope: true
         };
@@ -44,6 +45,7 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
+            userCompCtrl.displaySave = !_.isUndefined(userCompCtrl.saveAction);
             initDummyPhone();
             initDummyAdress();
             console.log('userComp');
@@ -59,15 +61,16 @@
         function initDummyAdress() {
             userCompCtrl.newAdress = {
                 id: '',
-                location: ''
+                location: '',
+                date: '',
+                direction: ''
             };
         }
 
         function removePhone(phone) {
-            _.remove(userCompCtrl.user.phones, function removePhone(n) {
+            _.remove(userCompCtrl.user.phones, function removePhon(n) {
                 return n.number === phone.number;
             });
-
         }
 
         function addAddress(address) {
@@ -76,7 +79,7 @@
         }
 
         function removeAddress(address) {
-            _.remove(userCompCtrl.user.addresses, function removeAddress(n) {
+            _.remove(userCompCtrl.user.addresses, function removeAddr(n) {
                 return n.location === address.location;
             });
 

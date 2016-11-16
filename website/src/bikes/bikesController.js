@@ -1,8 +1,8 @@
-(function () {
+(function() {
     'use strict';
 
 
-    function BikesController() {
+    function BikesController(CommonService, ModalUtility) {
         var bikesCtrl = this;
 
         /**
@@ -12,7 +12,6 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            
             bikesCtrl.bikes = [{
                 model: '2010',
                 conductor: 'Jose Lopez',
@@ -39,7 +38,6 @@
             }];
             console.log('init bikesCtrl');
         }
-
 
         bikesCtrl.$onInit = $onInit;
     }

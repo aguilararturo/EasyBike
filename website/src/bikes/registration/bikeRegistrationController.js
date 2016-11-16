@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    function BikeRegistrationController(CommonService) {
+    function BikeRegistrationController(CommonService, ModalUtility) {
         var bikeRegCtrl = this;
 
         /**
@@ -10,18 +10,32 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            bikeRegCtrl.user = {
-                phones: [],
-                name: '',
-                nit: '',
-                lastName: '',
-                addresses: []
+            bikeRegCtrl.bike = {
+                'id': 0,
+                'code': '',
+                'plate': '',
+                'model': '',
+                'driver': {
+                    'id': 0,
+                    'nit': '',
+                    'phones': [],
+                    'name': '',
+                    'lastName': '',
+                    'addresses': [],
+                    'imageUrl': ''
+                }
             };
+        }
 
-            
+        function saveBike() {
+            function completeSaveBike() {
+                ModalUtility.openSaveCompleteModal();
+            }
+            CommonService.saveBike(bikeRegCtrl.bike).then(completeSaveBike);
         }
 
         bikeRegCtrl.$onInit = $onInit;
+        bikeRegCtrl.saveBike = saveBike;
     }
     angular
         .module('EasyBikeApp.Bikes')

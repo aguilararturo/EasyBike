@@ -12,17 +12,15 @@ using easyBike.DataModel.DataClasess;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientController : Controller
+    public class BikeController : Controller
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Client> Get()
+        public IEnumerable<Bike> Get()
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
-                    .Include(client => client.Addresses)
-                    .Include(Client => Client.Phones)
+                var Data = db.Bikes
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
@@ -31,55 +29,40 @@ namespace easyBike.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Client Get(int id)
+        public Bike Get(int id)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
+                var Data = db.Bikes
                     .Where(item => item.Id == id);
                 return Data.First();
             }
         }
 
-        // GET api/values/5
-        [HttpGet("{phone}")]
-        public Client GetByPhone(Phone phone)
-        {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Clients
-                    .Where(item => item.Phones.Contains(phone));
-                return Data.FirstOrDefault();
-            }
-        }
-
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Client value)
+        public void Post([FromBody]Bike value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                db.Clients.Add(value);
+                db.Bikes.Add(value);
                 db.SaveChanges();
-                return Ok(value);
             }
-
-            return NotFound();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Client value)
+        public void Put(int id, [FromBody]Bike value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var original = db.Clients
+                var original = db.Bikes
                     .Where(item => item.Id == id).FirstOrDefault();
-                original.LastName = value.LastName;
-                original.Name = value.Name;
-                original.Phones = value.Phones;
-                original.Addresses = value.Addresses;               
-                
+
+                original.Code = value.Code;
+                original.Driver = value.Driver;
+                original.Model = value.Model;
+                original.Plate = value.Plate;
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -91,10 +74,10 @@ namespace easyBike.Api.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
+                var Data = db.Bikes
                     .Where(item => item.Id == id);
 
-                db.Clients.Remove(Data.First());
+                db.Bikes.Remove(Data.First());
                 db.SaveChanges();
             }
         }

@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    function UserRegistrationController(CommonService) {
+    function UserRegistrationController(CommonService, ModalUtility) {
         var userRegCtrl = this;
 
         /**
@@ -11,17 +11,28 @@
          */
         function $onInit() {
             userRegCtrl.user = {
+                id: 0,
                 phones: [],
                 name: '',
                 nit: '',
                 lastName: '',
+                imageUrl: '',
                 addresses: []
             };
 
-            userRegCtrl.text='Datos Cliente';
+            userRegCtrl.text = 'Datos Cliente';
+        }
+
+        function saveUser() {
+            function saveSussess(response) {
+                ModalUtility.openSaveCompleteModal();
+            }
+            CommonService.saveUser(userRegCtrl.user)
+                .then(saveSussess);
         }
 
         userRegCtrl.$onInit = $onInit;
+        userRegCtrl.saveUser = saveUser;
     }
     angular
         .module('EasyBikeApp.User')

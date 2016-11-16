@@ -15,7 +15,8 @@
             controller: 'BikeComponetController',
             controllerAs: 'bikeCompCtrl',
             bindToController: {
-                bike: '='
+                bike: '=',
+                saveAction: '&'
             },
             scope: true
         };

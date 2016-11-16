@@ -1,0 +1,35 @@
+<div id="cntMessageModal" class="message-modal">
+    <div id="cntMessageModalHeader" class="message-modal-header">
+        <div id="cntCloseRow" class="row">
+            <button id="btnClose" class="close-btn" align="right" ng-click="$close()">
+                <div id="cntCloseGlyphicon" class="glyphicon glyphicon-remove"></div>
+            </button>
+        </div>
+    </div>
+    <div id="cntMessageModalBody" class="message-modal-body">
+        <div id="cntTitleIconRow" class="row text-center">
+            <div id="cntTitle" class="tertiary-text-color title-icon {{ ::messageModalCtrl.titleIcon }}">
+            </div>
+        </div>
+        <div id="cntTitleRow" class="row text-center title">
+            <h1 id="hdrTitle" class="col-xs-offset-2 col-xs-8" ng-if="::messageModalCtrl.title">
+                {{ ::messageModalCtrl.title }}
+            </h1>
+        </div>
+        <div id="cntTextRow" class="row text-center content-container">
+            <p id="prgMessageText" class="col-xs-offset-1 col-xs-10 {{::message.class}}"
+               ng-repeat="message in ::messageModalCtrl.message track by $index" ng-bind-html="message.text">
+            </p>
+        </div>
+        <div id="cntButtonRow" class="row">
+            <dir id="cntButtonCol" class="col-xs-offset-3 col-xs-6">
+                <button id="btnClose" type="submit"
+                    ng-repeat="buttonText in ::messageModalCtrl.buttonText track by $index"
+                    ng-click="messageModalCtrl.buttonCommandExecuted(buttonText.text)"
+                    ng-class="buttonText.class">
+                    {{ ::buttonText.text }}
+                </button>
+            </dir>
+        </div>
+    </div>
+</div>

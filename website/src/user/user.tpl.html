@@ -11,17 +11,18 @@
 				<thead>
 					<tr>
 						<th>Nombre</th>
-						<th>Membrecia</th>
-						<th>Pedidos</th>
+						<th>Apellido</th>
+						<th>Telefonos</th>
 						<th>Direccion</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in userCtrl.users">
 						<td>{{user.name}}</td>
-						<td>{{user.membrecia}}</td>
-						<td>{{user.pedidos}}</td>
-						<td>{{user.direccion}}</td>
+						<td>{{user.lastName}}</td>
+						<td><span ng-repeat="phone in user.phones" ng-bind="phone.number"></span>
+							</td>
+						<td><span ng-repeat="address in user.addresses" ng-bind="address.location"></span></td>
 					</tr>
 				</tbody>
 			</table>
