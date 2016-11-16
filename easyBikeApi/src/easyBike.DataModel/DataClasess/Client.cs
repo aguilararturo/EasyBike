@@ -13,5 +13,6 @@ namespace easyBike.DataModel.DataClasess
         public string Name { get; set; }
         public string LastName { get; set; }
         public List<Address> Addresses { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
 
@@ -12,6 +12,7 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
+            
             bikesCtrl.bikes = [{
                 model: '2010',
                 conductor: 'Jose Lopez',

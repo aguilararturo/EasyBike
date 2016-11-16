@@ -15,7 +15,8 @@
             controller: 'UserComponetController',
             controllerAs: 'userCompCtrl',
             bindToController: {
-                user: '='
+                user: '=',
+                textTitle: '='
             },
             scope: true
         };

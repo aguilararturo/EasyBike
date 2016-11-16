@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    function UserRegistrationController(CommonService) {
-        var userRegCtrl = this;
+    function BikeRegistrationController(CommonService) {
+        var bikeRegCtrl = this;
 
         /**
          * @function $onInit
@@ -10,7 +10,7 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            userRegCtrl.user = {
+            bikeRegCtrl.user = {
                 phones: [],
                 name: '',
                 nit: '',
@@ -18,12 +18,12 @@
                 addresses: []
             };
 
-            userRegCtrl.text='Datos Cliente';
+            
         }
 
-        userRegCtrl.$onInit = $onInit;
+        bikeRegCtrl.$onInit = $onInit;
     }
     angular
-        .module('EasyBikeApp.User')
-        .controller('UserRegistrationController', UserRegistrationController);
+        .module('EasyBikeApp.Bikes')
+        .controller('BikeRegistrationController', BikeRegistrationController);
 })();
