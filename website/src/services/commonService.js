@@ -87,11 +87,79 @@
                 .catch(errorLoadingScripts);
         }
 
+        function getBikes() {
+            /**
+            * @function successfullRequest
+            * @author Arturo Aguilar
+            * @desc log a warning when there are a problem loading the orders analytics
+            * @param  {response} response response
+            * @returns {Object} response data
+            */
+            function successfullRequest(response) {
+                console.log('response', response);
+                return response.data;
+            }
+            /**
+            * @function errorLoadingScripts
+            * @author Arturo Aguilar
+            * @desc log a warning when there are a problem loading the orders analytics
+            * @param  {Object} error details
+            * @return {Promise} Rejected promise with error details.
+            */
+            function errorLoadingScripts(error) {
+                $log.warn('There is a problem getting Bikes.');
+                $log.warn(error);
+                return $q.reject(error);
+            }
+            var ordersURL = BASE_URL + '/bike';
+
+            console.log('url', ordersURL);
+
+            return $http.get(ordersURL)
+                .then(successfullRequest)
+                .catch(errorLoadingScripts);
+        }
+
+        function getUserByPhone(phoneNumber) {
+            /**
+            * @function successfullRequest
+            * @author Arturo Aguilar
+            * @desc log a warning when there are a problem loading the orders analytics
+            * @param  {response} response response
+            * @returns {Object} response data
+            */
+            function successfullRequest(response) {
+                console.log('response', response);
+                return response.data;
+            }
+            /**
+            * @function errorLoadingScripts
+            * @author Arturo Aguilar
+            * @desc log a warning when there are a problem loading the orders analytics
+            * @param  {Object} error details
+            * @return {Promise} Rejected promise with error details.
+            */
+            function errorLoadingScripts(error) {
+                $log.warn('There is a problem getting User by phone.');
+                $log.warn(error);
+                return $q.reject(error);
+            }
+            var getByPhoneURL = BASE_URL + '/client/GetByPhone/';
+
+            console.log('url', getByPhoneURL);
+
+            return $http.get(getByPhoneURL + phoneNumber)
+                .then(successfullRequest)
+                .catch(errorLoadingScripts);
+        }
+
         return {
+            getUserByPhone: getUserByPhone,
             getMenu: getMenu,
             getUser: getUser,
             saveUser: saveUser,
-            saveBike: saveBike
+            saveBike: saveBike,
+            getBikes: getBikes
         };
     }
 

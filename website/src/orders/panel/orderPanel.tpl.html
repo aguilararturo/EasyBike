@@ -1,18 +1,18 @@
-<div class="panel panel-primary main-panel">
+<div class="panel {{orderPnlCtrl.type.color}}">
     <div class="panel-heading">
         <div class="row">
             <div class="col-xs-3">
-                <i class="fa fa-home fa-5x"></i>
+                <i class="{{orderPnlCtrl.type.content}} fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-                <div class="huge">orderPnlCtrl.number</div>
-                <div>{{orderPnlCtrl.type}}</div>
+                <div class="huge">{{orderPnlCtrl.type.number}}</div>
+                <div>{{orderPnlCtrl.type.title}}</div>
             </div>
         </div>
     </div>
-    <a href="#">
+    <a href="" ng-click="orderPnlCtrl.action()">
         <div class="panel-footer">
-            <span class="pull-left">{{orderPnlCtrl.content}}</span>
+            <span class="pull-left">{{orderPnlCtrl.type.description}}</span>
             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
             <div class="clearfix"></div>
         </div>

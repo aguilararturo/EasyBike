@@ -3,92 +3,26 @@
 
 	<div class="row">
 		<div class="col-lg-3 col-md-6">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<i class="fa fa-home fa-5x"></i>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div class="huge">1</div>
-							<div>Tipo!</div>
-						</div>
-					</div>
-				</div>
-				<a href="#">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			<order-panel type="ordersCtrl.orderType" action="ordersCtrl.displayOrders()">
+			</order-panel>
 		</div>
 		<div class="col-lg-3 col-md-6">
-			<div class="panel panel-yellow">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<i class="fa fa-user fa-5x"></i>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div class="huge">2</div>
-							<div>Usuario!</div>
-						</div>
-					</div>
-				</div>
-				<a href="#">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			<order-panel type="ordersCtrl.userType" action="ordersCtrl.displayUser()"></order-panel>
 		</div>
 		<div class="col-lg-3 col-md-6">
-			<div class="panel panel-green">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<i class="fa fa-shopping-cart fa-5x"></i>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div class="huge">3</div>
-							<div>Pedido!</div>
-						</div>
-					</div>
-				</div>
-				<a href="#">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			<order-panel type="ordersCtrl.cartType" action="ordersCtrl.displayCart()"></order-panel>
 		</div>
 		<div class="col-lg-3 col-md-6">
-			<div class="panel panel-red">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-3">
-							<i class="fa fa-road fa-5x"></i>
-						</div>
-						<div class="col-xs-9 text-right">
-							<div class="huge">4</div>
-							<div>Moto!</div>
-						</div>
-					</div>
-				</div>
-				<a href="#">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
-			</div>
+			<order-panel type="ordersCtrl.bikeType" action="ordersCtrl.displayBike()"></order-panel>
 		</div>
+	</div>
+	<div class="row" ng-if="ordersCtrl.oderTypeEnable">
+	</div>
+	<div class="row" ng-if="ordersCtrl.userEnable">
+		<user-component class="col-xs-12" user="ordersCtrl.user" text-title="ordersCtrl.userTitle" search-action="ordersCtrl.searchUser"></user-component>
+	</div>
+	<div class="row" ng-if="ordersCtrl.cartEnable">
+	</div>
+	<div class="row" ng-if="ordersCtrl.bikeEnable">
 	</div>
 </div>

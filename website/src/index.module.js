@@ -6,6 +6,7 @@
      */
     angular
         .module('EasyBikeApp', [
+            'ngMap',
             'ui.router',
             'ui.bootstrap',
             'EasyBikeApp.Templates',

@@ -13,7 +13,12 @@
             restrict: 'E',
             templateUrl: 'orders/panel/orderPanel.tpl.html',
             controller: 'OrderPanelController',
-            controllerAs: 'orderPnlCtrl'
+            controllerAs: 'orderPnlCtrl',
+            bindToController: {
+                type: '=',
+                action: '&'
+            },
+            scope: true
         };
     }
     /**

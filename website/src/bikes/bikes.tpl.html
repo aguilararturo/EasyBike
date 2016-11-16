@@ -10,18 +10,20 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
-						<th>Model</th>
+						<th>Codigo</th>
+						<th>Placa</th>
 						<th>Conductor</th>
 						<th>stado</th>
-						<th>Pedidos</th>
+						<th>Model</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="bike in bikesCtrl.bikes">
-						<td>{{bike.model}}</td>
-						<td>{{bike.conductor}}</td>
+						<td>{{bike.code}}</td>
+						<td>{{bike.plate}}</td>
+						<td>{{bike.driver.name}} {{bike.driver.lastName}}</td>
 						<td>{{bike.state}}</td>
-						<td>{{bike.pedidos}}</td>
+						<td>{{bike.model}}</td>
 					</tr>
 				</tbody>
 			</table>

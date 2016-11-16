@@ -21,6 +21,7 @@ namespace easyBike.Api.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Bikes
+                    .Include(bike => bike.Driver)
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
@@ -34,6 +35,7 @@ namespace easyBike.Api.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Bikes
+                    .Include(bike => bike.Driver)
                     .Where(item => item.Id == id);
                 return Data.First();
             }

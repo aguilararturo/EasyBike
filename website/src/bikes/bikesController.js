@@ -37,6 +37,11 @@
                 pedidos: '120'
             }];
             console.log('init bikesCtrl');
+            CommonService.getBikes().then(loadBikes);
+        }
+
+        function loadBikes(response) {
+            bikesCtrl.bikes = response;
         }
 
         bikesCtrl.$onInit = $onInit;

@@ -8,17 +8,16 @@
      * @author Arturo Aguilar
      * @return {Object} directive
      */
-    function userComponent() {
+    function productComponent() {
         return {
             restrict: 'E',
-            templateUrl: 'components/user/userComp.tpl.html',
-            controller: 'UserComponetController',
-            controllerAs: 'userCompCtrl',
+            templateUrl: 'components/product/productComp.tpl.html',
+            controller: 'ProductComponetController',
+            controllerAs: 'prodCompCtrl',
             bindToController: {
                 user: '=',
                 textTitle: '=',
-                saveAction: '&?',
-                searchAction: '&?'
+                saveAction: '&?'
             },
             scope: true
         };
@@ -37,8 +36,8 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function UserComponetController(_) {
-        var userCompCtrl = this;
+    function ProductComponetController(_) {
+        var prodCompCtrl = this;
         /**
         * @function $onInit
         * @memberOf FeaturedBrandsController
@@ -46,22 +45,21 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            userCompCtrl.displaySave = !_.isUndefined(userCompCtrl.saveAction);
-            userCompCtrl.searchMode = !_.isUndefined(userCompCtrl.searchAction);
+            prodCompCtrl.displaySave = !_.isUndefined(prodCompCtrl.saveAction);
             initDummyPhone();
             initDummyAdress();
             console.log('userComp');
         }
 
         function initDummyPhone() {
-            userCompCtrl.newPhone = {
+            prodCompCtrl.newPhone = {
                 id: '',
                 number: ''
             };
         }
 
         function initDummyAdress() {
-            userCompCtrl.newAdress = {
+            prodCompCtrl.newAdress = {
                 id: '',
                 location: '',
                 date: '',
@@ -70,43 +68,35 @@
         }
 
         function removePhone(phone) {
-            _.remove(userCompCtrl.user.phones, function removePhon(n) {
+            _.remove(prodCompCtrl.user.phones, function removePhon(n) {
                 return n.number === phone.number;
             });
         }
 
         function addAddress(address) {
-            userCompCtrl.user.addresses.push(_.clone(address));
+            prodCompCtrl.user.addresses.push(_.clone(address));
             initDummyAdress();
         }
 
         function removeAddress(address) {
-            _.remove(userCompCtrl.user.addresses, function removeAddr(n) {
+            _.remove(prodCompCtrl.user.addresses, function removeAddr(n) {
                 return n.location === address.location;
             });
         }
 
         function addPhone(phone) {
-            userCompCtrl.user.phones.push(_.clone(phone));
+            prodCompCtrl.user.phones.push(_.clone(phone));
             initDummyPhone();
         }
 
-        function phoneChange() {
-            if (userCompCtrl.searchMode) {
-                userCompCtrl.searchAction()(
-                userCompCtrl.newPhone.number);
-            }
-        }
-
-        userCompCtrl.$onInit = $onInit;
-        userCompCtrl.addPhone = addPhone;
-        userCompCtrl.removePhone = removePhone;
-        userCompCtrl.addAddress = addAddress;
-        userCompCtrl.removeAddress = removeAddress;
-        userCompCtrl.phoneChange = phoneChange;
+        prodCompCtrl.$onInit = $onInit;
+        prodCompCtrl.addPhone = addPhone;
+        prodCompCtrl.removePhone = removePhone;
+        prodCompCtrl.addAddress = addAddress;
+        prodCompCtrl.removeAddress = removeAddress;
     }
     angular
         .module('EasyBikeApp.User')
-        .controller('UserComponetController', UserComponetController)
-        .directive('userComponent', userComponent);
+        .controller('ProductComponetController', ProductComponetController)
+        .directive('productComponent', productComponent);
 })();
