@@ -1,0 +1,15 @@
+<div class="row">
+    <ul class="nav nav-tabs">
+        <li role="presentation" ng-class="{'active': category.selected}" ng-repeat="category in prodCatCompCtrl.categories">
+            <a href="" class="category-nav-tab" ng-click="prodCatCompCtrl.selectTab(category)">
+                <div class="col-md-6 tab-image">
+                    <img src="{{category.pictureUrl}}">
+                </div>
+                <span class="col-md-6" ng-bind="category.name"></span>
+            </a>
+        </li>
+    </ul>
+    <div class="row">
+        <product-component product="product" ng-repeat="product in prodCatCompCtrl.products"></product-component>
+    </div>
+</div>

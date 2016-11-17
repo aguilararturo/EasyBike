@@ -15,9 +15,9 @@
             controller: 'ProductComponetController',
             controllerAs: 'prodCompCtrl',
             bindToController: {
-                user: '=',
+                product: '=',
                 textTitle: '=',
-                saveAction: '&?'
+                clickAction: '&?'
             },
             scope: true
         };
@@ -45,58 +45,22 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            prodCompCtrl.displaySave = !_.isUndefined(prodCompCtrl.saveAction);
-            initDummyPhone();
-            initDummyAdress();
-            console.log('userComp');
+            prodCompCtrl.hasAction = !_.isUndefined(prodCompCtrl.clickAction);
+
+            console.log('prodCompCtrl');
         }
 
-        function initDummyPhone() {
-            prodCompCtrl.newPhone = {
-                id: '',
-                number: ''
-            };
+        function clickProduct() {
+            if (prodCompCtrl.hasAction) {
+                prodCompCtrl.clickAction(prodCompCtrl.product);
+            }
         }
-
-        function initDummyAdress() {
-            prodCompCtrl.newAdress = {
-                id: '',
-                location: '',
-                date: '',
-                direction: ''
-            };
-        }
-
-        function removePhone(phone) {
-            _.remove(prodCompCtrl.user.phones, function removePhon(n) {
-                return n.number === phone.number;
-            });
-        }
-
-        function addAddress(address) {
-            prodCompCtrl.user.addresses.push(_.clone(address));
-            initDummyAdress();
-        }
-
-        function removeAddress(address) {
-            _.remove(prodCompCtrl.user.addresses, function removeAddr(n) {
-                return n.location === address.location;
-            });
-        }
-
-        function addPhone(phone) {
-            prodCompCtrl.user.phones.push(_.clone(phone));
-            initDummyPhone();
-        }
-
+        prodCompCtrl.clickProduct = clickProduct;
         prodCompCtrl.$onInit = $onInit;
-        prodCompCtrl.addPhone = addPhone;
-        prodCompCtrl.removePhone = removePhone;
-        prodCompCtrl.addAddress = addAddress;
-        prodCompCtrl.removeAddress = removeAddress;
+
     }
     angular
-        .module('EasyBikeApp.User')
+        .module('EasyBikeApp.Product')
         .controller('ProductComponetController', ProductComponetController)
         .directive('productComponent', productComponent);
 })();

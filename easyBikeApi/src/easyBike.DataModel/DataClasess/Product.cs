@@ -14,7 +14,6 @@ namespace easyBike.DataModel.DataClasess
         public string BarCode { get; set; }
         public ProductCategory Category { get; set; }
         public Restorant Restorant{ get; set; }
-        
-
+        public string CodSubfix { get; set; }
     }
 }

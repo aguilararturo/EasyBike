@@ -19,7 +19,8 @@
             'EasyBikeApp.Bikes',
             'EasyBikeApp.User',
             'EasyBikeApp.components',
-            'EasyBikeApp.Modals'
+            'EasyBikeApp.Modals',
+            'EasyBikeApp.Product'
         ]);
     console.log('indexmodule');
 })();

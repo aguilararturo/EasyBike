@@ -9,5 +9,6 @@ namespace easyBike.DataModel.DataClasess
         public Address Address { get; set; }
         public List<Phone> Phones { get; set; }
         public string ImageUrl { get; set; }
+        public string CodSubfix { get; set; }
     }
 }
