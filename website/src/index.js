@@ -1,9 +1,6 @@
 (function() {
     'use strict';
-
     var easyBikeApp = angular.module('EasyBikeApp');
-
-    console.log('EasyBikeApp module', easyBikeApp);
 
     /**
      * @function run

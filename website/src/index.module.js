@@ -20,7 +20,8 @@
             'EasyBikeApp.User',
             'EasyBikeApp.components',
             'EasyBikeApp.Modals',
-            'EasyBikeApp.Product'
+            'EasyBikeApp.Product',
+            'EasyBikeApp.Business'
         ]);
     console.log('indexmodule');
 })();
