@@ -18,12 +18,12 @@
     "name": "Motos",
     "href": "#/bike",
     "order": 0,
-    "content": "fa-taxi"
+    "content": "fa-motorcycle"
   },
   {
     "id": 4,
-    "name": "Restaurantes",
-    "href": "#/restorant",
+    "name": "Empresas",
+    "href": "#/business",
     "order": 0,
     "content": "fa-cutlery"
   },

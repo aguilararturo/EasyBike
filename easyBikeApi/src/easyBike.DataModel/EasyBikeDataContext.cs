@@ -17,7 +17,7 @@ namespace easyBike.DataModel
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Restorant> Restorants { get; set; }
+        public DbSet<Business> Businesses { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Bike> Bikes{ get; set; }

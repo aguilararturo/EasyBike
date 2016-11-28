@@ -44,12 +44,14 @@ module.exports = {
             'node_modules/jquery-zoom/jquery.zoom.min.js',
             'node_modules/EasyZoom/dist/easyzoom.js',
             'node_modules/ez-plus/src/jquery.ez-plus.js',			
-			'node_modules/ngmap/build/scripts/ng-map.min.js'
+			'node_modules/ngmap/build/scripts/ng-map.min.js',
+			'node_modules/croppie/croppie.js'
         ],
         styles: [
             'node_modules/angular-carousel/dist/angular-carousel.min.css',
             'node_modules/angularjs-slider/dist/rzslider.min.css',
-            'node_modules/EasyZoom/css/easyzoom.css'
+            'node_modules/EasyZoom/css/easyzoom.css',
+			'node_modules/croppie/croppie.css'
         ],
         js_map: [
             'node_modules/angular/angular.min.js.map'

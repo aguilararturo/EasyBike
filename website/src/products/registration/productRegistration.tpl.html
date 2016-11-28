@@ -2,31 +2,27 @@
     <h2>{{prodRegCtrl.textTitle}}</h2>
     <form class="form col-xs-12 col-lg-6">
 
-            <div class="form-group">
-                <label class="control-label aligment-left">Codigo</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="userCompCtrl.product.codSubfix">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Nombre</label>
+        <div class="form-group col-xs-12">
+            <label class="control-label aligment-left">Codigo</label>
+            <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="userCompCtrl.product.codSubfix">
+        </div>
+        <div class="form-group col-xs-12">
+            <image-component class="col-xs-12 no-width-padding" image-url="busRegCtrl.bussines.imageUrl"></image-component>
+        </div>
+        <div class="form-group col-xs-12">
+            <label class="control-label">Nombre</label>
+            <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="userCompCtrl.product.name">
+        </div>
+        <div class="form-group col-xs-12">
+            <label class="control-label">Description</label>
+            <input type="text" class="form-control" placeholder="Ingrese Marca" ng-model="userCompCtrl.product.description">
+        </div>
 
-                    <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="userCompCtrl.product.name">
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Marca</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Marca" ng-model="userCompCtrl.product.brand">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Brand</label>
-
-                    <input type="text" class="form-control" placeholder="Ingrese Marca" ng-model="userCompCtrl.product.lastName">
-
-            </div>
-
-        <div class="row" ng-if="userCompCtrl.displaySave">
+        <div class="col-xs-12" ng-if="userCompCtrl.displaySave">
             <div class="col-xs-12">
                 <button type="button" class="form-control btn btn-primary col-offset-2 col-xs-8" ng-click="userCompCtrl.saveAction()">Save changes</button>
             </div>
         </div>
+
     </form>
 </div>

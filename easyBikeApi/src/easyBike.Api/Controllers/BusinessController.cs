@@ -12,15 +12,18 @@ using Microsoft.EntityFrameworkCore;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class MenuController : Controller
+    public class BusinessController : Controller
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Menu> Get()
+        public IEnumerable<Business> Get()
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Menus
+                var Data = db.Businesses
+                    .Include(item => item.Addresses)
+                    .Include(item => item.Phones)
+                    .Include(item => item.Categories)
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
@@ -29,11 +32,13 @@ namespace easyBike.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Menu Get(int id)
+        public Business Get(int id)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Menus
+                var Data = db.Businesses
+                    .Include(item => item.Addresses)
+                    .Include(item => item.Phones)
                     .Where(item => item.Id == id);
                 return Data.First();
             }
@@ -41,44 +46,54 @@ namespace easyBike.Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Menu value)
+        public void Post([FromBody]Business value)
 
         {
             using (var db = new EasyBikeDataContext())
             {
-                db.Menus.Add(value);
+                db.Businesses.Add(value);
                 db.SaveChanges();
             }
         }
 
-        [HttpPost("AddMenus/")]
-        public void AddMenus([FromBody]IEnumerable<Menu> values)
+        [HttpPost("AddBusiness/")]
+        public void AddBusiness([FromBody]IEnumerable<Business> values)
 
         {
             foreach (var item in values)
             {
                 item.Id = 0;
+                foreach (var phone in item.Phones)
+                {
+                    phone.Id = 0;
+                }
+                foreach (var address in item.Addresses)
+                {
+                    address.Id = 0;
+                }
             }
             using (var db = new EasyBikeDataContext())
             {
-                db.Menus.AddRange(values);
+                db. Businesses.AddRange(values);
                 db.SaveChanges();
             }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Menu value)
+        public void Put(int id, [FromBody]Business value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var original = db.Menus
+                var original = db.Businesses
                     .Where(item => item.Id == id).FirstOrDefault();
 
-                original.Content = value.Content;
-                original.href = value.href;
+                original.Addresses = value.Addresses;
+                original.CodSubfix = value.CodSubfix;
                 original.Name = value.Name;
-                original.Order = value.Order;
+                original.ImageUrl = value.ImageUrl;
+                original.Phones = value.Phones;
+                original.Categories = value.Categories;
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -90,10 +105,10 @@ namespace easyBike.Api.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Menus
+                var Data = db.Businesses
                     .Where(item => item.Id == id);
 
-                db.Menus.Remove(Data.First());
+                db.Businesses.Remove(Data.First());
                 db.SaveChanges();
             }
         }

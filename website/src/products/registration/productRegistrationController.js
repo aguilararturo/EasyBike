@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     function ProductRegistrationController(CommonService, ModalUtility) {
         var prodRegCtrl = this;
@@ -10,15 +10,23 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            prodRegCtrl.user = {
-                id: 0,
-                phones: [],
-                name: '',
-                nit: '',
-                lastName: '',
-                imageUrl: '',
-                addresses: []
-            };
+            prodRegCtrl.product =
+                {
+                    id: 0,
+                    codSubfix: '',
+                    name: '',
+                    pictureUrl: '',
+                    brand: '',
+                    barCode: '',
+                    category: {
+
+                    },
+                    restorant: {},
+                    phones: [
+
+                    ],
+                    imageUrl: ''
+                };
 
             prodRegCtrl.text = 'Datos Cliente';
         }

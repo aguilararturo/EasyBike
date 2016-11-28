@@ -8,15 +8,14 @@
      * @author Arturo Aguilar
      * @return {Object} directive
      */
-    function bikeComponent() {
+    function addressComponent() {
         return {
             restrict: 'E',
-            templateUrl: 'components/bike/bikeComponent.tpl.html',
-            controller: 'BikeComponetController',
-            controllerAs: 'bikeCompCtrl',
+            templateUrl: 'components/address/addressComponent.tpl.html',
+            controller: 'AddressComponentController',
+            controllerAs: 'addressCompCtrl',
             bindToController: {
-                bike: '=',
-                saveAction: '&'
+                addresses: '='
             },
             scope: true
         };
@@ -35,23 +34,46 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function BikeComponetController(_) {
-        var bikeCompCtrl = this;
-        /**
-        * @function $onInit
-        * @memberOf FeaturedBrandsController
-        * @desc Initializes controller and brands from featured Brands or catalog brands
-        * @author Arturo Aguilar
-        */
+    function AddressComponentController(_) {
+        var addressCompCtrl = this;
+
         function $onInit() {
-            bikeCompCtrl.text = "Datos Motociclista";
-            console.log('bikeComp');
+            initDummyAdress();
+            if (_.isEmpty(addressCompCtrl.addresses)) {
+                addAddress(addressCompCtrl.newAdress);
+            }
         }
 
-        bikeCompCtrl.$onInit = $onInit;
+        function initDummyAdress() {
+            addressCompCtrl.newAdress = {
+                id: '',
+                location: '',
+                date: '',
+                direction: ''
+            };
+        }
+
+
+        function addAddress(address) {
+            addressCompCtrl.addresses.push(_.clone(address));
+            initDummyAdress();
+        }
+
+        function removeAddress(address) {
+            _.remove(addressCompCtrl.addresses, function removeAddr(n) {
+                return n.location === address.location;
+            });
+            if (_.isEmpty(addressCompCtrl.addresses)) {
+                addAddress(addressCompCtrl.newAdress);
+            }
+        }
+
+        addressCompCtrl.$onInit = $onInit;
+        addressCompCtrl.addAddress = addAddress;
+        addressCompCtrl.removeAddress = removeAddress;
     }
     angular
-        .module('EasyBikeApp.Bikes')
-        .controller('BikeComponetController', BikeComponetController)
-        .directive('bikeComponent', bikeComponent);
+        .module('EasyBikeApp.Components')
+        .controller('AddressComponentController', AddressComponentController)
+        .directive('addressComponent', addressComponent);
 })();

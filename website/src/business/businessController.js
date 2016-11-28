@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
 
@@ -12,11 +12,13 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            CommonService.getUser().then(loadMenuItems);
+            CommonService.getBusinesses().then(loadBusiness);
         }
 
-        function loadMenuItems(response) {
-            busCtrl.users = response;
+        function loadBusiness(response) {
+            busCtrl.businesses = response;
+
+            console.log('busCtrl.businesses', busCtrl.businesses);
         }
 
 

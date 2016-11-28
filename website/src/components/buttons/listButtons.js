@@ -49,7 +49,7 @@
         lbCtrl.$onInit = $onInit;
     }
     angular
-        .module('EasyBikeApp.components')
+        .module('EasyBikeApp.Components')
         .controller('ListButtonsController', ListButtonsController)
         .directive('listButtons', listButtons);
 })();

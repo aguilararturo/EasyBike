@@ -15,8 +15,7 @@
             controller: 'PhoneComponetController',
             controllerAs: 'phoneCompCtrl',
             bindToController: {
-                addresses: '=',
-                saveAction: '&'
+                phones: '='
             },
             scope: true
         };
@@ -37,21 +36,41 @@
      */
     function PhoneComponetController(_) {
         var phoneCompCtrl = this;
-        /**
-        * @function $onInit
-        * @memberOf FeaturedBrandsController
-        * @desc Initializes controller and brands from featured Brands or catalog brands
-        * @author Arturo Aguilar
-        */
+        function initDummyPhone() {
+            phoneCompCtrl.newPhone = {
+                id: '',
+                number: ''
+            };
+        }
+
         function $onInit() {
-            phoneCompCtrl.text = 'Datos Motociclista';
-            console.log('bikeComp');
+            initDummyPhone();
+            if (_.isEmpty(phoneCompCtrl.phones)) {
+                addPhone(phoneCompCtrl.newPhone);
+            }
+        }
+
+        function removePhone(phone) {
+            _.remove(phoneCompCtrl.phones, function removePhon(n) {
+                return n.number === phone.number;
+            });
+
+            if (_.isEmpty(phoneCompCtrl.phones)) {
+                addPhone(phoneCompCtrl.newPhone);
+            }
+        }
+
+        function addPhone(phone) {
+            phoneCompCtrl.phones.push(_.clone(phone));
+            initDummyPhone();
         }
 
         phoneCompCtrl.$onInit = $onInit;
+        phoneCompCtrl.addPhone = addPhone;
+        phoneCompCtrl.removePhone = removePhone;
     }
     angular
-        .module('EasyBikeApp.components')
+        .module('EasyBikeApp.Components')
         .controller('PhoneComponetController', PhoneComponetController)
         .directive('phoneComponent', phoneComponent);
 })();

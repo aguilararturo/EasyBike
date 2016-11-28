@@ -10,15 +10,27 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            busRegCtrl.user = {
-                id: 0,
-                phones: [],
-                name: '',
-                nit: '',
-                lastName: '',
-                imageUrl: '',
-                addresses: []
-            };
+            busRegCtrl.displaySave = true;
+            busRegCtrl.bussines =
+                {
+                    id: 0,
+                    codSubfix: "",
+                    name: "",
+                    addresses: [{
+                        id: 0,
+                        location: "",
+                        date: "",
+                        direction: "",
+                        number: 0
+                    }],
+                    phones: [
+                        {
+                            id: 0,
+                            number: ''
+                        }
+                    ],
+                    imageUrl: ""
+                };
 
             busRegCtrl.textTitle = 'Datos Empresa';
         }
@@ -31,8 +43,16 @@
                 .then(saveSussess);
         }
 
+        function saveAction() {
+            function completeSave() {
+                ModalUtility.openSaveCompleteModal();
+            }
+            CommonService.saveBusiness(busRegCtrl.bussines).then(completeSave);
+        }
+
         busRegCtrl.$onInit = $onInit;
         busRegCtrl.saveProduct = saveProduct;
+        busRegCtrl.saveAction = saveAction;
     }
     angular
         .module('EasyBikeApp.Business')

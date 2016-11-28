@@ -1,23 +1,15 @@
-<div id="apstMoleculeModal" class="reg-user" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="col-xs-12">
-        <legend>Datos Motocicleta</legend>
-    </div>
-    <form class="form">
-        <div class="body col-xs-12">
-                <div class="form-group col-md-4 col-xs-12">
-                    <label class="control-label">Codigo</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="bikeCompCtrl.bike.code">
-                </div>
-                <div class="form-group col-md-4 col-xs-12">
-                    <label class="control-label">Placa</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Placa" ng-model="bikeCompCtrl.bike.plate">
-                </div>
-                <div class="form-group col-md-4 col-xs-12">
-                    <label class="control-label">Modelo</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Model" ng-model="bikeCompCtrl.bike.model">
-                </div>
+<legend class="control-label col-xs-12 no-width-padding">
+    <span class="col-xs-6 no-width-padding">Telefonos</span>
+    <a class="col-xs-6 no-width-padding right-aligment add-more" href="" ng-click="phoneCompCtrl.addPhone(phoneCompCtrl.newPhone)">
+        <i class="fa fa-plus-square add-menu-item"></i><span> Agregar telefono nuevo</span>
+    </a>
+</legend>
 
-            <user-component class="col-xs-12 no-width-padding" user="bikeCompCtrl.bike.driver" text-title="bikeCompCtrl.text" save-action="bikeCompCtrl.saveAction()"></user-component>
+<div class="col-xs-12">
+    <div class="col-xs-12 col-md-12 no-width-padding phone-container" ng-repeat="item in phoneCompCtrl.phones">
+        <div class="col-xs-11 no-width-padding">
+            <input type="number" class="form-control" placeholder="Ingrese Telefono" ng-model="item.number">
         </div>
-    </form>
+        <list-buttons class="col-xs-1 control-label" remove="phoneCompCtrl.removePhone(item)"></list-buttons>
+    </div>
 </div>

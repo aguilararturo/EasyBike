@@ -1,0 +1,21 @@
+<div class="main-edit-image-container ">
+    <label class="control-label col-xs-12 no-width-padding">Imagen</label>
+    <div class="col-xs-12 no-width-padding">
+        <div class="col-xs-12 col-lg-4 no-width-padding " >
+            <img data-ng-src="{{imgCompCtrl.imageUrl}}" alt="" class="img-thumbnail single-image ">
+        </div>
+        <input id="imgCompInp" type="file" class="file col-xs-12 col-lg-8 no-width-padding" accept="image/*" >
+    </div>
+    <div class="col-xs-12 img-thumbnail" ng-if="!imgCompCtrl.displayImage">
+        <legend>Seleccionar imagen</legend>
+        <div class="edit-image-container col-xs-12" ng-if="imgCompCtrl.displayImageEdition">
+            <div id="croppier-container">
+            </div>
+        </div>
+        <div class="actions col-xs-12 no-width-padding image-actions">
+            <button class="upload-result" ng-click="imgCompCtrl.cutImage()" ng-if="imgCompCtrl.displayImageEdition">
+                Cortar imagen
+                </button>
+        </div>
+    </div>
+</div>

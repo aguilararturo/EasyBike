@@ -1,0 +1,12 @@
+<div class="col-xs-12 img-thumbnail" ng-if="!imgCompCtrl.displayImage">
+    <legend>{{imageModalCtrl.title}}</legend>
+    <div class="edit-image-container col-xs-12" ng-show="imgCompCtrl.displayImageEdition">
+        <div id="croppier-container">
+        </div>
+    </div>
+    <div class="actions col-xs-12 no-width-padding image-actions">
+        <button class="upload-result" ng-click="imgCompCtrl.cutImage()" ng-if="imgCompCtrl.displayImageEdition">
+                {{imageModalCtrl.buttonText}}
+                </button>
+    </div>
+</div>

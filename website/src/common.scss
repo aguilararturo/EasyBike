@@ -2,6 +2,14 @@
     content: "\\f07a";
 }
 
+.no-margin-bottom {
+  margin-bottom: 0px;
+}
+
+.item-top-padding {
+  padding-top: 10px;
+}
+
 .tab-image {
   img{
     height: 100%;
@@ -34,6 +42,12 @@
     }
 }
 
+.add-more {
+  font-size: 13px;
+  position: absolute;
+  bottom: 0px;
+}
+
 .no-padding {
     padding: 0px;
 }
@@ -41,6 +55,14 @@
 .no-width-padding {
     padding-left: 0px ;
 	padding-right: 0px;
+}
+
+.left-aligment {
+  text-align: left;
+}
+
+.right-aligment {
+  text-align: right;
 }
 
 $primary-blue-color: #232c41;
@@ -186,47 +208,7 @@ input, a, button, select {
   }
 }
 
-.form-group {
-  label {
-    color: $dark-gray-color;
-    font-size: 14px;
-    font-weight: $bold-font-weight;
-  }
 
-  .separator {
-    height: 50px;
-    padding-top: 15px;
-  }
-}
-
-input {
-  &[type] {
-    &.form-control {
-      border: 2px solid $light-gray-color;
-      border-radius: 0;
-      height: 50px;
-      background: white;
-      -webkit-appearance: none;
-      box-shadow: none;
-    }
-  }
-  &[type="text"], &[type="password"], &[type="email"], &[type="number"], &[type="tel"] {
-    &.text-field-error {
-      @include box-border-background;
-    }
-    &[disabled=disabled] {
-      background: $disable-bkgd-color;
-    }
-  }
-}
-
-.text-field-error {
-  cmp-dropdown {
-    & > div {
-      box-shadow: 0 0 4px rgba(255, 106, 17, 0.65) !important;
-    }
-  }
-}
 
 .disabled {
   color: $disable-text-color !important;
@@ -276,13 +258,6 @@ input {
 .glyphicon-question-sign {
   color: $active-green-links;
   font-size: 14px;
-}
-
-form {
-  label {
-    text-overflow: ellipsis;
-    white-space: normal;
-  }
 }
 
 .arrow_box:before {
@@ -385,7 +360,6 @@ form {
   }
 }
 
-
 .checkbox-btn-group {
   display: block;
   .checkbox-btn {
@@ -430,194 +404,3 @@ form {
     }
   }
 }
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  /* IE10+ CSS styles go here */
-  input {
-    &[type="text"], &[type="password"], &[type="email"] {
-      &.text-field-error {
-        @include box-border-background;
-      }
-    }
-  }
-}
-
-.rn-carousel-indicator {
-  span {
-    color: $disable-bkgd-color !important;
-    padding-right: 2px;
-    &.active {
-      color: $active-green-links !important;
-    }
-  }
-}
-
-.col-5-xs,
-.col-5-sm,
-.col-5-md,
-.col-5-lg {
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-.col-5-xs {
-  width: 20%;
-  float: left;
-}
-
-@media (min-width: 768px) {
-  .col-5-sm {
-    width: 20%;
-    float: left;
-  }
-}
-
-@media (min-width: 992px) {
-  .col-5-md {
-    width: 20%;
-    float: left;
-  }
-}
-
-@media (min-width: 1200px) {
-  .col-5-lg {
-    width: 20%;
-    float: left;
-  }
-}
-
-password-meter {
-  margin-top: 10px;
-  display: block;
-  span {
-    line-height: 0.5;
-    font-size: 12px;
-    font-weight: $bold-font-weight;
-  }
-  .poor-meter {
-    height: 6px;
-    color: $poor-password-color;
-    .poor {
-      background: $poor-password-color;
-      display: inline-block;
-      width: 20%;
-      height: 6px;
-    }
-  }
-  .fair-meter {
-    height: 6px;
-    color: $fair-password-color;
-    .fair {
-      background: $fair-password-color;
-      display: inline-block;
-      width: 40%;
-      height: 6px;
-    }
-  }
-  .okay-meter {
-    height: 6px;
-    color: $okay-password-color;
-    .okay {
-      background: $okay-password-color;
-      display: inline-block;
-      width: 60%;
-      height: 6px;
-    }
-  }
-  .good-meter {
-    height: 6px;
-    color: $good-password-color;
-    .good {
-      background: $good-password-color;
-      display: inline-block;
-      width: 80%;
-      height: 6px;
-    }
-  }
-  .excellent {
-    height: 6px;
-    background: $excellent-password-color;
-  }
-}
-
-//**Tooltip
-.tooltip {
-    &.in {
-        border-radius: 0;
-        opacity: 1;
-        padding-bottom: 10px !important;
-    }
-}
-
-.tooltip-inner {
-    color: $dark-text-color;
-    background-color: $light-gray-color;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
-    border-radius: 0 !important;
-}
-
-.tooltip-arrow {
-    border-top-color: $light-gray-color !important;
-    border-width: 10px 10px 0 !important;
-}
-
-.tooltip.bottom .tooltip-arrow {
-  border-bottom-color: $light-gray-color !important;
-  border-width: 0 10px 10px !important;
-}
-
-.paragraph {
-   color: $light-gray-text-color;
-   font-size: 15px;
-   font-weight: $regular-font-weight;
-   line-height: 1.7;
-}
-//**
-
-.table-image-icon {
-    img{
-        width: 70px;
-        height: 70px;
-        min-height: 70px;
-        min-width: 70px;
-    }
-}
-
-//**search message style when table is empty
-.table-empty-row{
-    font-size: 18px;
-    font-style: italic;
-    font-family: 'Lato', sans-serif;
-    font-weight: $regular-font-weight;
-    @extend .primary-text-color;
-}
-
-.disabled-link {
-    cursor: not-allowed;
-}
-
-.disable-link-image{
-    cursor: default;
-}
-
-.disable-link-text{
-    cursor: text;
-    text-decoration: none !important;
-}
-.horizontal-link-toolbar {
-    a {
-        font-weight: $bold-font-weight;
-    }
-}
-.pull-center {
-    text-align: center;
-}
-//**Remove the x from inputs in ie.
-input[type=text]::-ms-clear, input[type=number]::-ms-clear, input[type=email]::-ms-clear  {
-    display: none;
-    width:0;
-    height:0;
-}
-

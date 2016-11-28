@@ -18,7 +18,7 @@
             'EasyBikeApp.orders',
             'EasyBikeApp.Bikes',
             'EasyBikeApp.User',
-            'EasyBikeApp.components',
+            'EasyBikeApp.Components',
             'EasyBikeApp.Modals',
             'EasyBikeApp.Product',
             'EasyBikeApp.Business'
