@@ -12,12 +12,12 @@
         return {
             restrict: 'E',
             templateUrl: 'components/productCategory/productCategoryRegistrationComponent/productCategoryRegistrationComponent.tpl.html',
-            controller: 'ProductCategoryRegistrationComponent',
+            controller: 'ProductCategoryRegistrationComponentController',
             controllerAs: 'prodCatRegCompCtrl',
             bindToController: {
                 productCategory: '=',
                 textTitle: '=',
-                saveAction: '&?'
+                displaySaveAction: '='
             },
             scope: true
         };
@@ -36,7 +36,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function ProductCategoryRegistrationComponentController(_) {
+    function ProductCategoryRegistrationComponentController(_, ProductCategoryService) {
         var prodCatRegCompCtrl = this;
         /**
         * @function $onInit
@@ -45,10 +45,15 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            prodCatRegCompCtrl.hasSaveAction = !_.isUndefined(prodCatRegCompCtrl.saveAction);
+
+        }
+
+        function saveProductCategory(category) {
+            ProductCategoryService.saveProductCategory(category);
         }
 
         prodCatRegCompCtrl.$onInit = $onInit;
+        prodCatRegCompCtrl.saveProductCategory = saveProductCategory;
     }
     angular
         .module('EasyBikeApp.Components')

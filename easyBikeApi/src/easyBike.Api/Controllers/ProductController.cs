@@ -64,7 +64,7 @@ namespace easyBikeApi.Controllers
                 original.Category = value.Category;
                 original.Name = value.Name;
                 original.Restorant = value.Restorant;
-                original.PictureUrl = value.PictureUrl;
+                original.ImageUrl = value.ImageUrl;
                 
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();

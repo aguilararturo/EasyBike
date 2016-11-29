@@ -60,7 +60,7 @@ namespace easyBikeApi.Controllers
                     .Where(item => item.Id == id).FirstOrDefault();
 
                 original.Name = value.Name;
-                original.PictureUrl = value.PictureUrl;
+                original.ImageUrl = value.ImageUrl;
 
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();

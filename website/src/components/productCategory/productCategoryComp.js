@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -15,9 +15,9 @@
             controller: 'ProductCategoryComponetController',
             controllerAs: 'prodCatCompCtrl',
             bindToController: {
-                categories: '=',
                 textTitle: '=',
-                clickAction: '&?'
+                clickAction: '&?',
+                multipleSelection: '@'
             },
             scope: true
         };
@@ -36,7 +36,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function ProductCategoryComponetController(_, CommonService) {
+    function ProductCategoryComponetController(_, ProductCategoryService) {
         var prodCatCompCtrl = this;
         /**
         * @function $onInit
@@ -46,15 +46,19 @@
         */
         function $onInit() {
             prodCatCompCtrl.hasAction = !_.isUndefined(prodCatCompCtrl.clickAction);
-            CommonService.getProductCategories().then(loadCategories);
-            console.log('prodCompCtrl');
-            CommonService.getProducts().then(loadProducts);
+            ProductCategoryService.getDefaultProductCategory().then(loadCategories);
+            prodCatCompCtrl.multipleSelection = !_.isUndefined(prodCatCompCtrl.multipleSelection);
         }
 
         function loadCategories(response) {
-            prodCatCompCtrl.categories = _.mapValues(response,
-                function (category) {
-                    category.selected = false;
+            prodCatCompCtrl.categories = response;
+            setSelectCategories(false);
+        }
+
+        function setSelectCategories(selected) {
+            prodCatCompCtrl.categories = _.mapValues(prodCatCompCtrl.categories,
+                function(category) {
+                    category.selected = selected;
                     return category;
                 });
         }
@@ -64,17 +68,13 @@
                 prodCatCompCtrl.clickAction(prodCatCompCtrl.product);
             }
         }
-        function selectTab(cat) {
-            prodCatCompCtrl.categories = _.mapValues(prodCatCompCtrl.categories,
-                function (category) {
-                    category.selected = false;
-                    return category;
-                });
-            cat.selected = true;
-        }
-
-        function loadProducts(response) {
-            prodCatCompCtrl.products = response;
+        function selectTab(category) {
+            if (!prodCatCompCtrl.multipleSelection) {
+                setSelectCategories(false);
+                category.selected = true;
+            } else {
+                category.selected = !category.selected;
+            }
         }
 
         prodCatCompCtrl.clickProduct = clickProduct;

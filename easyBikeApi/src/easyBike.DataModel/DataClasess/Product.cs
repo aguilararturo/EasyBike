@@ -10,7 +10,7 @@ namespace easyBike.DataModel.DataClasess
         public int Id { get; set; }
         public string CodSubfix { get; set; }
         public string Name { get; set; }
-        public string PictureUrl { get; set; }
+        public string ImageUrl { get; set; }
         public string BarCode { get; set; }
         public string Description { get; set; }
         public ProductCategory Category { get; set; }

@@ -9,7 +9,7 @@ namespace easyBike.DataModel.DataClasess
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string PictureUrl { get; set; }
+        public string ImageUrl { get; set; }
         public bool Default { get; set; }
     }
 }

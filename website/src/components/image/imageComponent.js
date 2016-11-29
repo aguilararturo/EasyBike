@@ -43,9 +43,8 @@
         }
 
         function linkInput() {
-
             var inputElm = angular.element($element[0].querySelector('#imgCompInp'));
-            inputElm.bind("change", readFile);
+            inputElm.bind('change', readFile);
         }
 
         function readFile(input) {
@@ -84,19 +83,17 @@
                 reader.onload = onloadImage;
 
                 reader.readAsDataURL(input.target.files[0]);
-            }
-            else {
+            } else {
                 console.log("Sorry - you're browser doesn't support the FileReader API");
             }
         }
 
         function cutImage() {
             imgCompCtrl.cropierElem.croppie('result', {
-                type: 'rawcanvas',
+                type: 'base64',
                 format: 'png'
-            }).then(function (canvas) {
-                var ddd = canvas.toDataURL();
-                imgCompCtrl.imageUrl = canvas.toDataURL();
+            }).then(function (image) {
+                imgCompCtrl.imageUrl = image;
                 imgCompCtrl.displayImage = true;
             });
 

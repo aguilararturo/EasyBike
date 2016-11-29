@@ -13,22 +13,14 @@
             prodCatRegCtrl.productCategory = {
                 id: 0,
                 name: '',
-                imageUrl: ''
+                ImageUrl: '',
+                default: false
             };
 
             prodCatRegCtrl.text = 'Datos Cliente';
         }
 
-        function saveProduct() {
-            function saveSussess(response) {
-                ModalUtility.openSaveCompleteModal();
-            }
-            CommonService.saveProductCategory(prodCatRegCtrl.productCategory)
-                .then(saveSussess);
-        }
-
         prodCatRegCtrl.$onInit = $onInit;
-        prodCatRegCtrl.saveProduct = saveProduct;
     }
     angular
         .module('EasyBikeApp.Product')

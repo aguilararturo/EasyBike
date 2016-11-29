@@ -13,10 +13,11 @@
                 </label>
             </div>
         </div>
-        <div class="form-group col-xs-12">
-            <button type="submit" class="btn btn-success col-xs-12">Guardar producto categoria
-
+        <div class="form-group col-xs-12" ng-if="prodCatRegCompCtrl.displaySaveAction">
+            <button type="submit" class="btn btn-success col-xs-12" ng-click="prodCatRegCompCtrl.saveProductCategory(prodCatRegCompCtrl.productCategory)">Guardar producto categoria
             </button>
         </div>
     </form>
 </div>
+
+<product-category-component multiple-selection="true"></product-category-component>
