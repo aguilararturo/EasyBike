@@ -1,23 +1,26 @@
 <div class="main-edit-image-container ">
     <label class="control-label col-xs-12 no-width-padding">Imagen</label>
-    <div class="col-xs-12 no-width-padding">
-        <div class="col-xs-12 col-sm-4 col-md-3 no-width-padding ">
+    <div class="col-xs-12 no-width-padding form-inline">
+        <div class="form-group ">
             <img data-ng-src="{{imgCompCtrl.imageUrl}}" alt="" class="img-thumbnail single-image ">
         </div>
-        <div class="col-xs-12 col-sm-8 col-md-9 no-width-padding">
+        <div class="form-group">
             <input id="imgCompInp" type="file" class="file" accept="image/*">
         </div>
     </div>
     <div class="col-xs-12 img-thumbnail" ng-if="!imgCompCtrl.displayImage">
         <legend>Seleccionar imagen</legend>
-        <div class="edit-image-container col-xs-12" ng-if="imgCompCtrl.displayImageEdition">
-            <div id="croppier-container">
+        <div class="form-inline">
+            <div class="form-group edit-image-container" ng-if="imgCompCtrl.displayImageEdition">
+                <div id="croppier-container">
+                </div>
             </div>
-        </div>
-        <div class="actions col-xs-12 no-width-padding image-actions">
-            <button class="upload-result" ng-click="imgCompCtrl.cutImage()" ng-if="imgCompCtrl.displayImageEdition">
+            <div class="form-group">
+                <button class="btn btn-default" ng-click="imgCompCtrl.cutImage()" ng-if="imgCompCtrl.displayImageEdition">
+                    <i class="fa fa-cut"></i>
                 Cortar imagen
                 </button>
+            </div>
         </div>
     </div>
 </div>

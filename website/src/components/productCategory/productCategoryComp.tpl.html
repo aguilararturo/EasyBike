@@ -1,0 +1,8 @@
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group" ng-repeat="category in prodCatCompCtrl.categories">
+        <button type="button" class="btn btn-default category-btn" ng-click="prodCatCompCtrl.selectTab(category)">
+            <img data-ng-src="{{category.pictureUrl}}">
+        {{category.name}}
+        </button>
+    </div>
+</div>

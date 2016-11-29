@@ -1,0 +1,22 @@
+<div id="apstMoleculeModal" class="col-xs-12 col-lg-8" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <legend>Registrar producto categoria</legend>
+    <form class="form col-xs-12">
+        <div class="form-group col-xs-12">
+            <image-component class="col-xs-12 no-width-padding" image-url="prodCatRegCompCtrl.productCategory.imageUrl"></image-component>
+        </div>
+        <div class="form-group col-xs-12">
+            <label class="control-label aligment-left">Nombre</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="prodCatRegCompCtrl.productCategory.name">
+                <label class="input-group-addon transparent-back no-border">
+                    <input  type="checkbox" ng-model="prodCatRegCompCtrl.productCategory.default"> Categoria Por Defecto
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <button type="submit" class="btn btn-success col-xs-12">Guardar producto categoria
+
+            </button>
+        </div>
+    </form>
+</div>

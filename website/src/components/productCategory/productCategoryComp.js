@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -11,11 +11,11 @@
     function productCategoryComponent() {
         return {
             restrict: 'E',
-            templateUrl: 'components/product/productCategory/productCategoryComp.tpl.html',
+            templateUrl: 'components/productCategory/productCategoryComp.tpl.html',
             controller: 'ProductCategoryComponetController',
             controllerAs: 'prodCatCompCtrl',
             bindToController: {
-                product: '=',
+                categories: '=',
                 textTitle: '=',
                 clickAction: '&?'
             },
@@ -53,7 +53,7 @@
 
         function loadCategories(response) {
             prodCatCompCtrl.categories = _.mapValues(response,
-                function(category) {
+                function (category) {
                     category.selected = false;
                     return category;
                 });
@@ -66,7 +66,7 @@
         }
         function selectTab(cat) {
             prodCatCompCtrl.categories = _.mapValues(prodCatCompCtrl.categories,
-                function(category) {
+                function (category) {
                     category.selected = false;
                     return category;
                 });
@@ -80,10 +80,9 @@
         prodCatCompCtrl.clickProduct = clickProduct;
         prodCatCompCtrl.$onInit = $onInit;
         prodCatCompCtrl.selectTab = selectTab;
-
     }
     angular
-        .module('EasyBikeApp.User')
+        .module('EasyBikeApp.Components')
         .controller('ProductCategoryComponetController', ProductCategoryComponetController)
         .directive('productCategoryComponent', productCategoryComponent);
 })();
