@@ -34,17 +34,22 @@
 .red-button {
   color: red;
 }
-.button-tranparent {
+.transparent-button {
   opacity: 0.75;
- 
   border: none;
   background-color: transparent;
   height: 100%;
-  font-size: 20px;
+  
 }
- .button-tranparent:hover {
-    opacity: 1;
-  }
+.transparent-button:hover {
+  opacity: 1;
+}
+.big-button {
+  font-size: 24px;
+}
+.transparent-back {
+  background-color: transparent;
+}
 @import "menu/menu";
 @import "common";
 @import "components/user/userComp";

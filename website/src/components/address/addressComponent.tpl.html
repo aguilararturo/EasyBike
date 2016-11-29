@@ -5,20 +5,18 @@
     </a>
 </legend>
 
-<div class="col-xs-12">
-    <div class="col-xs-12 no-width-padding" ng-repeat="item in addressCompCtrl.addresses">
-        <div class="col-xs-12 no-width-padding">
-            <div class="col-xs-11 no-width-padding">
-                <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="item.location">
-            </div>
-            <list-buttons class="col-xs-1 no-left-padding" remove="addressCompCtrl.removeAddress(item)"></list-buttons>
-        </div>
-        <div class="col-xs-12  map-container">
-            <map zoom="15" center="{{item.location ? item.location : 'cochabamba'}}">
+<div class="col-xs-12 " ng-repeat="item in addressCompCtrl.addresses">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="item.location">
+        <list-buttons class="input-group-addon no-padding transparent-back" remove="addressCompCtrl.removeAddress(item)"></list-buttons>
+    </div>
+    <div class="col-xs-12 no-width-padding  map-container">
+        <map zoom="15" center="{{item.location ? item.location : 'cochabamba'}}">
                         <marker position="{{item.location}}" />
                         <control name="overviewMap" opened="true" />
                         </map>
-        </div>
-        <div class="col-xs-12 no-width-padding"><hr></div>
+    </div>
+    <div class="col-xs-12 no-width-padding">
+        <hr>
     </div>
 </div>

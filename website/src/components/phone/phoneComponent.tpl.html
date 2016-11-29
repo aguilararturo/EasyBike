@@ -5,11 +5,12 @@
     </a>
 </legend>
 
-<div class="col-xs-12">
-    <div class="col-xs-12 col-sm-6 no-width-padding phone-container" ng-repeat="item in phoneCompCtrl.phones">
-        <div class="col-xs-11 col-sm-10 col-md-11 col-lg-10 no-width-padding">
+<div class="col-xs-12 no-width-padding">
+    <div class="col-xs-12 col-sm-6 phone-container" ng-repeat="item in phoneCompCtrl.phones">
+        <div class="input-group">
             <input type="number" class="form-control" placeholder="Ingrese Telefono" ng-model="item.number">
+
+            <list-buttons class="input-group-addon no-padding transparent-back" remove="phoneCompCtrl.removePhone(item)"></list-buttons>
         </div>
-        <list-buttons class="col-xs-1 col-sm-2 col-md-1 col-lg-2 no-left-padding control-label" remove="phoneCompCtrl.removePhone(item)"></list-buttons>
     </div>
 </div>
