@@ -17,8 +17,7 @@
             bindToController: {
                 user: '=',
                 textTitle: '=',
-                saveAction: '&?',
-                searchAction: '&?'
+                saveAction: '&?'
             },
             scope: true
         };
@@ -91,19 +90,11 @@
             initDummyPhone();
         }
 
-        function phoneChange() {
-            if (userCompCtrl.searchMode) {
-                userCompCtrl.searchAction()(
-                userCompCtrl.newPhone.number);
-            }
-        }
-
         userCompCtrl.$onInit = $onInit;
         userCompCtrl.addPhone = addPhone;
         userCompCtrl.removePhone = removePhone;
         userCompCtrl.addAddress = addAddress;
         userCompCtrl.removeAddress = removeAddress;
-        userCompCtrl.phoneChange = phoneChange;
     }
     angular
         .module('EasyBikeApp.User')

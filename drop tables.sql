@@ -1,3 +1,4 @@
+use EasyBikeDB
 -- CLEAN DB
 EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
 EXEC sp_MSForEachTable 'DELETE FROM ?'

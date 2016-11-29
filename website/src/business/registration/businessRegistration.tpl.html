@@ -2,21 +2,22 @@
     <legend>
         <h3>{{busRegCtrl.textTitle}}</h3>
     </legend>
-    <form class="form col-xs-12 col-lg-6">
+    <form class="form col-xs-12 col-lg-8">
 
-        <div class="form-group col-xs-12">
+        <div class="form-group col-xs-12 col-md-4">
             <label class="control-label aligment-left">Codigo</label>
             <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="busRegCtrl.bussines.codSubfix">
         </div>
-        <div class="form-group col-xs-12">
-            <image-component class="col-xs-12 no-width-padding" image-url="busRegCtrl.bussines.imageUrl"></image-component>
-        </div>
-        <div class="form-group col-xs-12">
+        <div class="form-group col-xs-12 col-md-8">
             <label class="control-label">Nombre</label>
 
             <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="busRegCtrl.bussines.name">
 
         </div>
+        <div class="form-group col-xs-12">
+            <image-component class="col-xs-12 no-width-padding" image-url="busRegCtrl.bussines.imageUrl"></image-component>
+        </div>
+        
 
         <div class="form-group col-xs-12">
             <phone-component phones="busRegCtrl.bussines.phones" class="col-xs-12 no-width-padding"></phone-component>

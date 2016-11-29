@@ -1,10 +1,12 @@
 <div class="main-edit-image-container ">
     <label class="control-label col-xs-12 no-width-padding">Imagen</label>
     <div class="col-xs-12 no-width-padding">
-        <div class="col-xs-12 col-lg-4 no-width-padding " >
+        <div class="col-xs-12 col-sm-4 col-md-3 no-width-padding ">
             <img data-ng-src="{{imgCompCtrl.imageUrl}}" alt="" class="img-thumbnail single-image ">
         </div>
-        <input id="imgCompInp" type="file" class="file col-xs-12 col-lg-8 no-width-padding" accept="image/*" >
+        <div class="col-xs-12 col-sm-8 col-md-9 no-width-padding">
+            <input id="imgCompInp" type="file" class="file" accept="image/*">
+        </div>
     </div>
     <div class="col-xs-12 img-thumbnail" ng-if="!imgCompCtrl.displayImage">
         <legend>Seleccionar imagen</legend>

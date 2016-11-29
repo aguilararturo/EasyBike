@@ -1,7 +1,6 @@
-<div>
-    <button type="button" class="btn btn-xs glyphicon glyphicon-plus btn-success" ng-click="lbCtrl.add()" ng-if="lbCtrl.displayAdd"></button>
-    <button type="button" class="btn btn-xs glyphicon glyphicon-pencil btn-warning" ng-click="lbCtrl.edit()" ng-if="lbCtrl.displayEdit"></button>
-    <a href="" ng-click="lbCtrl.remove()" ng-if="lbCtrl.displayRemove">
-        <i class="fa fa-window-close"></i>
-    </a>
-</div>
+<button type="button" class="btn btn-xs glyphicon glyphicon-plus btn-success" ng-click="lbCtrl.add()" ng-if="lbCtrl.displayAdd"></button>
+<button type="button" class="btn btn-xs glyphicon glyphicon-pencil btn-warning" ng-click="lbCtrl.edit()" ng-if="lbCtrl.displayEdit"></button>
+
+<button type="button" ng-click="lbCtrl.remove()" ng-if="lbCtrl.displayRemove" class="button-tranparent">
+        <i class="fa fa-window-close red-button"></i>
+</button>

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     /**
      * @function FeaturedBrandsController
@@ -32,6 +32,9 @@
                 phones: [],
                 addresses: []
             };
+
+            ordersCtrl.userTitle = "Datos Usuario";
+            ordersCtrl.number = '';
 
             ordersCtrl.orderType = {
                 title: 'Tipo de orden',

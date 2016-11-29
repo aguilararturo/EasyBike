@@ -19,7 +19,13 @@
 	<div class="row" ng-if="ordersCtrl.oderTypeEnable">
 	</div>
 	<div class="row" ng-if="ordersCtrl.userEnable">
-		<user-component class="col-xs-12" user="ordersCtrl.user" text-title="ordersCtrl.userTitle" search-action="ordersCtrl.searchUser"></user-component>
+		<div class="form-group col-sx-12">
+			<legend class="control-label">Buscar por telefono</legend>
+			<div class="col-xs-12 no-width-padding">
+				<input type="number" class="form-control" placeholder="Ingrese Telefono a buscar" ng-model="ordersCtrl.number" ng-blur="ordersCtrl.searchUser(ordersCtrl.number)">
+			</div>
+		</div>
+		<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle"></user-component>
 	</div>
 	<div class="row" ng-if="ordersCtrl.cartEnable">
 		<product-category-component></product-category-component>

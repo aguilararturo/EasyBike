@@ -61,7 +61,6 @@ namespace easyBikeApi.Controllers
                     .Where(item => item.Id == id).FirstOrDefault();
 
                 original.BarCode = value.BarCode;
-                original.Brand = value.Brand;
                 original.Category = value.Category;
                 original.Name = value.Name;
                 original.Restorant = value.Restorant;
