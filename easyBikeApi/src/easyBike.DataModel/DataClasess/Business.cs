@@ -10,7 +10,7 @@ namespace easyBike.DataModel.DataClasess
         public string Name { get; set; }
         public List<Address> Addresses { get; set; }
         public List<Phone> Phones { get; set; }
-        public string ImageUrl { get; set; }        
+        public string ImageUrl { get; set; }
         public ICollection<BusinessCategory> BusinesCategories { get; set; }
         [NotMapped]
         public List<ProductCategory> Categories { get; set; }

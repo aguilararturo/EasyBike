@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel;
 using easyBike.DataModel.DataClasess;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using easyBikeApi.Utils;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,32 +16,62 @@ namespace easyBike.Api.Controllers
     [Route("api/[controller]")]
     public class BusinessController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public BusinessController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<Business> Get()
         {
+            return getBusinesses(false);
+        }
+
+        // GET: api/values
+        [HttpGet("GetWithCategories")]
+        public IEnumerable<Business> GetWithCategories()
+        {
+            return getBusinesses(true);
+        }
+
+        private IEnumerable<Business> getBusinesses(bool withCategories)
+        {
+            List<Business> Data;
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Businesses
+                Data = db.Businesses
                     .Include(item => item.Addresses)
                     .Include(item => item.Phones)
-                    .Include(item => item.Categories)
-                    .OrderBy(item => item.Id)
-                    .ToList();
-                return Data;
+                    .Include(item => item.BusinesCategories)
+                    .ThenInclude(p => p.ProductCategory)
+                   .ToList();
             }
+
+            if (withCategories)
+            {
+                foreach (var row in Data)
+                {
+                    row.Categories = row.BusinesCategories.Select(bc => bc.ProductCategory).ToList();
+                    row.BusinesCategories = null;
+                }
+            }
+
+            return Data;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Business Get(int id)
-        {
+        {            
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Businesses
                     .Include(item => item.Addresses)
-                    .Include(item => item.Phones)
-                    .Where(item => item.Id == id);
+                    .Include(item => item.Phones)                    
+                    .Where(item => item.Id == id);               
                 return Data.First();
             }
         }
@@ -49,11 +81,35 @@ namespace easyBike.Api.Controllers
         public void Post([FromBody]Business value)
 
         {
+            var imagePath = _hostingEnvironment.ContentRootPath + "/images/" + value.Id;
+            var imageString = value.ImageUrl;
+            value.ImageUrl = imagePath;
+
             using (var db = new EasyBikeDataContext())
             {
+                value.BusinesCategories = new List<BusinessCategory>();
+                foreach (var item in value.Categories)
+                {
+                    if (item.Id > 0)
+                    {                       
+                        db.ProductCategories.Attach(item);
+                        db.Entry(item).State = EntityState.Unchanged;
+                    }
+                    var busCat = new BusinessCategory()
+                    {
+                        Bussiness = value,
+                        BussinessId = value.Id,
+                        ProductCategory = item,
+                        ProductCategoryId = item.Id
+                    };
+                    value.BusinesCategories.Add(busCat);
+                }
+                
                 db.Businesses.Add(value);
-                db.SaveChanges();
+                db.SaveChanges();                               
             }
+
+            ImageUtility.SaveImage(imagePath, imageString);
         }
 
         [HttpPost("AddBusiness/")]

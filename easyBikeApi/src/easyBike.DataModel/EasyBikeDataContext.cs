@@ -21,6 +21,7 @@ namespace easyBike.DataModel
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Bike> Bikes { get; set; }
+        public DbSet<BusinessCategory> BusinessCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
