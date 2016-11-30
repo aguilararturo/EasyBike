@@ -20,12 +20,28 @@ namespace easyBike.DataModel
         public DbSet<Business> Businesses { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Phone> Phones { get; set; }
-        public DbSet<Bike> Bikes{ get; set; }
+        public DbSet<Bike> Bikes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string sConnString = @"Data Source=.\sqlexpress;Initial Catalog=EasyBikeDB;Integrated Security=True;Pooling=False";
             optionsBuilder.UseSqlServer(sConnString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BusinessCategory>()
+                .HasKey(bc => new { bc.BussinessId, bc.ProductCategoryId });
+
+            modelBuilder.Entity<BusinessCategory>()
+                .HasOne(bc => bc.Bussiness)
+                .WithMany(b => b.BusinesCategories)
+                .HasForeignKey(bc => bc.BussinessId);
+
+            modelBuilder.Entity<BusinessCategory>()
+                .HasOne(bc => bc.ProductCategory)
+                .WithMany(c => c.BusinesCategories)
+                .HasForeignKey(bc => bc.ProductCategoryId);
         }
 
     }
