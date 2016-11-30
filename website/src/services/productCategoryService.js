@@ -8,7 +8,7 @@
         var productCatalogURL = BASE_URL + '/productCategory';
 
         function getDefaultProductCategory() {
-            return $http.get(productCatalogURL)
+            return $http.get(productCatalogURL + '/GetDefaultCategories')
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts('Default Category'));
         }

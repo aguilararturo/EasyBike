@@ -56,6 +56,12 @@
 .check-icon-color {
   color: green;
 }
+.form-group {
+  margin-bottom: 5px;
+}
+legend {
+  margin-bottom: 10px;
+}
 @import "menu/menu";
 @import "common";
 @import "components/user/userComp";

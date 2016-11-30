@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -17,7 +17,10 @@
             bindToController: {
                 textTitle: '=',
                 clickAction: '&?',
-                multipleSelection: '@'
+                multipleSelection: '@',
+                enableAddNew: '@',
+                selectionChange: '&?',
+                selectedCategories: '='
             },
             scope: true
         };
@@ -48,6 +51,7 @@
             prodCatCompCtrl.hasAction = !_.isUndefined(prodCatCompCtrl.clickAction);
             ProductCategoryService.getDefaultProductCategory().then(loadCategories);
             prodCatCompCtrl.multipleSelection = !_.isUndefined(prodCatCompCtrl.multipleSelection);
+            prodCatCompCtrl.enableAddNew = !_.isUndefined(prodCatCompCtrl.enableAddNew);
         }
 
         function loadCategories(response) {
@@ -57,7 +61,7 @@
 
         function setSelectCategories(selected) {
             prodCatCompCtrl.categories = _.mapValues(prodCatCompCtrl.categories,
-                function(category) {
+                function (category) {
                     category.selected = selected;
                     return category;
                 });
@@ -74,6 +78,10 @@
                 category.selected = true;
             } else {
                 category.selected = !category.selected;
+            }
+            prodCatCompCtrl.selectedCategories = _.filter(prodCatCompCtrl.categories, function (cat) { return cat.selected; });
+            if (!_.isUndefined(prodCatCompCtrl.selectionChange)) {
+                prodCatCompCtrl.selectionChange(prodCatCompCtrl.selectedCategories);
             }
         }
 

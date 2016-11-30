@@ -29,7 +29,8 @@
                             number: ''
                         }
                     ],
-                    imageUrl: ""
+                    imageUrl: "",
+                    Categories:[]
                 };
 
             busRegCtrl.textTitle = 'Datos Empresa';

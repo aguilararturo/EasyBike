@@ -3,34 +3,29 @@
         <h3>{{busRegCtrl.textTitle}}</h3>
     </legend>
     <form class="form col-xs-12 col-lg-8">
-
         <div class="form-group col-xs-12 col-md-4">
             <label class="control-label aligment-left">Codigo</label>
             <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="busRegCtrl.bussines.codSubfix">
         </div>
         <div class="form-group col-xs-12 col-md-8">
             <label class="control-label">Nombre</label>
-
             <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="busRegCtrl.bussines.name">
-
         </div>
         <div class="form-group col-xs-12">
             <image-component class="col-xs-12 no-width-padding" image-url="busRegCtrl.bussines.imageUrl"></image-component>
         </div>
-        
-
+        <div class="form-group col-xs-12">
+            <label class="control-label">Categorias</label>
+            <product-category-component multiple-selection="true" enable-add-new="true" selected-categories="busRegCtrl.bussines.categories"></product-category-component>
+        </div>
         <div class="form-group col-xs-12">
             <phone-component phones="busRegCtrl.bussines.phones" class="col-xs-12 no-width-padding"></phone-component>
         </div>
-
         <div class="form-group col-xs-12">
             <address-component addresses="busRegCtrl.bussines.addresses" class="col-xs-12 no-width-padding"></address-component>
         </div>
-
         <div class="form-group col-xs-12" ng-if="busRegCtrl.displaySave">
-            
-                <button type="button" class="form-control btn btn-primary col-xs-12" ng-click="busRegCtrl.saveAction()">Guardar Empresa</button>
-            
+            <button type="button" class="form-control btn btn-primary col-xs-12" ng-click="busRegCtrl.saveAction()">Guardar Empresa</button>
         </div>
     </form>
 </div>

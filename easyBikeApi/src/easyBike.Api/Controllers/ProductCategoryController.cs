@@ -39,6 +39,20 @@ namespace easyBikeApi.Controllers
             }
         }
 
+        // GET: api/values
+        [HttpGet("GetDefaultCategories")]
+        public IEnumerable<ProductCategory> GetDefaultCategories()
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var Data = db.ProductCategories
+                    .OrderBy(item => item.Id)
+                    .Where(item => item.Default == true)
+                    .ToList();
+                return Data;
+            }
+        }
+
         // POST api/values
         [HttpPost]
         public void Post([FromBody]ProductCategory value)
@@ -47,6 +61,20 @@ namespace easyBikeApi.Controllers
             {
                 db.ProductCategories.Add(value);
                 db.SaveChanges();                
+            }
+        }
+
+        [HttpPost("AddCategories/")]
+        public void AddCategories([FromBody]IEnumerable<ProductCategory> values)
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                foreach (var item in values)
+                {
+                    item.Id = 0;
+                }
+                db.ProductCategories.AddRange(values);
+                db.SaveChanges();
             }
         }
 
