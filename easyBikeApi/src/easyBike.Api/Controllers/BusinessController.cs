@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using easyBikeApi.Utils;
 using System.IO;
+using Microsoft.AspNetCore.Hosting.Server;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -85,8 +86,8 @@ namespace easyBike.Api.Controllers
         {            
             var imagePath = string.Format(IMG_DIR,_hostingEnvironment.ContentRootPath, Path.GetRandomFileName());
             var imageString = value.ImageUrl;
-            value.ImageUrl = imagePath;
-
+            value.ImageUrl = string.Format(IMG_DIR, _hostingEnvironment.WebRootPath, Path.GetRandomFileName()); 
+            
             using (var db = new EasyBikeDataContext())
             {
                 value.BusinesCategories = new List<BusinessCategory>();

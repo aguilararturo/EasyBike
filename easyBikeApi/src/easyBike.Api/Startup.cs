@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace easyBike.Api
 {
@@ -63,10 +66,16 @@ namespace easyBike.Api
         {
             app.UseCors("AllowAll");
 
-            app.UseCors(builder =>
-    builder.WithOrigins("http://localhost:9000/")
-           .AllowAnyHeader()
-    );
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), @"images")),
+                RequestPath = new PathString("/images")
+            });
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:9000/")
+           .AllowAnyHeader());
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
