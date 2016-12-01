@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace easyBike.Api
 {
@@ -47,6 +48,10 @@ namespace easyBike.Api
                 jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
 
+            services.AddMvc().AddJsonOptions(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+
             services.AddSwaggerGen();
 
             var corsBuilder = new CorsPolicyBuilder();
@@ -73,6 +78,9 @@ namespace easyBike.Api
                 Path.Combine(Directory.GetCurrentDirectory(), @"images")),
                 RequestPath = new PathString("/images")
             });
+
+            HttpHelper.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>(),
+                app.ApplicationServices.GetRequiredService<IHostingEnvironment>());
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:9000/")
            .AllowAnyHeader());

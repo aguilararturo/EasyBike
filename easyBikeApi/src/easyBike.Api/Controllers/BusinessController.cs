@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using easyBikeApi.Utils;
 using System.IO;
 using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,14 +19,6 @@ namespace easyBike.Api.Controllers
     [Route("api/[controller]")]
     public class BusinessController : Controller
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
-        private const string IMG_DIR = "{0}/images/business{1}.png";
-
-        public BusinessController(IHostingEnvironment hostingEnvironment)
-        {
-            _hostingEnvironment = hostingEnvironment;
-        }
-
         // GET: api/values
         [HttpGet]
         public IEnumerable<Business> Get()
@@ -43,24 +36,35 @@ namespace easyBike.Api.Controllers
         private IEnumerable<Business> getBusinesses(bool withCategories)
         {
             List<Business> Data;
-            using (var db = new EasyBikeDataContext())
-            {
-                Data = db.Businesses
-                    .Include(item => item.Addresses)
-                    .Include(item => item.Phones)
-                    .Include(item => item.BusinesCategories)
-                    .ThenInclude(p => p.ProductCategory)
-                   .ToList();
-            }
-
             if (withCategories)
-            {
+            {                
+                using (var db = new EasyBikeDataContext())
+                {
+                    Data = db.Businesses
+                        .Include(item => item.Addresses)
+                        .Include(item => item.Phones)
+                        .Include(item => item.BusinesCategories)
+                       .ToList();
+                }
+
+
                 foreach (var row in Data)
                 {
                     row.Categories = row.BusinesCategories.Select(bc => bc.ProductCategory).ToList();
                     row.BusinesCategories = null;
                 }
             }
+            else
+            {
+                using (var db = new EasyBikeDataContext())
+                {
+                    Data = db.Businesses
+                        .Include(item => item.Addresses)
+                        .Include(item => item.Phones)                       
+                       .ToList();
+                }
+            }
+
 
             return Data;
         }
@@ -83,11 +87,11 @@ namespace easyBike.Api.Controllers
         [HttpPost]
         public void Post([FromBody]Business value)
 
-        {            
-            var imagePath = string.Format(IMG_DIR,_hostingEnvironment.ContentRootPath, Path.GetRandomFileName());
+        {
             var imageString = value.ImageUrl;
-            value.ImageUrl = string.Format(IMG_DIR, _hostingEnvironment.WebRootPath, Path.GetRandomFileName()); 
-            
+            var imageUrls = HttpHelper.getImageName("bussines");
+            value.ImageUrl = imageUrls.imageUrl;
+
             using (var db = new EasyBikeDataContext())
             {
                 value.BusinesCategories = new List<BusinessCategory>();
@@ -112,7 +116,7 @@ namespace easyBike.Api.Controllers
                 db.SaveChanges();                               
             }
 
-            ImageUtility.SaveImage(imagePath, imageString);
+            ImageUtility.SaveImage(imageUrls.imageDir, imageString);
         }
 
         [HttpPost("AddBusiness/")]
@@ -130,11 +134,8 @@ namespace easyBike.Api.Controllers
                 {
                     address.Id = 0;
                 }
-            }
-            using (var db = new EasyBikeDataContext())
-            {
-                db. Businesses.AddRange(values);
-                db.SaveChanges();
+
+                Post(item);
             }
         }
 

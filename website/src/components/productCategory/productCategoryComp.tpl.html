@@ -1,8 +1,8 @@
 <div class="btn-group btn-group-justified" role="group" aria-label="...">
     <div class="btn-group" role="group" ng-repeat="category in prodCatCompCtrl.categories">
         <button type="button" ng-class="{'active' : category.selected}" class="btn btn-default category-btn" ng-click="prodCatCompCtrl.selectTab(category)">
+            <i class="fa" ng-class="category.selected ? 'check-icon-color fa-check-square-o' : 'fa-square-o'" aria-hidden="true" ng-if="prodCatCompCtrl.multipleSelection"></i>
             <img class="img-rounded single-image-icon" data-ng-src="{{category.imageUrl}}" >{{category.name}}
-            <span class="glyphicon glyphicon-ok form-control-feedback check-icon-color" aria-hidden="true" ng-if="category.selected && prodCatCompCtrl.multipleSelection"></span>
         </button>
 
     </div>

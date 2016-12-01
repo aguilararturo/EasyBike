@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel;
 using easyBike.DataModel.DataClasess;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using easyBike.Api;
+using easyBikeApi.Utils;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,25 +60,27 @@ namespace easyBikeApi.Controllers
         // POST api/values
         [HttpPost]
         public void Post([FromBody]ProductCategory value)
-        {
+        {            
+            var imageString = value.ImageUrl;
+            var imageUrls = HttpHelper.getImageName("prodCat");
+            value.ImageUrl = imageUrls.imageUrl;
+
             using (var db = new EasyBikeDataContext())
             {
                 db.ProductCategories.Add(value);
                 db.SaveChanges();                
             }
+
+            ImageUtility.SaveImage(imageUrls.imageDir, imageString);
         }
 
         [HttpPost("AddCategories/")]
         public void AddCategories([FromBody]IEnumerable<ProductCategory> values)
         {
-            using (var db = new EasyBikeDataContext())
+            foreach (var item in values)
             {
-                foreach (var item in values)
-                {
-                    item.Id = 0;
-                }
-                db.ProductCategories.AddRange(values);
-                db.SaveChanges();
+                item.Id = 0;
+                Post(item);
             }
         }
 
