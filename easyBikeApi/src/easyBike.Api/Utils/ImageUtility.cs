@@ -10,7 +10,7 @@ namespace easyBikeApi.Utils
     {
         public static void SaveImage(string filePath, string imageBase64)
         {                     
-            var bytes = Convert.FromBase64String(imageBase64);
+            var bytes = Convert.FromBase64String(imageBase64.Replace("data:image/png;base64,", String.Empty));
             using (var imageFile = new FileStream(filePath, FileMode.Create))
             {
                 imageFile.Write(bytes, 0, bytes.Length);

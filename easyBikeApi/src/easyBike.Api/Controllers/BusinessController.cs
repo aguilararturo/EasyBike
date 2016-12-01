@@ -8,6 +8,7 @@ using easyBike.DataModel.DataClasess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using easyBikeApi.Utils;
+using System.IO;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +18,7 @@ namespace easyBike.Api.Controllers
     public class BusinessController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+        private const string IMG_DIR = "{0}/images/business{1}.png";
 
         public BusinessController(IHostingEnvironment hostingEnvironment)
         {
@@ -75,13 +77,13 @@ namespace easyBike.Api.Controllers
                 return Data.First();
             }
         }
-
+       
         // POST api/values
         [HttpPost]
         public void Post([FromBody]Business value)
 
-        {
-            var imagePath = _hostingEnvironment.ContentRootPath + "/images/" + value.Id;
+        {            
+            var imagePath = string.Format(IMG_DIR,_hostingEnvironment.ContentRootPath, Path.GetRandomFileName());
             var imageString = value.ImageUrl;
             value.ImageUrl = imagePath;
 
