@@ -1,0 +1,45 @@
+.wizard-steps-component {
+    text-align: center;
+    height: 40px;
+    padding: 0;
+    width: 90%;
+    margin: 0 auto;
+    .step-container {
+        display: inline;
+        &:last-child {
+            .bar {
+                display: none;
+            }
+        }
+    }
+
+    .circle-empty {
+        position: relative;
+        margin: 0;
+        display: inline-block;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        border: 3px solid $light-gray-color;
+    }
+
+    .bar {
+        display: inline-block;
+       // margin: 9px -2.5px 9px -2.5px;
+        width: 20%;
+        height: 25px;
+        //background: $light-gray-color;
+        border-bottom: 5px solid $light-gray-color;
+    }
+
+    .description {
+        position: absolute;
+        width: 80px;
+        left: -30px;
+        top: 23px;
+        text-align: center;
+        color: $dark-text-color;
+        font-size: 12px;
+        font-weight: $bold-font-weight;
+    }
+}

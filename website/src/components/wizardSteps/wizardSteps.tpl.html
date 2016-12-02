@@ -1,0 +1,11 @@
+<div id="cntWizardSteps" class="wizard-steps-component">
+    <div id="cntSteps" ng-repeat="step in ::wizardStepsCtrl.steps track by $index"
+         class="step-container">
+        <div id="cntKey{{::$index}}" ng-class="{'circle-filled secondary-bkgd-color secondary-border-color': wizardStepsCtrl.isSelectedStep(step.key)}"
+             class="circle-empty">
+             <i class="fa fa-home"></i>
+            <div id="cntValue{{::$index}}" class="description" ng-bind="::step.value"></div>
+        </div>
+        <div id="cntBar{{::$index}}" class="bar"></div>
+    </div>
+</div>

@@ -21,7 +21,8 @@
             'EasyBikeApp.Components',
             'EasyBikeApp.Modals',
             'EasyBikeApp.Product',
-            'EasyBikeApp.Business'
+            'EasyBikeApp.Business',
+            'EasyBikeApp.Utils'
         ]);
     console.log('indexmodule');
 })();

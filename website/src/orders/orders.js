@@ -33,6 +33,28 @@
                 addresses: []
             };
 
+            ordersCtrl.selectedStep = {};
+
+            ordersCtrl.steps = [
+                {
+                    key: 'home',
+                    value: 'Orden'
+                },
+                {
+                    key: 'Usuario',
+                    value: 'Usuario'
+                },
+                {
+                    key: 'order',
+                    value: 'Pedido'
+                },
+                {
+                    key: 'bike',
+                    value: 'Moto'
+                }
+
+            ];
+
             ordersCtrl.userTitle = "Datos Usuario";
             ordersCtrl.number = '';
 
