@@ -1,35 +1,23 @@
-<div class="simple-page">
-	<h1>Pedidos</h1>
+<wizard on-finish="ordersCtrl.saveOrder()" indicators-position="top">
+	<wz-step wz-title="Tipo de Orden">
 
-	<div class="row">
-		<div class="col-lg-3 col-md-6">
-			<order-panel type="ordersCtrl.orderType" action="ordersCtrl.displayOrders()">
-			</order-panel>
-		</div>
-		<div class="col-lg-3 col-md-6">
-			<order-panel type="ordersCtrl.userType" action="ordersCtrl.displayUser()"></order-panel>
-		</div>
-		<div class="col-lg-3 col-md-6">
-			<order-panel type="ordersCtrl.cartType" action="ordersCtrl.displayCart()"></order-panel>
-		</div>
-		<div class="col-lg-3 col-md-6">
-			<order-panel type="ordersCtrl.bikeType" action="ordersCtrl.displayBike()"></order-panel>
-		</div>
-	</div>
-	<div class="row" ng-if="ordersCtrl.oderTypeEnable">
-	</div>
-	<div class="row" ng-if="ordersCtrl.userEnable">
-		<div class="form-group col-sx-12">
-			<legend class="control-label">Buscar por telefono</legend>
-			<div class="col-xs-12 no-width-padding">
-				<input type="number" class="form-control" placeholder="Ingrese Telefono a buscar" ng-model="ordersCtrl.number" ng-blur="ordersCtrl.searchUser(ordersCtrl.number)">
+		<input type="submit" wz-next value="Continue" />
+	</wz-step>
+	<wz-step wz-title="Cliente">
+		<input type="submit" wz-next value="Go on" />
+		<div class="col-xs-8">
+			<div class="form-group col-sx-12">
+				<legend class="control-label">Buscar por telefono</legend>
+				<div class="col-xs-12 no-width-padding">
+					<input type="number" class="form-control" placeholder="Ingrese Telefono a buscar" ng-model="ordersCtrl.number" ng-blur="ordersCtrl.searchUser(ordersCtrl.number)">
+				</div>
 			</div>
+			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle"></user-component>
 		</div>
-		<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle"></user-component>
-	</div>
-	<div class="row" ng-if="ordersCtrl.cartEnable">
+		
+	</wz-step>
+	<wz-step wz-title="Producto">
 		<product-category-component></product-category-component>
-	</div>
-	<div class="row" ng-if="ordersCtrl.bikeEnable">
-	</div>
-</div>
+		<input type="submit" wz-next value="Finish now" />
+	</wz-step>
+</wizard>
