@@ -1,13 +1,14 @@
-<div class="row">
-    <aa-step-auto-size class="form-inline">
-        <div class="form-group step-left">
-            <hr>
+<div-equal class="form-inline col-xs-12">
+        <div class="form-group div-equal-child" ng-repeat="type in stepsCmpCtrl.steps track by $index">
+                <aa-step-auto-size class="form-inline col-xs-12 no-width-padding">
+                        <div class="form-group step-left" >
+                                <hr class="step-line-style " ng-class="type.selected ? 'step-line-success' : 'step-line-info'" ng-if="$index > 0">
+                        </div>
+                        <div class="form-group step-doot panel-color panel-size" ng-class="type.selected ? 'btn-success' : 'btn-info'" ng-click="stepsCmpCtrl.clickStep(type, $index)">
+                                <i class="{{type.content}} fa-2x"></i>
+                                <div> {{type.number}}</div>
+                                <div>{{type.title}}</div>
+                        </div>
+                </aa-step-auto-size>
         </div>
-        <div class="form-group step-doot">
-
-        </div>
-        <div class="form-group step-rigth">
-            <hr>
-        </div>
-    </aa-step-auto-size>
-</div>
+</div-equal>

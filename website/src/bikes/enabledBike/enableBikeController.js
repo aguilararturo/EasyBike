@@ -1,7 +1,7 @@
-(function() {
+(function () {
     'use strict';
-    function BikeRegistrationController(BikeService, ModalUtility) {
-        var bikeRegCtrl = this;
+    function EnableBikeController(BikeService, ModalUtility) {
+        var enableBikeCtrl = this;
 
         /**
          * @function $onInit
@@ -10,7 +10,8 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            bikeRegCtrl.bike = {
+            enableBikeCtrl.searchText = '';
+            enableBikeCtrl.bike = {
                 'id': 0,
                 'code': '',
                 'plate': '',
@@ -25,8 +26,6 @@
                     'imageUrl': ''
                 }
             };
-
-            bikeRegCtrl.text = "Datos Motociclista";
         }
 
         function saveBike() {
@@ -36,10 +35,15 @@
             BikeService.saveBike(bikeRegCtrl.bike).then(completeSaveBike);
         }
 
-        bikeRegCtrl.$onInit = $onInit;
-        bikeRegCtrl.saveBike = saveBike;
+        function searchBike() {
+
+        }
+
+        enableBikeCtrl.$onInit = $onInit;
+        enableBikeCtrl.saveBike = saveBike;
+        enableBikeCtrl.searchBike = searchBike;
     }
     angular
         .module('EasyBikeApp.Bikes')
-        .controller('BikeRegistrationController', BikeRegistrationController);
+        .controller('EnableBikeController', EnableBikeController);
 })();

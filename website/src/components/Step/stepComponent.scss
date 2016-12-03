@@ -1,9 +1,18 @@
-.doot-step {
-
-}
 
 .step-line-style {
     border-top: 10px solid #eeeeee;
+}
+
+.step-line-success {
+    border-top-color: $btn-success-bg;
+}
+
+.step-line-info {
+   border-top-color: $btn-info-bg;
+}
+
+.step-line-warning {
+   border-top-color: $btn-warning-bg;
 }
 
 .step-line-style-no-color {
@@ -23,7 +32,7 @@
 }
 
 .panel-color {
-    background-color: #337ab7;
+    //background-color: #337ab7;
     border-radius: 4px;
-    color: white;
+    //color: white;
 }

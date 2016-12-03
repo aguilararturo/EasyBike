@@ -1,6 +1,6 @@
-(function () {
+(function() {
     'use strict';
-    function ProductRegistrationController(CommonService, ModalUtility) {
+    function ProductRegistrationController(ProductService, ModalUtility, BussinessService) {
         var prodRegCtrl = this;
 
         /**
@@ -21,26 +21,69 @@
                     category: {
 
                     },
-                    restorant: {},
+                    business: {
+                        categories: []
+                    },
                     phones: [
 
                     ],
                     imageUrl: ''
                 };
+            prodRegCtrl.categoryValidate = false;
+            prodRegCtrl.businessValidate = false;
+            prodRegCtrl.displayProductSelection = false;
+            prodRegCtrl.textTitle = 'Registro de producto';
+        }
 
-            prodRegCtrl.text = 'Datos Cliente';
+        function selectCategory(category) {
+            prodRegCtrl.product.category =
+                _.find(prodRegCtrl.product.business.categories, function(o) {
+                    return o.selected;
+                });
+            prodRegCtrl.categoryValidate = true;
         }
 
         function saveProduct() {
             function saveSussess(response) {
                 ModalUtility.openSaveCompleteModal();
             }
-            CommonService.saveProduct(prodRegCtrl.user)
+            return ProductService.saveProduct(prodRegCtrl.product)
                 .then(saveSussess);
         }
 
+        function searchBusiness() {
+            if (_.isEmpty(prodRegCtrl.businesses)) {
+                BussinessService.getBusinessesWithCategories().then(loadBusiness);
+            }
+            prodRegCtrl.displayProductSelection = true;
+        }
+
+        function selectBusiness(business) {
+            function iterateBussines(item) {
+                item.selected = item.id === business.id;
+            }
+            _.forEach(prodRegCtrl.businesses, iterateBussines);
+
+            prodRegCtrl.product.business = business;
+            prodRegCtrl.displayProductSelection = false;
+            prodRegCtrl.businessValidate = true;
+            prodRegCtrl.categoryValidate = false;
+        }
+
+        function loadBusiness(response) {
+            function mapBusiness(business) {
+                business.selected = false;
+            }
+            _.map(response, mapBusiness);
+            prodRegCtrl.businesses = response;
+        }
+
+
         prodRegCtrl.$onInit = $onInit;
         prodRegCtrl.saveProduct = saveProduct;
+        prodRegCtrl.selectCategory = selectCategory;
+        prodRegCtrl.searchBusiness = searchBusiness;
+        prodRegCtrl.selectBusiness = selectBusiness;
     }
     angular
         .module('EasyBikeApp.Product')

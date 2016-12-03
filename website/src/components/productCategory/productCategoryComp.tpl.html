@@ -4,11 +4,14 @@
             <i class="fa" ng-class="category.selected ? 'check-icon-color fa-check-square-o' : 'fa-square-o'" aria-hidden="true" ng-if="prodCatCompCtrl.multipleSelection"></i>
             <img class="img-rounded single-image-icon" data-ng-src="{{category.imageUrl}}" >{{category.name}}
         </button>
-
     </div>
     <div class="btn-group" role="group" ng-if="prodCatCompCtrl.enableAddNew">
         <button type="button" class="btn btn-default category-btn" ng-click="prodCatCompCtrl.addNewCategory()">
             <img src="src/assets/plus.svg" class="img-rounded single-image-icon">Nueva categoria
         </button>
     </div>
+</div>
+<div class="alert alert-danger" role="alert" ng-if="prodCatCompCtrl.displayError">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span> Seleccione una categoria
 </div>

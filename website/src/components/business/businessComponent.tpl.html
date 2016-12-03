@@ -1,12 +1,16 @@
-<div class="col-xs-12 img-thumbnail no-width-padding">
-    <legend class="control-label col-xs-12 no-margin-bottom no-width-padding">
+<div class="col-xs-12 img-thumbnail no-width-padding" ng-class="businessCompCtrl.business.selected ? 'selected-bussines' : ''">
+    <legend class="control-label col-xs-12 no-margin-bottom no-width-padding" ng-class="businessCompCtrl.business.selected ? 'selected-bussines' : ''">
         <span class="col-xs-10">{{businessCompCtrl.business.name}}</span>
         <a class="col-xs-2 right-aligment add-more" href="" ng-click="addressCompCtrl.addAddress(addressCompCtrl.newAdress)">
             <i class="fa fa-plus-square add-menu-item"></i>
         </a>
     </legend>
 
-    <div class="col-xs-12 no-width-padding">        
-        <img data-ng-src="{{businessCompCtrl.business.imageUrl}}" alt="" class="single-image">
+    <div class="col-xs-12 no-width-padding">
+        <a href="" ng-click="businessCompCtrl.lunchAction()">
+            <i class="fa fa-2x" ng-class="businessCompCtrl.business.selected ? 'check-icon-color fa-check-square-o' : 'fa-square-o'"
+                aria-hidden="true" ng-if="businessCompCtrl.selectionEnabled"></i>
+            <img data-ng-src="{{businessCompCtrl.business.imageUrl}}" alt="" class="single-image">
+        </a>
     </div>
 </div>

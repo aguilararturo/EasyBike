@@ -2,7 +2,7 @@
     'use strict';
 
 
-    function BikesController(CommonService, ModalUtility) {
+    function BikesController(BikeService, BikeEnabledService, ModalUtility) {
         var bikesCtrl = this;
 
         /**
@@ -12,39 +12,33 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            bikesCtrl.bikes = [{
-                model: '2010',
-                conductor: 'Jose Lopez',
-                state: 'Transito',
-                pedidos: '30'
-            },
-            {
-                model: '2012',
-                conductor: 'Angel Cosio',
-                state: 'Transito',
-                pedidos: '40'
-            },
-            {
-                model: '2008',
-                conductor: 'Mauricio Vargas',
-                state: 'Fuera de Servicio',
-                pedidos: '10'
-            },
-            {
-                model: '2015',
-                conductor: 'Andres Torrico',
-                state: 'Libre',
-                pedidos: '120'
-            }];
+            bikesCtrl.bikes = [];
+            bikesCtrl.todayBikes = [];
             console.log('init bikesCtrl');
-            CommonService.getBikes().then(loadBikes);
+            reloadData();
         }
 
         function loadBikes(response) {
             bikesCtrl.bikes = response;
         }
 
+        function loadTodayBikes(response) {
+            var bikes = [];
+
+            function filterBikes(regBike) {
+                bikes.push(regBike.bike);
+            }
+            _.forEach(response, filterBikes);
+            bikesCtrl.todayBikes = bikes;
+        }
+
+        function reloadData() {
+            BikeService.getBikes().then(loadBikes);
+            BikeEnabledService.getTodayBikes().then(loadTodayBikes);
+        }
+
         bikesCtrl.$onInit = $onInit;
+        bikesCtrl.reloadData = reloadData;
     }
     angular
         .module('EasyBikeApp.Bikes')

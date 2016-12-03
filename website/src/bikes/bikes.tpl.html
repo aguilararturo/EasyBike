@@ -1,34 +1,28 @@
 <div class="row">
 	<div class="col-lg-6">
 		<legend>
+			<h3>Motocicletas habilitadas para hoy</h3>
+		</legend>
+		<div class="col-xs-12">
+			<a href="#/newEnabledBike" class="option-item-link">
+				<i class="fa fa-plus add-menu-item"></i> Habilitar Motocicleta
+			</a>
+		</div>
+		<div class="col-xs-12">
+			<bike-table-component bikes="bikesCtrl.todayBikes" disable-option="true" action-performe="bikesCtrl.reloadData()"></bike-table-component>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<legend>
 			<h3>Lista Motos</h3>
 		</legend>
-		<div class="row">
+		<div class="col-lg-6">
 			<a href="#/newBike" class="option-item-link">
 				<i class="fa fa-plus add-menu-item"></i> Agregar Motocicleta
 			</a>
 		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>Codigo</th>
-						<th>Placa</th>
-						<th>Conductor</th>
-						<th>stado</th>
-						<th>Model</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="bike in bikesCtrl.bikes">
-						<td>{{bike.code}}</td>
-						<td>{{bike.plate}}</td>
-						<td>{{bike.driver.name}} {{bike.driver.lastName}}</td>
-						<td>{{bike.state}}</td>
-						<td>{{bike.model}}</td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="col-xs-12">
+			<bike-table-component bikes="bikesCtrl.bikes" enabled-option="true" action-performe="bikesCtrl.reloadData()"></bike-table-component>
 		</div>
 	</div>
 </div>

@@ -1,27 +1,55 @@
 <div id="apstMoleculeModal" class="reg-user" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <h2>{{prodRegCtrl.textTitle}}</h2>
-    <form class="form col-xs-12 col-lg-6">
+    <legend>
+        <h3>{{prodRegCtrl.textTitle}}</h3>
+    </legend>
+    <div class="col-xs-12" ng-if="prodRegCtrl.displayProductSelection">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span> Seleccione una Empresa
+        </div>
+        <div class="col-xs-12 order-panel small-top-padding">
+            <business-component business="item" selection-enabled="true" click-action="prodRegCtrl.selectBusiness(item)" class="col-sm-6 col-md-4 col-lg-3 item-top-padding"
+                ng-repeat="item in prodRegCtrl.businesses">
+            </business-component>
+        </div>
+    </div>
+    <form class="form col-xs-12 col-lg-6" ng-if="!prodRegCtrl.displayProductSelection">
+        <div class="col-xs-12">
+            <legend>Empresa seleccionada</legend>
+            <div class="form-group col-xs-12">
+                <business-component business="prodRegCtrl.product.business" selection-enabled="true" class="col-sm-6 col-md-6 col-lg-6 item-top-padding"
+                    ng-if="prodRegCtrl.businessValidate"></business-component>
+                <button class="btn btn-info" ng-click="prodRegCtrl.searchBusiness()">
+                    <i class="fa fa-search" aria-hidden="true"></i>Buscar Empresa</button>
+                <div class="alert alert-danger" role="alert" ng-if="!prodRegCtrl.businessValidate">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span> Seleccione una Empresa
+                </div>
+            </div>
+            <div class="col-xs-12" ng-if="prodRegCtrl.businessValidate">
+                <product-category-component custom-categories="prodRegCtrl.product.business.categories" selection-change="prodRegCtrl.selectCategory()" display-selection-error="true"></product-category-component>
+            </div>
+        </div>
 
         <div class="form-group col-xs-12">
             <label class="control-label aligment-left">Codigo</label>
-            <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="userCompCtrl.product.codSubfix">
+            <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="prodRegCtrl.product.codSubfix">
         </div>
         <div class="form-group col-xs-12">
-            <image-component class="col-xs-12 no-width-padding" image-url="busRegCtrl.bussines.imageUrl"></image-component>
+            <image-component class="col-xs-12 no-width-padding" image-url="prodRegCtrl.product.imageUrl"></image-component>
         </div>
         <div class="form-group col-xs-12">
             <label class="control-label">Nombre</label>
-            <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="userCompCtrl.product.name">
+            <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="prodRegCtrl.product.name">
         </div>
         <div class="form-group col-xs-12">
             <label class="control-label">Description</label>
-            <input type="text" class="form-control" placeholder="Ingrese Marca" ng-model="userCompCtrl.product.description">
+            <input type="text" class="form-control" placeholder="Ingrese Marca" ng-model="prodRegCtrl.product.description">
         </div>
 
-        <div class="col-xs-12" ng-if="userCompCtrl.displaySave">
-            <div class="col-xs-12">
-                <button type="button" class="form-control btn btn-primary col-offset-2 col-xs-8" ng-click="userCompCtrl.saveAction()">Save changes</button>
-            </div>
+
+        <div class="col-xs-12">
+            <save-buttom click-action="prodRegCtrl.saveProduct()" text-title="'Guardar Producto'"></save-buttom>
         </div>
 
     </form>

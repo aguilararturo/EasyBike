@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
     /**
      * @function FeaturedBrandsController
@@ -14,7 +14,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService) {
         var ordersCtrl = this;
 
         /**
@@ -32,25 +32,33 @@
                 phones: [],
                 addresses: []
             };
-
+            ordersCtrl.businesses = {};
             ordersCtrl.selectedStep = {};
+            ordersCtrl.todayBikes = [];
+            ordersCtrl.selectedBusiness = {};
+            ordersCtrl.businessValidate = false;
+            ordersCtrl.userValidate = false;
 
             ordersCtrl.steps = [
                 {
                     key: 'home',
-                    value: 'Orden'
+                    value: 'Orden',
+                    selected: true
                 },
                 {
                     key: 'Usuario',
-                    value: 'Usuario'
+                    value: 'Usuario',
+                    selected: false
                 },
                 {
                     key: 'order',
-                    value: 'Pedido'
+                    value: 'Pedido',
+                    selected: false
                 },
                 {
                     key: 'bike',
-                    value: 'Moto'
+                    value: 'Moto',
+                    selected: false
                 }
 
             ];
@@ -58,78 +66,83 @@
             ordersCtrl.userTitle = "Datos Usuario";
             ordersCtrl.number = '';
 
-            ordersCtrl.orderType = {
-                title: 'Tipo de orden',
-                content: 'fa fa-home',
-                number: '1',
-                description: 'Mostrar',
-                color: 'panel-primary'
-            };
-            ordersCtrl.userType = {
-                title: 'Usuario',
-                content: 'fa fa-user',
-                number: '2',
-                description: 'Mostrar',
-                color: 'panel-yellow'
-            };
-            ordersCtrl.cartType = {
-                title: 'Pedido',
-                content: 'fa fa-shopping-cart',
-                number: '3',
-                description: 'Mostrar',
-                color: 'panel-green'
-            };
-            ordersCtrl.bikeType = {
-                title: 'Moto',
-                content: 'fa fa-road',
-                number: '4',
-                description: 'Mostrar',
-                color: 'panel-red'
-            };
+            ordersCtrl.steps = [
+                {
+                    title: 'Tipo de orden',
+                    content: 'fa fa-home',
+                    number: '1',
+                    selected: true
+                },
+                {
+                    title: 'Usuario',
+                    content: 'fa fa-user',
+                    number: '2',
+                    selected: false
+                },
+                {
+                    title: 'Pedido',
+                    content: 'fa fa-shopping-cart',
+                    number: '3',
+                    selected: false
+                },
+                {
+                    title: 'Moto',
+                    content: 'fa fa-road',
+                    number: '4',
+                    selected: false
+                }
+            ];
+
+            ordersCtrl.selectedStep = ordersCtrl.steps[0];
             console.log('init ordersCtrl');
+            BussinessService.getBusinessesWithCategories().then(loadBusiness);
+            BikeEnabledService.getTodayBikes().then(loadTodayBikes);
         }
 
-        function displayUser() {
-            ordersCtrl.userEnable = true;
-            ordersCtrl.oderTypeEnable = false;
-            ordersCtrl.cartEnable = false;
-            ordersCtrl.bikeEnable = false;
+        function loadBusiness(response) {
+
+            function mapBusiness(business) {
+                business.selected = false;
+            }
+            _.map(response, mapBusiness);
+            ordersCtrl.businesses = response;
+
+            console.log('ordersCtrl.businesses', ordersCtrl.businesses);
         }
 
-        function displayOrders() {
-            ordersCtrl.userEnable = false;
-            ordersCtrl.oderTypeEnable = true;
-            ordersCtrl.cartEnable = false;
-            ordersCtrl.bikeEnable = false;
-        }
+        function selectBusiness(business) {
+            function iterateBussines(item) {
+                item.selected = item.id === business.id;
+            }
+            _.forEach(ordersCtrl.businesses, iterateBussines);
 
-        function displayCart() {
-            ordersCtrl.userEnable = false;
-            ordersCtrl.oderTypeEnable = false;
-            ordersCtrl.cartEnable = true;
-            ordersCtrl.bikeEnable = false;
-        }
-
-        function displayBike() {
-            ordersCtrl.userEnable = false;
-            ordersCtrl.oderTypeEnable = false;
-            ordersCtrl.cartEnable = false;
-            ordersCtrl.bikeEnable = true;
+            ordersCtrl.selectedBusiness = business;
+            ordersCtrl.businessValidate = true;
         }
 
         function loadUser(response) {
             ordersCtrl.user = response;
+            ordersCtrl.userValidate = true;
         }
 
         function searchUser(number) {
             console.log('search User', number);
-            CommonService.getUserByPhone(number).then(loadUser);
+            if (!_.isEmpty(number.toString())) {
+                CommonService.getUserByPhone(number).then(loadUser);
+            }
         }
 
-        ordersCtrl.displayUser = displayUser;
-        ordersCtrl.displayOrders = displayOrders;
-        ordersCtrl.displayCart = displayCart;
-        ordersCtrl.displayBike = displayBike;
+        function loadTodayBikes(response) {
+            var bikes = [];
+
+            function filterBikes(regBike) {
+                bikes.push(regBike.bike);
+            }
+            _.forEach(response, filterBikes);
+            ordersCtrl.todayBikes = bikes;
+        }
+
+        ordersCtrl.selectBusiness = selectBusiness;
         ordersCtrl.searchUser = searchUser;
         ordersCtrl.$onInit = $onInit;
     }

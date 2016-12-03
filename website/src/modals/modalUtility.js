@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -31,7 +31,7 @@
                 backdrop: 'static',
                 keyboard: false,
                 resolve: {
-                    MESSAGE: function() {
+                    MESSAGE: function () {
                         var updatedMessageArray = messageArray;
                         if (!_.isNull(messageArray) && !_.isArray(messageArray)) {
                             updatedMessageArray = [{
@@ -40,20 +40,20 @@
                         }
                         return updatedMessageArray;
                     },
-                    BUTTON_TEXT: function() {
+                    BUTTON_TEXT: function () {
                         var updatedButtonArrayText = buttonArraryText;
                         if (!_.isNull(buttonArraryText) && !_.isArray(buttonArraryText)) {
                             updatedButtonArrayText = [{
                                 text: buttonArraryText,
-                                class: 'btn btn-default green-btn'
+                                class: 'btn btn-default btn-success btn-all-width'
                             }];
                         }
                         return updatedButtonArrayText;
                     },
-                    TITLE: function() {
+                    TITLE: function () {
                         return title;
                     },
-                    TITLE_ICON: function() {
+                    TITLE_ICON: function () {
                         return tileIcon;
                     }
                 }
@@ -93,7 +93,33 @@
          */
         function openSaveCompleteModal() {
             var msg = 'Los Datos se guardaron correctamente';
-            return openMessage(msg, 'OKAY', 'Guardar');
+            return openMessage(msg, [
+                {
+                    text: 'Aceptar',
+                    class: 'btn btn-default btn-success col-xs-12'
+                }
+            ], msg);
+        }
+
+        /**
+         * @function openSaveCompleteModal
+         * @memberof ModalUtility
+         * @author Arturo Aguilar
+         * @desc Save complete message.
+         * @returns {Object} The message modal.
+         */
+        function openAskEnableBikeModal(placa, key) {
+            var msg = 'Usted desea habilitar la motocicleta ' + placa;
+            return openMessage(msg, [
+                {
+                    text: key,
+                    class: 'btn btn-default btn-success col-xs-6'
+                },
+                {
+                    text: 'Cancelar',
+                    class: 'btn btn-default btn-Error col-xs-6'
+                }
+            ], msg);
         }
 
         function openGenericError() {
@@ -112,7 +138,8 @@
             openMessage: openMessage,
             openExpiredSessionModal: openExpiredSessionModal,
             openNoCatalogsModal: openNoCatalogsModal,
-            openSaveCompleteModal: openSaveCompleteModal
+            openSaveCompleteModal: openSaveCompleteModal,
+            openAskEnableBikeModal: openAskEnableBikeModal
         };
     }
 

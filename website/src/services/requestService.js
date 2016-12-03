@@ -10,6 +10,9 @@
         * @returns {Object} response data
         */
         function successRequest(response) {
+            if(_.isUndefined(response.data)) {
+                return response;
+            }
             return response.data;
         }
 

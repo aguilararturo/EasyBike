@@ -44,6 +44,7 @@ namespace easyBike.Api.Controllers
                         .Include(item => item.Addresses)
                         .Include(item => item.Phones)
                         .Include(item => item.BusinesCategories)
+                        .ThenInclude(bc => bc.ProductCategory)
                        .ToList();
                 }
 

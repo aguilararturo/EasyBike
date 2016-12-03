@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    function BusinessRegistrationController(CommonService, ModalUtility) {
+    function BusinessRegistrationController(CommonService, BussinessService, ModalUtility) {
         var busRegCtrl = this;
 
         /**
@@ -30,29 +30,20 @@
                         }
                     ],
                     imageUrl: "",
-                    Categories:[]
+                    categories:[]
                 };
 
             busRegCtrl.textTitle = 'Datos Empresa';
-        }
-
-        function saveProduct() {
-            function saveSussess(response) {
-                ModalUtility.openSaveCompleteModal();
-            }
-            CommonService.saveProduct(busRegCtrl.user)
-                .then(saveSussess);
         }
 
         function saveAction() {
             function completeSave() {
                 ModalUtility.openSaveCompleteModal();
             }
-            CommonService.saveBusiness(busRegCtrl.bussines).then(completeSave);
+            BussinessService.saveBusiness(busRegCtrl.bussines).then(completeSave);
         }
 
         busRegCtrl.$onInit = $onInit;
-        busRegCtrl.saveProduct = saveProduct;
         busRegCtrl.saveAction = saveAction;
     }
     angular

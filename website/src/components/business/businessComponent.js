@@ -15,7 +15,9 @@
             controller: 'BusinessComponentController',
             controllerAs: 'businessCompCtrl',
             bindToController: {
-                business: '='
+                business: '=',
+                selectionEnabled: '@',
+                clickAction: '&?'
             },
             scope: true
         };
@@ -41,7 +43,17 @@
 
         }
 
+        function lunchAction() {
+            if (businessCompCtrl.selectionEnabled) {
+                businessCompCtrl.business.selected = true;
+            }
+            if (!_.isUndefined(businessCompCtrl.clickAction)) {
+                businessCompCtrl.clickAction(businessCompCtrl.business);
+            }
+        }
+
         businessCompCtrl.$onInit = $onInit;
+        businessCompCtrl.lunchAction = lunchAction;
     }
     angular
         .module('EasyBikeApp.Components')

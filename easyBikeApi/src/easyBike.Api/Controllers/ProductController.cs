@@ -46,6 +46,8 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
+                db.Entry(value.Business).State = EntityState.Unchanged;
+                db.Entry(value.Category).State = EntityState.Unchanged;
                 db.Products.Add(value);
                 db.SaveChanges();
             }
@@ -63,7 +65,7 @@ namespace easyBikeApi.Controllers
                 original.BarCode = value.BarCode;
                 original.Category = value.Category;
                 original.Name = value.Name;
-                original.Restorant = value.Restorant;
+                original.Business = value.Business;
                 original.ImageUrl = value.ImageUrl;
                 
                 db.Entry(original).State = EntityState.Modified;

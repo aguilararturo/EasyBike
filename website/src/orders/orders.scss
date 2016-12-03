@@ -24,3 +24,8 @@
     border-top: 9px solid crimson;
     height: 30px;
 }
+
+.order-panel {
+    overflow-y: auto;
+    max-height: 78vh;
+}

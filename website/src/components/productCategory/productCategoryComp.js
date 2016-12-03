@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -20,7 +20,9 @@
                 multipleSelection: '@',
                 enableAddNew: '@',
                 selectionChange: '&?',
-                selectedCategories: '='
+                selectedCategories: '=',
+                customCategories: '=',
+                displaySelectionError: '@'
             },
             scope: true
         };
@@ -39,7 +41,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function ProductCategoryComponetController(_, ProductCategoryService) {
+    function ProductCategoryComponetController(_, ProductCategoryService, $state) {
         var prodCatCompCtrl = this;
         /**
         * @function $onInit
@@ -49,10 +51,17 @@
         */
         function $onInit() {
             prodCatCompCtrl.hasAction = !_.isUndefined(prodCatCompCtrl.clickAction);
-            ProductCategoryService.getDefaultProductCategory().then(loadCategories);
+            if (_.isUndefined(prodCatCompCtrl.customCategories)) {
+                ProductCategoryService.getDefaultProductCategory().then(loadCategories);
+            } else {
+                prodCatCompCtrl.categories = prodCatCompCtrl.customCategories;
+            }
             prodCatCompCtrl.multipleSelection = !_.isUndefined(prodCatCompCtrl.multipleSelection);
             prodCatCompCtrl.enableAddNew = !_.isUndefined(prodCatCompCtrl.enableAddNew);
+
+            validateCategories();
         }
+
 
         function loadCategories(response) {
             prodCatCompCtrl.categories = response;
@@ -61,10 +70,16 @@
 
         function setSelectCategories(selected) {
             prodCatCompCtrl.categories = _.mapValues(prodCatCompCtrl.categories,
-                function (category) {
+                function(category) {
                     category.selected = selected;
                     return category;
                 });
+        }
+
+        function validateCategories() {
+            if (prodCatCompCtrl.displaySelectionError) {
+                prodCatCompCtrl.displayError = _.isEmpty(_.find(prodCatCompCtrl.categories, function(o) { return o.selected; }));
+            }
         }
 
         function clickProduct() {
@@ -79,15 +94,30 @@
             } else {
                 category.selected = !category.selected;
             }
-            prodCatCompCtrl.selectedCategories = _.filter(prodCatCompCtrl.categories, function (cat) { return cat.selected; });
-            if (!_.isUndefined(prodCatCompCtrl.selectionChange)) {
-                prodCatCompCtrl.selectionChange(prodCatCompCtrl.selectedCategories);
+            if (!_.isUndefined(prodCatCompCtrl.selectedCategories)) {
+                prodCatCompCtrl.selectedCategories = _.filter(prodCatCompCtrl.categories, function(cat) {
+                    return cat.selected;
+                });
             }
+            if (!_.isUndefined(prodCatCompCtrl.selectionChange)) {
+                if (prodCatCompCtrl.multipleSelection) {
+                    prodCatCompCtrl.selectionChange(prodCatCompCtrl.selectedCategories);
+                } else {
+                    prodCatCompCtrl.selectionChange(category);
+                }
+            }
+
+            validateCategories();
+        }
+
+        function addNewCategory() {
+            $state.go('new-productCategory');
         }
 
         prodCatCompCtrl.clickProduct = clickProduct;
         prodCatCompCtrl.$onInit = $onInit;
         prodCatCompCtrl.selectTab = selectTab;
+        prodCatCompCtrl.addNewCategory = addNewCategory;
     }
     angular
         .module('EasyBikeApp.Components')

@@ -2,7 +2,7 @@
     'use strict';
 
 
-    function BusinessController(CommonService) {
+    function BusinessController(BussinessService) {
         var busCtrl = this;
 
         /**
@@ -12,7 +12,7 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            CommonService.getBusinesses().then(loadBusiness);
+            BussinessService.getBusinesses().then(loadBusiness);
         }
 
         function loadBusiness(response) {
