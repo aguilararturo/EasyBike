@@ -15,7 +15,9 @@
             controller: 'AddressComponentController',
             controllerAs: 'addressCompCtrl',
             bindToController: {
-                addresses: '='
+                addresses: '=',
+                selectionChange: '&?',
+                enableSelection: '='
             },
             scope: true
         };
@@ -34,7 +36,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function AddressComponentController(_) {
+    function AddressComponentController(_, UtilityService) {
         var addressCompCtrl = this;
 
         function $onInit() {
@@ -42,6 +44,8 @@
             if (_.isEmpty(addressCompCtrl.addresses)) {
                 addAddress(addressCompCtrl.newAdress);
             }
+
+            //addressCompCtrl.enableSelection = !_.isUndefined(addressCompCtrl.selectionChange);
         }
 
         function initDummyAdress() {
@@ -49,7 +53,8 @@
                 id: '',
                 location: '',
                 date: '',
-                direction: ''
+                direction: '',
+                displayMap: false
             };
         }
 
@@ -68,9 +73,23 @@
             }
         }
 
+        function showMap(item) {
+            item.displayMap = !item.displayMap;
+        }
+
+        function checkAddress(item) {
+            UtilityService.unSelected(addressCompCtrl.addresses);
+            item.selected = true;
+            if (!_.isUndefined(addressCompCtrl.selectionChange)) {
+                addressCompCtrl.selectionChange();
+            }
+        }
+
         addressCompCtrl.$onInit = $onInit;
         addressCompCtrl.addAddress = addAddress;
         addressCompCtrl.removeAddress = removeAddress;
+        addressCompCtrl.showMap = showMap;
+        addressCompCtrl.checkAddress = checkAddress;
     }
     angular
         .module('EasyBikeApp.Components')

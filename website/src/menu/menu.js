@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -30,7 +30,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function MenuController( CommonService) {
+    function MenuController(CommonService, _) {
         var menuCtrl = this;
         menuCtrl.menuItems = {};
         console.log('MenuController');
@@ -45,19 +45,31 @@
          */
         function $onInit() {
             menuCtrl.menuItems = {};
+            menuCtrl.isopen = false;
             console.log('init');
             CommonService.getMenu().then(loadMenuItems);
         }
 
+        function mapMenus(menu) {
+            menu.selected = false;
+            return menu;
+        }
+
         function loadMenuItems(response) {
-            menuCtrl.menuItems = response;
+            menuCtrl.menuItems = _.map(response, mapMenus);
+        }
+
+        function selectMenu(menu) {
+            _.forEach(menuCtrl.menuItems, mapMenus);
+            menu.selected = true;
         }
 
         menuCtrl.$onInit = $onInit;
+        menuCtrl.selectMenu = selectMenu;
     }
     angular
         .module('EasyBikeApp.Menu')
         .controller('MenuController', MenuController)
         .directive('menuBar', menuBar);
-        console.log('menuDirective');
+    console.log('menuDirective');
 })();

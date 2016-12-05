@@ -10,7 +10,7 @@ namespace easyBike.DataModel.DataClasess
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public Client Client{ get; set; }
-        public List<OrderProduct> Products { get; set; }
+        public List<OrderProduct> OrderProducts { get; set; }
         public Address DeliveryAddress { get; set; }
     }
 }

@@ -18,7 +18,9 @@
                 name: '@',
                 add: '&?',
                 edit: '&?',
-                remove: '&?'
+                remove: '&?',
+                show: '&?',
+                isDisplayed: '='
             },
             scope: true
         };
@@ -42,8 +44,7 @@
             lbCtrl.displayAdd = !_.isUndefined(lbCtrl.add);
             lbCtrl.displayRemove = !_.isUndefined(lbCtrl.remove);
             lbCtrl.displayEdit = !_.isUndefined(lbCtrl.edit);
-
-            console.log('listButtons', lbCtrl.name);
+            lbCtrl.displayShow = !_.isUndefined(lbCtrl.show);
         }
 
         lbCtrl.$onInit = $onInit;

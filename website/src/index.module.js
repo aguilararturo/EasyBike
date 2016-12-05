@@ -9,7 +9,6 @@
             'ngMap',
             'ui.router',
             'ui.bootstrap',
-            'mgo-angular-wizard',
             'EasyBikeApp.Templates',
             'vcRecaptcha',
             'EasyBikeApp.Libraries',

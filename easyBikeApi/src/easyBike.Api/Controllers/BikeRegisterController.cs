@@ -38,7 +38,7 @@ namespace easyBikeApi.Controllers
                     .Where(b => b.Date.Date == DateTime.Today && b.Active)
                    .Include(b => b.Bike)
                    .ThenInclude(b => b.Driver)
-                    .OrderBy(item => item.Id)
+                    .OrderByDescending(item => item.Date)                    
                     .ToList();
 
                 return Data;

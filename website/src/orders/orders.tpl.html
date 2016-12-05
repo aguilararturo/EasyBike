@@ -1,9 +1,9 @@
 <div class="simple-page">
-	<div class="row col-xs-12 small-top-padding">
+	<div class="row col-xs-12 small-h-padding">
 		<step-component steps="ordersCtrl.steps" selected-step="ordersCtrl.selectedStep"></step-component>
 	</div>
 
-	<div class="col-xs-12 order-panel small-top-padding">
+	<div class="col-xs-12 order-panel">
 		<div class="row" ng-if="ordersCtrl.steps[0].number == ordersCtrl.selectedStep.number">
 			<business-component business="item" selection-enabled="true" click-action="ordersCtrl.selectBusiness(item)" class="col-sm-6 col-md-4 col-lg-3 item-top-padding"
 				ng-repeat="item in ordersCtrl.businesses"></business-component>
@@ -15,25 +15,29 @@
 					<input type="number" class="form-control" placeholder="Ingrese Telefono a buscar" ng-model="ordersCtrl.number" ng-blur="ordersCtrl.searchUser(ordersCtrl.number)">
 				</div>
 			</div>
-			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle"></user-component>
+			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle" selection-address-change="ordersCtrl.selectAddressChange()"></user-component>
 		</div>
 		<div class="row col-xs-12" ng-if="ordersCtrl.steps[2].number == ordersCtrl.selectedStep.number">
-			<div class="col-md-4">
+			<div class="col-md-4 no-width-padding">
 				<legend>Carrito</legend>
-				<order-detail></order-detail>
+				<order-detail order-products="ordersCtrl.order.orderProducts"></order-detail>
 			</div>
-			<div class="col-md-8">
-				<legend>Productos {{ordersCtrl.selectedBusiness.name}}</legend>
+			<div class="col-md-8" ng-if="!ordersCtrl.showAddProductOrder">
 				<product-category-component custom-categories="ordersCtrl.selectedBusiness.categories" ng-if="ordersCtrl.businessValidate"
-					selection-change="ordersCtrl.selectedCategoryChange(category)"></product-category-component>
+					selection-change="ordersCtrl.selectedCategoryChange(category)" display-selection-error="true"></product-category-component>
 				<div class="alert alert-danger" role="alert" ng-if="!ordersCtrl.businessValidate">
 					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 					<span class="sr-only">Error:</span> Seleccione una tipo de orden
 				</div>
-				<div class="col-xs-12">
-					<product-component product="item" click-action="ordersCtrl.selectCategory(item)" ng-repeat="item in ordersCtrl.categoryProducts">
+				<div class="col-xs-12 no-width-padding">
+					<legend>Lista de {{ordersCtrl.selectedCategory.name}}</legend>
+					<product-component product="item" click-action="ordersCtrl.selectProduct(item)" ng-repeat="item in ordersCtrl.categoryProducts">
 					</product-component>
 				</div>
+			</div>
+			<div class="col-md-8" ng-if="ordersCtrl.showAddProductOrder">
+				<add-order-detail order-product="ordersCtrl.newOrderProduct" acept-action="ordersCtrl.addCartProduct(ordersCtrl.newOrderProduct)"
+					cancel-action="ordersCtrl.cancelCartProduct()"></add-order-detail>
 			</div>
 		</div>
 		<div class="row" ng-if="ordersCtrl.steps[3].number == ordersCtrl.selectedStep.number">

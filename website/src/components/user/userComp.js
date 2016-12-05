@@ -17,7 +17,8 @@
             bindToController: {
                 user: '=',
                 textTitle: '=',
-                saveAction: '&?'
+                saveAction: '&?',
+                selectionAddressChange: '&?'
             },
             scope: true
         };
@@ -47,6 +48,7 @@
         function $onInit() {
             userCompCtrl.displaySave = !_.isUndefined(userCompCtrl.saveAction);
             userCompCtrl.searchMode = !_.isUndefined(userCompCtrl.searchAction);
+            userCompCtrl.selectionAddressEnabled = !_.isUndefined(userCompCtrl.selectionAddressChange);
             initDummyPhone();
             initDummyAdress();
             console.log('userComp');

@@ -5,15 +5,17 @@
                 <th>Codigo</th>
                 <th>Nombre</th>
                 <th>Cantidad</th>
-                <th>Remover</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="op in userCtrl.OrderProducts">
+            <tr ng-repeat="op in orderDtlCtr.orderProducts">
                 <td>{{op.product.codSubfix}}</td>
                 <td>{{op.product.name}}</td>
                 <td>{{op.quantity}}</td>
-                <td>button</td>
+                <td>
+                    <button class="btn btn-error" ng-click="ordersCtrl.removeCartProduct(op)"><a class="fa fa-minus"></a></button>
+                    </td>
             </tr>
         </tbody>
     </table>

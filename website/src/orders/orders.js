@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
     /**
      * @function FeaturedBrandsController
@@ -14,7 +14,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _) {
         var ordersCtrl = this;
 
         /**
@@ -40,6 +40,8 @@
             ordersCtrl.userValidate = false;
             ordersCtrl.categoryProducts = [];
 
+            ordersCtrl.showAddProductOrder = false;
+
             ordersCtrl.steps = [
                 {
                     key: 'home',
@@ -64,7 +66,7 @@
 
             ];
 
-            ordersCtrl.userTitle = "Datos Usuario";
+            ordersCtrl.userTitle = 'Datos Usuario';
             ordersCtrl.number = '';
 
             ordersCtrl.steps = [
@@ -94,10 +96,26 @@
                 }
             ];
 
+            ordersCtrl.order = {
+                id: '',
+                client: ordersCtrl.client,
+                orderProducts: [],
+                deliveryAddress: {}
+            };
+
             ordersCtrl.selectedStep = ordersCtrl.steps[0];
             console.log('init ordersCtrl');
             BussinessService.getBusinessesWithCategories().then(loadBusiness);
             BikeEnabledService.getTodayBikes().then(loadTodayBikes);
+            initializeNewOrderProduct();
+        }
+
+        function initializeNewOrderProduct() {
+            ordersCtrl.newOrderProduct = {
+                id: '',
+                quantity: 1,
+                product: {}
+            };
         }
 
         function getSelectedCategory() {
@@ -118,7 +136,6 @@
         }
 
         function loadBusiness(response) {
-
             function mapBusiness(business) {
                 business.selected = false;
             }
@@ -160,10 +177,47 @@
             ordersCtrl.todayBikes = bikes;
         }
 
+        function selectProduct(product) {
+            ordersCtrl.showAddProductOrder = true;
+            ordersCtrl.newOrderProduct.product = product;
+        }
+
+        function addCartProduct(orderProduct) {
+            function searchProd(prod) {
+                return prod.product.id === orderProduct.product.id;
+            }
+
+            var product = _.find(ordersCtrl.order.orderProducts, searchProd);
+            if (_.isUndefined(product)) {
+                ordersCtrl.order.orderProducts.push(orderProduct);
+            } else {
+                product.quantity += orderProduct.quantity;
+            }
+            ordersCtrl.showAddProductOrder = false;
+            initializeNewOrderProduct();
+        }
+
+        function cancelCartProduct() {
+            ordersCtrl.showAddProductOrder = false;
+        }
+
+        function removeCartProduct(orderProduct) {
+            _.pull(ordersCtrl.order.orderProducts, orderProduct);
+        }
+
+        function selectAddressChange() {
+            ordersCtrl.order.deliveryAddress = UtilityService.getSelected(ordersCtrl.user.addresses);
+        }
+
         ordersCtrl.$onInit = $onInit;
         ordersCtrl.selectBusiness = selectBusiness;
         ordersCtrl.searchUser = searchUser;
         ordersCtrl.selectedCategoryChange = selectedCategoryChange;
+        ordersCtrl.selectProduct = selectProduct;
+        ordersCtrl.addCartProduct = addCartProduct;
+        ordersCtrl.cancelCartProduct = cancelCartProduct;
+        ordersCtrl.removeCartProduct = removeCartProduct;
+        ordersCtrl.selectAddressChange = selectAddressChange;
     }
     angular
         .module('EasyBikeApp.orders')

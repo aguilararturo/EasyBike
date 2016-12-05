@@ -28,14 +28,7 @@
 
         }
 
-        function removeProduct(orderDetail) {
-            _.remove(phoneCompCtrl.orderProducts, function removeOrderDetail(od) {
-                return od.product.codSubfix === orderDetail.product.codSubfix;
-            });
-        }
-
-        phoneCompCtrl.$onInit = $onInit;
-        phoneCompCtrl.removeProduct = removeProduct;
+        orderDtlCtr.$onInit = $onInit;
     }
     angular
         .module('EasyBikeApp.Components')
