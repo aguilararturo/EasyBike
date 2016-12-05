@@ -1,0 +1,20 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Remover</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="op in userCtrl.OrderProducts">
+                <td>{{op.product.codSubfix}}</td>
+                <td>{{op.product.name}}</td>
+                <td>{{op.quantity}}</td>
+                <td>button</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

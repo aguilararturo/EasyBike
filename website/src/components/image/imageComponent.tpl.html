@@ -1,6 +1,6 @@
 <div class="main-edit-image-container ">
-    <label class="control-label col-xs-12 no-width-padding">Imagen</label>
-    <div class="col-xs-12 no-width-padding form-inline">
+    <label class="control-label col-xs-12 no-width-padding" ng-show="imgCompCtrl.displayImage">Imagen</label>
+    <div class="col-xs-12 no-width-padding form-inline" ng-show="imgCompCtrl.displayImage">
         <div class="form-group ">
             <img data-ng-src="{{imgCompCtrl.imageUrl}}" alt="" class="img-thumbnail single-image ">
         </div>

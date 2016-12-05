@@ -8,7 +8,7 @@
 			<business-component business="item" selection-enabled="true" click-action="ordersCtrl.selectBusiness(item)" class="col-sm-6 col-md-4 col-lg-3 item-top-padding"
 				ng-repeat="item in ordersCtrl.businesses"></business-component>
 		</div>
-		<div class="row" ng-if="ordersCtrl.steps[1].number == ordersCtrl.selectedStep.number">
+		<div class="row col-xs-12" ng-if="ordersCtrl.steps[1].number == ordersCtrl.selectedStep.number">
 			<div class="form-group col-sx-12">
 				<legend class="control-label">Buscar por telefono</legend>
 				<div class="col-xs-12 no-width-padding">
@@ -18,10 +18,22 @@
 			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle"></user-component>
 		</div>
 		<div class="row col-xs-12" ng-if="ordersCtrl.steps[2].number == ordersCtrl.selectedStep.number">
-			<product-category-component custom-categories="ordersCtrl.selectedBusiness.categories" ng-if="ordersCtrl.businessValidate"></product-category-component>
-			<div class="alert alert-danger" role="alert" ng-if="!ordersCtrl.businessValidate">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only">Error:</span> Seleccione una tipo de orden
+			<div class="col-md-4">
+				<legend>Carrito</legend>
+				<order-detail></order-detail>
+			</div>
+			<div class="col-md-8">
+				<legend>Productos {{ordersCtrl.selectedBusiness.name}}</legend>
+				<product-category-component custom-categories="ordersCtrl.selectedBusiness.categories" ng-if="ordersCtrl.businessValidate"
+					selection-change="ordersCtrl.selectedCategoryChange(category)"></product-category-component>
+				<div class="alert alert-danger" role="alert" ng-if="!ordersCtrl.businessValidate">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only">Error:</span> Seleccione una tipo de orden
+				</div>
+				<div class="col-xs-12">
+					<product-component product="item" click-action="ordersCtrl.selectCategory(item)" ng-repeat="item in ordersCtrl.categoryProducts">
+					</product-component>
+				</div>
 			</div>
 		</div>
 		<div class="row" ng-if="ordersCtrl.steps[3].number == ordersCtrl.selectedStep.number">

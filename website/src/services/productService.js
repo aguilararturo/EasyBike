@@ -18,9 +18,17 @@
                 .catch(requestService.errorLoadingScripts('Products'));
         }
 
+        function getProductsByCategory(categoryId, businessId) {
+            var getByCatUrl = productURL + '/GetByCategory?businessId=' + businessId + '&categoryId=' + categoryId;
+            return $http.get(getByCatUrl)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getProductsByCategory'));
+        }
+
         return {
             saveProduct: saveProduct,
-            getProducts: getProducts
+            getProducts: getProducts,
+            getProductsByCategory: getProductsByCategory
         };
     }
 

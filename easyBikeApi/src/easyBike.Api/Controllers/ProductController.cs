@@ -40,6 +40,18 @@ namespace easyBikeApi.Controllers
             }
         }
 
+        // GET api/values/5
+        [HttpGet("GetByCategory")]
+        public ICollection< Product> GetByCategory([FromQuery] int businessId, [FromQuery] int categoryId)
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var Data = db.Products
+                    .Where(item => item.Business.Id == businessId && item.Category.Id == categoryId);
+                return Data.ToList();
+            }
+        }
+
         // POST api/values
         [HttpPost]
         public void Post([FromBody]Product value)

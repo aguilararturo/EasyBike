@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     /**
      * @function FeaturedBrandsController
@@ -14,7 +14,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService) {
         var ordersCtrl = this;
 
         /**
@@ -38,6 +38,7 @@
             ordersCtrl.selectedBusiness = {};
             ordersCtrl.businessValidate = false;
             ordersCtrl.userValidate = false;
+            ordersCtrl.categoryProducts = [];
 
             ordersCtrl.steps = [
                 {
@@ -99,6 +100,23 @@
             BikeEnabledService.getTodayBikes().then(loadTodayBikes);
         }
 
+        function getSelectedCategory() {
+            function searchSelectedCat(cat) {
+                return cat.selected === true;
+            }
+            return _.find(ordersCtrl.selectedBusiness.categories, searchSelectedCat);
+        }
+
+        function selectedCategoryChange(category) {
+            ordersCtrl.selectedCategory = getSelectedCategory();
+            ProductService.getProductsByCategory(ordersCtrl.selectedCategory.id, ordersCtrl.selectedBusiness.id)
+                .then(loadProducts);
+        }
+
+        function loadProducts(response) {
+            ordersCtrl.categoryProducts = response;
+        }
+
         function loadBusiness(response) {
 
             function mapBusiness(business) {
@@ -142,9 +160,10 @@
             ordersCtrl.todayBikes = bikes;
         }
 
+        ordersCtrl.$onInit = $onInit;
         ordersCtrl.selectBusiness = selectBusiness;
         ordersCtrl.searchUser = searchUser;
-        ordersCtrl.$onInit = $onInit;
+        ordersCtrl.selectedCategoryChange = selectedCategoryChange;
     }
     angular
         .module('EasyBikeApp.orders')
