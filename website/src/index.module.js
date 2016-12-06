@@ -24,5 +24,4 @@
             'EasyBikeApp.Business',
             'EasyBikeApp.Utils'
         ]);
-    console.log('indexmodule');
 })();

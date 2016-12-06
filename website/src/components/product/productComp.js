@@ -46,8 +46,6 @@
         */
         function $onInit() {
             prodCompCtrl.hasAction = !_.isUndefined(prodCompCtrl.clickAction);
-
-            console.log('prodCompCtrl');
         }
 
         function clickProduct() {

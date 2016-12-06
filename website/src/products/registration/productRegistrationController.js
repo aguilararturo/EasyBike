@@ -1,6 +1,6 @@
-(function() {
+(function () {
     'use strict';
-    function ProductRegistrationController(ProductService, ModalUtility, BussinessService) {
+    function ProductRegistrationController(ProductService, ModalUtility, BussinessService, _) {
         var prodRegCtrl = this;
 
         /**
@@ -10,25 +10,24 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            prodRegCtrl.product =
-                {
-                    id: 0,
-                    codSubfix: '',
-                    name: '',
-                    pictureUrl: '',
-                    brand: '',
-                    barCode: '',
-                    category: {
+            prodRegCtrl.product = {
+                id: 0,
+                codSubfix: '',
+                name: '',
+                pictureUrl: '',
+                brand: '',
+                barCode: '',
+                category: {
 
-                    },
-                    business: {
-                        categories: []
-                    },
-                    phones: [
+                },
+                business: {
+                    categories: []
+                },
+                phones: [
 
-                    ],
-                    imageUrl: ''
-                };
+                ],
+                imageUrl: ''
+            };
             prodRegCtrl.categoryValidate = false;
             prodRegCtrl.businessValidate = false;
             prodRegCtrl.displayProductSelection = false;
@@ -37,7 +36,7 @@
 
         function selectCategory(category) {
             prodRegCtrl.product.category =
-                _.find(prodRegCtrl.product.business.categories, function(o) {
+                _.find(prodRegCtrl.product.business.categories, function (o) {
                     return o.selected;
                 });
             prodRegCtrl.categoryValidate = true;

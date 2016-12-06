@@ -1,8 +1,7 @@
 <div class="col-xs-6 col-md-3 thumbnail">
     <a href="" class="" ng-click="prodCompCtrl.clickProduct()">
-        <img class="product-image thumbnail" src="{{prodCompCtrl.product.imageUrl}}">
-        <span class="col-xs-12 text-center" ng-bind="prodCompCtrl.product.codSubfix"></span>
-        <span class="col-xs-12 text-center" ng-bind="prodCompCtrl.product.name"></span>
-        <span class="col-xs-12 text-center" ng-bind="prodCompCtrl.product.description"></span>
+        <img class="product-image" src="{{prodCompCtrl.product.imageUrl}}">
+        <span class="col-xs-12 text-center product-title" ng-bind="prodCompCtrl.product.name"></span>
+        <span class="col-xs-12 text-center product-code" ng-bind="prodCompCtrl.product.codSubfix"></span>
     </a>
 </div>

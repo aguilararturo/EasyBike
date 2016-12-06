@@ -17,8 +17,6 @@
 
         function loadBusiness(response) {
             busCtrl.businesses = response;
-
-            console.log('busCtrl.businesses', busCtrl.businesses);
         }
 
 

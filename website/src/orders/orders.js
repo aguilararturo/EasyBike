@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     /**
      * @function FeaturedBrandsController
@@ -104,7 +104,6 @@
             };
 
             ordersCtrl.selectedStep = ordersCtrl.steps[0];
-            console.log('init ordersCtrl');
             BussinessService.getBusinessesWithCategories().then(loadBusiness);
             BikeEnabledService.getTodayBikes().then(loadTodayBikes);
             initializeNewOrderProduct();
@@ -141,8 +140,6 @@
             }
             _.map(response, mapBusiness);
             ordersCtrl.businesses = response;
-
-            console.log('ordersCtrl.businesses', ordersCtrl.businesses);
         }
 
         function selectBusiness(business) {

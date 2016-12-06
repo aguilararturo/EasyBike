@@ -13,9 +13,9 @@
                 <td>{{op.product.codSubfix}}</td>
                 <td>{{op.product.name}}</td>
                 <td>{{op.quantity}}</td>
-                <td>
-                    <button class="btn btn-error" ng-click="ordersCtrl.removeCartProduct(op)"><a class="fa fa-minus"></a></button>
-                    </td>
+                <td class="div-btn no-width-padding" ng-click="ordersCtrl.removeCartProduct(op)">
+                        <i class="fa fa-times red-button fa-2x"></i>
+                </td>
             </tr>
         </tbody>
     </table>

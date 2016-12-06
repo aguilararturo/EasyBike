@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     var easyBikeApp = angular.module('EasyBikeApp');
 
@@ -8,7 +8,6 @@
      * @author Purna Annapureddy
      * @desc Website Level Runtime Configurations
      */
-    easyBikeApp.run(function() {
-        console.log('run');
+    easyBikeApp.run(function () {
     });
 })();

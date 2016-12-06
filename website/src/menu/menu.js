@@ -33,7 +33,6 @@
     function MenuController(CommonService, _) {
         var menuCtrl = this;
         menuCtrl.menuItems = {};
-        console.log('MenuController');
         CommonService.getMenu().then(loadMenuItems);
 
 
@@ -46,7 +45,6 @@
         function $onInit() {
             menuCtrl.menuItems = {};
             menuCtrl.isopen = false;
-            console.log('init');
             CommonService.getMenu().then(loadMenuItems);
         }
 
@@ -71,5 +69,4 @@
         .module('EasyBikeApp.Menu')
         .controller('MenuController', MenuController)
         .directive('menuBar', menuBar);
-    console.log('menuDirective');
 })();

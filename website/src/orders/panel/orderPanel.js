@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -48,11 +48,11 @@
             console.log('init order panel');
         }
 
-        function clickStep(){
+        function clickStep() {
             ordersCtrl.type.selected = true;
         }
 
-        ordersCtrl.clickStep=clickStep;
+        ordersCtrl.clickStep = clickStep;
         ordersCtrl.$onInit = $onInit;
     }
     angular

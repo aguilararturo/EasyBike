@@ -36,8 +36,6 @@
         */
         function $onInit() {
             $element.ready(linkInput);
-
-            console.log('imgCompCtrl', imgCompCtrl.name);
             imgCompCtrl.displayImage = true;
             imgCompCtrl.displayImageEdition = false;
         }
@@ -96,9 +94,6 @@
                 imgCompCtrl.imageUrl = image;
                 imgCompCtrl.displayImage = true;
             });
-
-
-            console.log('cutImage');
         }
 
         imgCompCtrl.$onInit = $onInit;

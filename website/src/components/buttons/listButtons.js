@@ -39,8 +39,6 @@
         * @desc Initializes controller
         */
         function $onInit() {
-            console.log(_.isUndefined(lbCtrl.add), _.isUndefined(lbCtrl.edit), _.isUndefined(lbCtrl.remove));
-
             lbCtrl.displayAdd = !_.isUndefined(lbCtrl.add);
             lbCtrl.displayRemove = !_.isUndefined(lbCtrl.remove);
             lbCtrl.displayEdit = !_.isUndefined(lbCtrl.edit);

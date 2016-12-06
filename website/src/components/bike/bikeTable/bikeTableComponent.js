@@ -48,8 +48,7 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            bikeTblCompCtrl.text = "Datos Motociclista";
-            console.log('bikeTblCompCtrl');
+            bikeTblCompCtrl.text = 'Datos Motociclista';
             _.map(bikeTblCompCtrl.bikes, setSelection);
         }
 
@@ -59,8 +58,7 @@
             modResult.result.then(closemod);
 
             function closemod(option) {
-                if (option == okeyKey) {
-
+                if (option === okeyKey) {
                     var regBike = {
                         id: 0,
                         bike: bike,
@@ -88,7 +86,7 @@
             modResult.result.then(closemod);
 
             function closemod(option) {
-                if (option == okeyKey) {
+                if (option === okeyKey) {
                     BikeEnabledService.disableBikeRegister(bike).then(
                         function completeSave() {
                             ModalUtility.openSaveCompleteModal();

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     /**
      * Create routes for info pages

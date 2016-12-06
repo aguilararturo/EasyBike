@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -51,7 +51,6 @@
             userCompCtrl.selectionAddressEnabled = !_.isUndefined(userCompCtrl.selectionAddressChange);
             initDummyPhone();
             initDummyAdress();
-            console.log('userComp');
         }
 
         function initDummyPhone() {

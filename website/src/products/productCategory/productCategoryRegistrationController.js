@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    function ProductCategoryRegistrationController(CommonService, ModalUtility) {
+    function ProductCategoryRegistrationController() {
         var prodCatRegCtrl = this;
 
         /**

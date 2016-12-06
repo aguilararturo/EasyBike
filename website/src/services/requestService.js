@@ -1,7 +1,7 @@
-(function () {
+(function() {
     'use strict';
 
-    function requestService($log, $q) {
+    function requestService($log, $q, _) {
         /**
         * @function successfullRequest
         * @author Arturo Aguilar
@@ -10,7 +10,7 @@
         * @returns {Object} response data
         */
         function successRequest(response) {
-            if(_.isUndefined(response.data)) {
+            if (_.isUndefined(response.data)) {
                 return response;
             }
             return response.data;

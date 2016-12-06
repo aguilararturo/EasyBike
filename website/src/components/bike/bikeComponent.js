@@ -35,7 +35,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function BikeComponetController(_) {
+    function BikeComponetController() {
         var bikeCompCtrl = this;
         /**
         * @function $onInit
@@ -44,8 +44,7 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            bikeCompCtrl.text = "Datos Motociclista";
-            console.log('bikeComp');
+            bikeCompCtrl.text = 'Datos Motociclista';
         }
 
         bikeCompCtrl.$onInit = $onInit;

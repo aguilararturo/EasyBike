@@ -9,8 +9,6 @@
         };
         $http.defaults.headers.common.Accept = 'text/plain';
         $http.defaults.headers.common['Content-Type'] = 'application/json';
-
-        console.log('CommonService');
         function getMenu() {
             /**
             * @function successfullRequest
@@ -20,7 +18,6 @@
             * @returns {Object} response data
             */
             function successfullRequest(response) {
-                console.log('response', response);
                 return response.data;
             }
             /**
@@ -36,8 +33,6 @@
                 return $q.reject(error);
             }
             var ordersURL = BASE_URL + '/menu';
-
-            console.log('url', ordersURL);
 
             return $http.get(ordersURL)
                 .then(successfullRequest)
@@ -58,7 +53,6 @@
             * @returns {Object} response data
             */
             function successfullRequest(response) {
-                console.log('response', response);
                 return response.data;
             }
             /**
@@ -74,8 +68,6 @@
                 return $q.reject(error);
             }
             var ordersURL = BASE_URL + '/client';
-
-            console.log('url', ordersURL);
 
             return $http.get(ordersURL)
                 .then(successfullRequest)
@@ -93,7 +85,6 @@
             * @returns {Object} response data
             */
             function successfullRequest(response) {
-                console.log('response', response);
                 return response.data;
             }
             /**
@@ -110,8 +101,6 @@
             }
             var getByPhoneURL = BASE_URL + '/client/GetByPhone/';
 
-            console.log('url', getByPhoneURL);
-
             return $http.get(getByPhoneURL + phoneNumber)
                 .then(successfullRequest)
                 .catch(errorLoadingScripts);
@@ -126,7 +115,6 @@
             * @returns {Object} response data
             */
             function successfullRequest(response) {
-                console.log('response', response);
                 return response.data;
             }
             /**
@@ -143,8 +131,6 @@
             }
             var getByPhoneURL = BASE_URL + '/ProductCategory';
 
-            console.log('url', getByPhoneURL);
-
             return $http.get(getByPhoneURL)
                 .then(successfullRequest)
                 .catch(errorLoadingScripts);
@@ -159,7 +145,6 @@
             * @returns {Object} response data
             */
             function successfullRequest(response) {
-                console.log('response', response);
                 return response.data;
             }
             /**
@@ -176,8 +161,6 @@
             }
             var getByPhoneURL = BASE_URL + '/Product';
 
-            console.log('url', getByPhoneURL);
-
             return $http.get(getByPhoneURL)
                 .then(successfullRequest)
                 .catch(errorLoadingScripts);
@@ -188,8 +171,7 @@
             getProductCategories: getProductCategories,
             getMenu: getMenu,
             getUser: getUser,
-            saveUser: saveUser,        
-            getProducts: getProducts,
+            saveUser: saveUser
         };
     }
 

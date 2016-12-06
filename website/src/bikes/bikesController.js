@@ -1,8 +1,8 @@
-(function() {
+(function () {
     'use strict';
 
 
-    function BikesController(BikeService, BikeEnabledService, ModalUtility) {
+    function BikesController(BikeService, BikeEnabledService) {
         var bikesCtrl = this;
 
         /**
@@ -14,7 +14,6 @@
         function $onInit() {
             bikesCtrl.bikes = [];
             bikesCtrl.todayBikes = [];
-            console.log('init bikesCtrl');
             reloadData();
         }
 
