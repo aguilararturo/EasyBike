@@ -21,7 +21,7 @@ namespace easyBike.Api.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Menus
-                    .OrderBy(item => item.Id)
+                    .OrderBy(item => item.Order)
                     .ToList();
                 return Data;
             }

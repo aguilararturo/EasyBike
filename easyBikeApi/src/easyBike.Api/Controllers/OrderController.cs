@@ -50,6 +50,20 @@ namespace easyBikeApi.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 db.Orders.Add(value);
+                if (value.Client.Id > 0)
+                {
+                    db.Entry(value.Client).State = EntityState.Modified;
+                }
+                foreach (var op in value.OrderProducts)
+                {
+                    db.Entry(op.Product).State = EntityState.Modified;
+                }
+
+                if (value.DeliveryAddress.Id > 0)
+                {
+                    db.Entry(value.DeliveryAddress).State = EntityState.Modified;
+                }
+
                 db.SaveChanges();
                 return Ok(value);
             }
@@ -91,4 +105,4 @@ namespace easyBikeApi.Controllers
         }
     }
 }
-}
+
