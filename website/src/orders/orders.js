@@ -14,7 +14,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService) {
         var ordersCtrl = this;
         var KEYS = {
             ORDER: 'Pedido',
@@ -214,7 +214,7 @@
         }
 
         function saveOrder() {
-            var orderComplete = ordersCtrl.order;
+            OrderService.saveOrder(ordersCtrl.order);
         }
 
         function selectionBikeChange() {

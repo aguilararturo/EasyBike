@@ -48,8 +48,7 @@ namespace easyBikeApi.Controllers
         public IActionResult Post([FromBody] Order value)
         {
             using (var db = new EasyBikeDataContext())
-            {
-                db.Orders.Add(value);
+            {                
                 if (value.Client.Id > 0)
                 {
                     db.Entry(value.Client).State = EntityState.Modified;
@@ -63,7 +62,7 @@ namespace easyBikeApi.Controllers
                 {
                     db.Entry(value.DeliveryAddress).State = EntityState.Modified;
                 }
-
+                db.Orders.Add(value);
                 db.SaveChanges();
                 return Ok(value);
             }

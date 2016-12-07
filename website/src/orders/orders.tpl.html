@@ -42,7 +42,7 @@
 		</div>
 		<div class="row" ng-if="ordersCtrl.steps[3].number == ordersCtrl.selectedStep.number">
 			<div class="col-xs-12 order-bottons text-right">
-				<button class="btn btn-success" ng-click="ordersCtrl.saveOrder()">Guardar Orden</button>
+				<save-buttom click-action="ordersCtrl.saveOrder()" text-title="'Guardar Orden'"></save-buttom>
 			</div>
 			<div class="col-xs-12">
 				<legend>Lita de motos habilitadas</legend>
