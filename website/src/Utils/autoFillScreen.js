@@ -5,7 +5,7 @@
             restrict: 'EA',
             link: function linkheigthAsWidth(scope, element, attrs) {
                 function applyDimensions(newValue, oldValue) {
-                    var panelsWidth =  $window.outerHeight - element.offset().top;
+                    var panelsWidth =  $window.innerHeight - (element.offset().top + 20);
                     element.css('height', panelsWidth);
                 }
 

@@ -16,6 +16,12 @@
      */
     function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _) {
         var ordersCtrl = this;
+        var KEYS = {
+            ORDER: 'Pedido',
+            TYPE_ORDER: 'Tipo de orden',
+            USER: 'Usuario',
+            BIKE: 'Moto'
+        };
 
         /**
          * @function $onInit
@@ -28,77 +34,60 @@
             ordersCtrl.oderTypeEnable = false;
             ordersCtrl.cartEnable = false;
             ordersCtrl.bikeEnable = false;
-            ordersCtrl.user = {
-                phones: [],
-                addresses: []
-            };
             ordersCtrl.businesses = {};
             ordersCtrl.selectedStep = {};
             ordersCtrl.todayBikes = [];
             ordersCtrl.selectedBusiness = {};
             ordersCtrl.businessValidate = false;
-            ordersCtrl.userValidate = false;
             ordersCtrl.categoryProducts = [];
 
             ordersCtrl.showAddProductOrder = false;
-
-            ordersCtrl.steps = [
-                {
-                    key: 'home',
-                    value: 'Orden',
-                    selected: true
-                },
-                {
-                    key: 'Usuario',
-                    value: 'Usuario',
-                    selected: false
-                },
-                {
-                    key: 'order',
-                    value: 'Pedido',
-                    selected: false
-                },
-                {
-                    key: 'bike',
-                    value: 'Moto',
-                    selected: false
-                }
-
-            ];
 
             ordersCtrl.userTitle = 'Datos Usuario';
             ordersCtrl.number = '';
 
             ordersCtrl.steps = [
                 {
-                    title: 'Tipo de orden',
+                    title: KEYS.TYPE_ORDER,
                     content: 'fa fa-home',
                     number: '1',
-                    selected: true
+                    selected: true,
+                    validated: false
                 },
                 {
-                    title: 'Usuario',
+                    title: KEYS.USER,
                     content: 'fa fa-user',
                     number: '2',
-                    selected: false
+                    selected: false,
+                    validated: false
                 },
                 {
-                    title: 'Pedido',
+                    title: KEYS.ORDER,
                     content: 'fa fa-shopping-cart',
                     number: '3',
-                    selected: false
+                    selected: false,
+                    validated: false
                 },
                 {
-                    title: 'Moto',
+                    title: KEYS.BIKE,
                     content: 'fa fa-road',
                     number: '4',
-                    selected: false
+                    selected: false,
+                    validated: false
                 }
             ];
 
             ordersCtrl.order = {
                 id: '',
-                client: ordersCtrl.client,
+                client: {
+                    id: 0,
+                    phones: [],
+                    name: '',
+                    nit: '',
+                    lastName: '',
+                    imageUrl: '',
+                    addresses: []
+                },
                 orderProducts: [],
                 deliveryAddress: {}
             };
@@ -150,11 +139,14 @@
 
             ordersCtrl.selectedBusiness = business;
             ordersCtrl.businessValidate = true;
+
+            validateStep(KEYS.TYPE_ORDER, true);
         }
 
         function loadUser(response) {
-            ordersCtrl.user = response;
-            ordersCtrl.userValidate = true;
+            ordersCtrl.order.client = response;
+
+            validateStep(KEYS.USER, true);
         }
 
         function searchUser(number) {
@@ -192,6 +184,12 @@
             }
             ordersCtrl.showAddProductOrder = false;
             initializeNewOrderProduct();
+
+            validatedOrderDetail();
+        }
+
+        function validatedOrderDetail() {
+            validateStep(KEYS.ORDER, _.size(ordersCtrl.order.orderProducts) > 0);
         }
 
         function cancelCartProduct() {
@@ -200,10 +198,32 @@
 
         function removeCartProduct(orderProduct) {
             _.pull(ordersCtrl.order.orderProducts, orderProduct);
+            validatedOrderDetail();
         }
 
         function selectAddressChange() {
-            ordersCtrl.order.deliveryAddress = UtilityService.getSelected(ordersCtrl.user.addresses);
+            ordersCtrl.order.deliveryAddress = UtilityService.getSelected(ordersCtrl.order.client.addresses);
+        }
+
+        function validateStep(key, selected) {
+            function findStep(item) {
+                return item.title === key;
+            }
+            var step = _.find(ordersCtrl.steps, findStep);
+            step.validated = selected;
+        }
+
+        function saveOrder() {
+            var orderComplete = ordersCtrl.order;
+        }
+
+        function selectionBikeChange() {
+            function findSelectedBike(bike) {
+                return bike.selected;
+            }
+            var bike = _.find(ordersCtrl.todayBikes, findSelectedBike);
+
+            validateStep(KEYS.BIKE, !_.isUndefined(bike));
         }
 
         ordersCtrl.$onInit = $onInit;
@@ -215,6 +235,8 @@
         ordersCtrl.cancelCartProduct = cancelCartProduct;
         ordersCtrl.removeCartProduct = removeCartProduct;
         ordersCtrl.selectAddressChange = selectAddressChange;
+        ordersCtrl.saveOrder = saveOrder;
+        ordersCtrl.selectionBikeChange = selectionBikeChange;
     }
     angular
         .module('EasyBikeApp.orders')

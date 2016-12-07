@@ -20,7 +20,8 @@
                 enabledOption: '@',
                 disableOption: '@',
                 actionPerforme: '&?',
-                enableSelection: '@'
+                enableSelection: '@',
+                selectionChange: '&?'
             },
             scope: true
         };
@@ -49,7 +50,7 @@
         */
         function $onInit() {
             bikeTblCompCtrl.text = 'Datos Motociclista';
-            _.map(bikeTblCompCtrl.bikes, setSelection);
+            _.map(bikeTblCompCtrl.bikes, setFalseSelection);
         }
 
         function enableBike(bike) {
@@ -103,13 +104,17 @@
             }
         }
 
-        function setSelection(element) {
+        function setFalseSelection(element) {
             element.selected = false;
         }
 
         function selection(bike) {
-            _.forEach(bikeTblCompCtrl.bikes, setSelection);
+            _.forEach(bikeTblCompCtrl.bikes, setFalseSelection);
             bike.selected = true;
+
+            if (!_.isUndefined(bikeTblCompCtrl.selectionChange)) {
+                bikeTblCompCtrl.selectionChange();
+            }
         }
 
         bikeTblCompCtrl.$onInit = $onInit;

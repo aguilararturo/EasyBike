@@ -3,7 +3,7 @@
 		<step-component steps="ordersCtrl.steps" selected-step="ordersCtrl.selectedStep"></step-component>
 	</div>
 
-	<div class="col-xs-12 order-panel">
+	<div class="col-xs-12 order-panel" auto-fill-screen>
 		<div class="row" ng-if="ordersCtrl.steps[0].number == ordersCtrl.selectedStep.number">
 			<business-component business="item" selection-enabled="true" click-action="ordersCtrl.selectBusiness(item)" class="col-sm-6 col-md-4 col-lg-3 item-top-padding"
 				ng-repeat="item in ordersCtrl.businesses"></business-component>
@@ -15,7 +15,7 @@
 					<input type="number" class="form-control" placeholder="Ingrese Telefono a buscar" ng-model="ordersCtrl.number" ng-blur="ordersCtrl.searchUser(ordersCtrl.number)">
 				</div>
 			</div>
-			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.user" text-title="ordersCtrl.userTitle" selection-address-change="ordersCtrl.selectAddressChange()"></user-component>
+			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.order.client" text-title="ordersCtrl.userTitle" selection-address-change="ordersCtrl.selectAddressChange()"></user-component>
 		</div>
 		<div class="row col-xs-12" ng-if="ordersCtrl.steps[2].number == ordersCtrl.selectedStep.number">
 			<div class="col-md-4 no-width-padding">
@@ -41,8 +41,12 @@
 			</div>
 		</div>
 		<div class="row" ng-if="ordersCtrl.steps[3].number == ordersCtrl.selectedStep.number">
+			<div class="col-xs-12 order-bottons">
+				<button class="btn btn-success" ng-click="ordersCtrl.saveOrder()">Guardar Orden</button>
+			</div>
 			<div class="col-xs-12">
-				<bike-table-component bikes="ordersCtrl.todayBikes" enable-selection="true"></bike-table-component>
+				<legend>Lita de motos habilitadas</legend>
+				<bike-table-component bikes="ordersCtrl.todayBikes" enable-selection="true" selection-change="ordersCtrl.selectionBikeChange()"></bike-table-component>
 			</div>
 		</div>
 	</div>
