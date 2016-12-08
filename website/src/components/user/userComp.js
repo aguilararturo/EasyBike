@@ -18,7 +18,8 @@
                 user: '=',
                 textTitle: '=',
                 saveAction: '&?',
-                selectionAddressChange: '&?'
+                selectionAddressChange: '&?',
+                saveText: '<'
             },
             scope: true
         };
@@ -51,6 +52,9 @@
             userCompCtrl.selectionAddressEnabled = !_.isUndefined(userCompCtrl.selectionAddressChange);
             initDummyPhone();
             initDummyAdress();
+            if (_.isEmpty(userCompCtrl.saveText)) {
+                userCompCtrl.saveText = 'Guardar Cliente';
+            }
         }
 
         function initDummyPhone() {

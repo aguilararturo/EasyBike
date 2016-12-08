@@ -1,21 +1,22 @@
 (function () {
     'use strict';
 
-    function saveButtom() {
+    function saveButton() {
         return {
             restrict: 'E',
             templateUrl: 'components/saveButton/saveButton.tpl.html',
-            controller: 'SaveButtomController',
+            controller: 'SaveButtonController',
             controllerAs: 'saveBtnCtrl',
             bindToController: {
                 textTitle: '=',
-                clickAction: '&?'
+                clickAction: '&?',
+                saveMessage: '<'
             },
             scope: true
         };
     }
 
-    function SaveButtomController(_) {
+    function SaveButtonController(ModalUtility, _) {
         var saveBtnCtrl = this;
         /**
         * @function $onInit
@@ -24,11 +25,12 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            enableButton();
+            saveBtnCtrl.disabled = false;  
         }
 
         function enableButton() {
-            saveBtnCtrl.disabled = false;
+            ModalUtility.openSaveCompleteModal();
+            saveBtnCtrl.disabled = false;            
         }
 
         function saveAction() {
@@ -44,6 +46,6 @@
     }
     angular
         .module('EasyBikeApp.Components')
-        .controller('SaveButtomController', SaveButtomController)
-        .directive('saveButtom', saveButtom);
+        .controller('SaveButtonController', SaveButtonController)
+        .directive('saveButton', saveButton);
 })();

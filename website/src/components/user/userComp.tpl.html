@@ -3,7 +3,6 @@
         <h3>{{userCompCtrl.textTitle}}</h3>
     </legend>
     <form class="form">
-        <div class="body">
             <div class="form-group col-xs-12">
                 <label class="control-label">NIT / CI</label>
                 <input type="number" class="form-control" placeholder="Ingrese Nit / CI" ng-model="userCompCtrl.user.nit">
@@ -13,9 +12,7 @@
             </div>
             <div class="form-group col-xs-12">
                 <label class="control-label">Nombre</label>
-
                 <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="userCompCtrl.user.name">
-
             </div>
             <div class="form-group col-xs-12">
                 <label class="control-label">Apellido</label>
@@ -25,13 +22,12 @@
             </div>
 
             <div class="form-group col-xs-12">
-                <address-component addresses="userCompCtrl.user.addresses" class="col-xs-12 no-width-padding" selection-change="userCompCtrl.selectionAddressChange()" enable-selection="userCompCtrl.selectionAddressEnabled"></address-component>
+                <address-component addresses="userCompCtrl.user.addresses" class="col-xs-12 no-width-padding" selection-change="userCompCtrl.selectionAddressChange()"
+                    enable-selection="userCompCtrl.selectionAddressEnabled"></address-component>
             </div>
-            <div class="row col-xs-12" ng-if="userCompCtrl.displaySave">
-                <div class="col-xs-12">
-                    <button type="button" class="form-control btn btn-primary col-offset-2 col-xs-8" ng-click="userCompCtrl.saveAction()">Save changes</button>
-                </div>
-            </div>
+        <div class="row col-xs-12" ng-if="userCompCtrl.displaySave">
+            <save-button click-action="userCompCtrl.saveAction()" text-title="userCompCtrl.saveText"></save-button>
         </div>
+
     </form>
 </div>
