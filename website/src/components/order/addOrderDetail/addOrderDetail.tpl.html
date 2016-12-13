@@ -2,25 +2,22 @@
     <legend>
         <h3>Agregar producto</h3>
     </legend>
-    <product-component product="addOrderDtlCtr.orderProduct.product" class="col-xs-12 col-sm-12 text-center">
+    <product-component product="addOrderDtlCtr.orderProduct.product" class="col-xs-12 text-center">
     </product-component>
 
-    <div class="form-group col-xs-12 col-sm-12">
+    <div class="form-group col-xs-12">
         <label class="control-label col-xs-12 no-width-padding">Cantidad</label>
-        <div class="col-xs-6 no-width-padding">
-            <input type="number" class="form-control" placeholder="Ingrese Cantidad" ng-model="addOrderDtlCtr.orderProduct.quantity">
-        </div>
-        <div class="col-xs-6">
+        <div class="form-inline">
+            <input type="number" class="form-control" placeholder="Ingrese Cantidad" ng-model="addOrderDtlCtr.orderProduct.quantity" min="1">
             <button class="btn btn-info fa fa-plus" ng-click="addOrderDtlCtr.plusQuantity()"></button>
             <button class="btn btn-info fa fa-minus" ng-click="addOrderDtlCtr.minusQuantity()"></button>
         </div>
     </div>
-    <div class="form-group col-xs-12 col-sm-12 no-width-padding">
-        <div class="col-xs-6">
-            <button class="btn btn-success col-xs-12 no-width-padding" ng-click="addOrderDtlCtr.okAction()">Aceptar</button>
-        </div>
-        <div class="col-xs-6">
-            <button class="btn btn-warning col-xs-12 no-width-padding" ng-click="addOrderDtlCtr.cancel()">Cancelar</button>
-        </div>
+    <div class="form-inline col-xs-12">
+
+            <button class="btn btn-success" ng-click="addOrderDtlCtr.okAction()">Aceptar</button>
+
+            <button class="btn btn-warning" ng-click="addOrderDtlCtr.cancel()">Cancelar</button>
+
     </div>
 </div>

@@ -1,4 +1,9 @@
-
+.main-step-container {
+    height: 67px;
+}
+.step-buttons-container {
+    height: 35px;
+}
 .step-line-style {
     border-top: 10px solid #eeeeee;
 }
@@ -39,4 +44,14 @@
     //background-color: #337ab7;
     border-radius: 4px;
     //color: white;
+}
+
+.step-button {
+    .btn-link:focus,
+    .btn-link:active:focus{
+        outline:none;
+    }
+    .btn-link:focus{
+        text-decoration:none;
+    }
 }

@@ -5,6 +5,10 @@
 
 	<div class="col-xs-12 order-panel" auto-fill-screen>
 		<div class="row" ng-if="ordersCtrl.steps[0].number == ordersCtrl.selectedStep.number">
+			<div class="alert alert-info" role="alert" ng-if="!ordersCtrl.businessValidate">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only">Error:</span> Seleccione una tipo de orden
+			</div>
 			<business-component business="item" selection-enabled="true" click-action="ordersCtrl.selectBusiness(item)" class="col-sm-6 col-md-4 col-lg-3 item-top-padding"
 				ng-repeat="item in ordersCtrl.businesses"></business-component>
 		</div>
@@ -18,19 +22,20 @@
 			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.order.client" text-title="ordersCtrl.userTitle" selection-address-change="ordersCtrl.selectAddressChange()"></user-component>
 		</div>
 		<div class="row col-xs-12" ng-if="ordersCtrl.steps[2].number == ordersCtrl.selectedStep.number">
-			<div class="col-md-4 no-width-padding">
+			<div class="alert alert-danger" role="alert" ng-if="!ordersCtrl.businessValidate">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only">Error:</span> Seleccione una tipo de orden primero
+			</div>
+			<div class="col-md-4 no-left-padding">
 				<legend>Carrito</legend>
 				<order-detail order-products="ordersCtrl.order.orderProducts"></order-detail>
 			</div>
 			<div class="col-md-8" ng-if="!ordersCtrl.showAddProductOrder">
+				<legend>Lista de productos - {{ordersCtrl.selectedCategory.name}}</legend>
 				<product-category-component custom-categories="ordersCtrl.selectedBusiness.categories" ng-if="ordersCtrl.businessValidate"
 					selection-change="ordersCtrl.selectedCategoryChange(category)" display-selection-error="true"></product-category-component>
-				<div class="alert alert-danger" role="alert" ng-if="!ordersCtrl.businessValidate">
-					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-					<span class="sr-only">Error:</span> Seleccione una tipo de orden
-				</div>
 				<div class="col-xs-12 no-width-padding">
-					<legend>Lista de {{ordersCtrl.selectedCategory.name}}</legend>
+
 					<product-component product="item" click-action="ordersCtrl.selectProduct(item)" ng-repeat="item in ordersCtrl.categoryProducts">
 					</product-component>
 				</div>

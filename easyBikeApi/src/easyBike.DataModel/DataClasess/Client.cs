@@ -10,8 +10,7 @@ namespace easyBike.DataModel.DataClasess
         public int Id { get; set; }
         public int Nit { get; set; }
         public List<Phone> Phones { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }        
         public List<Address> Addresses { get; set; }
         public string ImageUrl { get; set; }
     }

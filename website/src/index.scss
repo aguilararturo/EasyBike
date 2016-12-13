@@ -59,7 +59,7 @@
   border: none;
 }
 .check-icon-color {
-  color: green;
+  color: $btn-success-bg;
 }
 .form-group {
   margin-bottom: 5px;
@@ -105,6 +105,16 @@ legend {
   padding: 2px !important;
   font-size: 20px;
 }
+.fa-hover:hover {
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.border-hover:hover {
+  border-color: $btn-info-bg;
+  border-width: 1px;
+}
+
 
 @import "menu/menu";
 @import "common";

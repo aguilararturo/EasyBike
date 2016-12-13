@@ -1,10 +1,25 @@
-<div-equal class="form-inline col-xs-12 no-width-padding">
+<div class="col-xs-12 step-buttons-container">
+        <div class="col-xs-6">
+                <button class="btn btn-link fa-hover" ng-click="stepsCmpCtrl.selectStep(stepsCmpCtrl.prevStep)" ng-if="stepsCmpCtrl.prevStep">
+                <i class="fa fa-chevron-left add-menu-item"></i>{{stepsCmpCtrl.prevStep.title}}
+        </button>
+        </div>
+        <div class="col-xs-6 text-right">
+                <button class="btn btn-link fa-hover" ng-click="stepsCmpCtrl.selectStep(stepsCmpCtrl.nextStep)" ng-if="stepsCmpCtrl.nextStep">
+                {{stepsCmpCtrl.nextStep.title}}
+                <i class="fa fa-chevron-right"></i>
+        </button>
+        </div>
+</div>
+<div-equal class="form-inline col-xs-12 no-width-padding main-step-container">
         <div class="form-group div-equal-child" ng-repeat="type in stepsCmpCtrl.steps track by $index">
                 <aa-step-auto-size class="form-inline col-xs-12 no-width-padding">
-                        <div class="form-group step-left" >
-                                <hr class="step-line-style " ng-class="type.selected ? (type.validated ? 'step-line-success' : 'step-line-danger') : 'step-line-info'" ng-if="$index > 0">
+                        <div class="form-group step-left">
+                                <hr class="step-line-style " ng-class="type.selected ? (type.validated ? 'step-line-success' : 'step-line-danger') : 'step-line-info'"
+                                        ng-if="$index > 0">
                         </div>
-                        <div class="form-group step-doot panel-color panel-size" ng-class="type.selected ? ( type.validated ? 'btn-success' : 'btn-danger' ) : 'btn-info'" ng-click="stepsCmpCtrl.clickStep(type, $index)">
+                        <div class="form-group step-doot panel-color panel-size" ng-class="type.selected ? ( type.validated ? 'btn-success' : 'btn-danger' ) : 'btn-info'"
+                                ng-click="stepsCmpCtrl.clickStep(type, $index)">
                                 <div> {{type.number}}</div>
                                 <i class="{{type.content}} fa-2x"></i>
 

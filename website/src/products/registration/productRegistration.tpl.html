@@ -3,7 +3,7 @@
         <h3>{{prodRegCtrl.textTitle}}</h3>
     </legend>
     <div class="col-xs-12" ng-if="prodRegCtrl.displayProductSelection">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-info" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span> Seleccione una Empresa
         </div>
@@ -15,8 +15,8 @@
     </div>
     <form class="form col-xs-12 col-lg-6" ng-if="!prodRegCtrl.displayProductSelection">
         <div class="col-xs-12">
-            <legend>Empresa seleccionada</legend>
-            <div class="form-group col-xs-12">
+            <label class="control-label">Empresa</label>
+            <div class="form-group col-xs-12 no-width-padding">
                 <business-component business="prodRegCtrl.product.business" selection-enabled="true" class="col-sm-6 col-md-6 col-lg-6 item-top-padding"
                     ng-if="prodRegCtrl.businessValidate"></business-component>
                 <button class="btn btn-info" ng-click="prodRegCtrl.searchBusiness()">
@@ -27,12 +27,13 @@
                 </div>
             </div>
             <div class="col-xs-12" ng-if="prodRegCtrl.businessValidate">
+                <label class="control-label">Categoria</label>
                 <product-category-component custom-categories="prodRegCtrl.product.business.categories" selection-change="prodRegCtrl.selectCategory(category)" display-selection-error="true"></product-category-component>
             </div>
         </div>
 
         <div class="form-group col-xs-12">
-            <label class="control-label aligment-left">Codigo</label>
+            <label class="control-label aligment-left">Codigo Producto</label>
             <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="prodRegCtrl.product.codSubfix">
         </div>
         <div class="form-group col-xs-12">

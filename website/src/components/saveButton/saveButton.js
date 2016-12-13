@@ -25,12 +25,12 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            saveBtnCtrl.disabled = false;  
+            saveBtnCtrl.disabled = false;
         }
 
         function enableButton() {
             ModalUtility.openSaveCompleteModal();
-            saveBtnCtrl.disabled = false;            
+            saveBtnCtrl.disabled = false;
         }
 
         function saveAction() {
@@ -39,7 +39,7 @@
                 saveBtnCtrl.clickAction().then(enableButton);
             }
         }
-        saveBtnCtrl.enableButton=enableButton;
+        saveBtnCtrl.enableButton = enableButton;
         saveBtnCtrl.saveAction = saveAction;
         saveBtnCtrl.$onInit = $onInit;
 
