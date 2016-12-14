@@ -12,5 +12,8 @@ namespace easyBike.DataModel.DataClasess
         public Client Client{ get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public Address DeliveryAddress { get; set; }
+        public int StateId { get; set; }
+        public OrderState state { get; set; }
+        public Bike Bike { get; set; }
     }
 }

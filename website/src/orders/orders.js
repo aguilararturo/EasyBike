@@ -3,8 +3,6 @@
     /**
      * @function FeaturedBrandsController
      * @desc Controller to load the brands from Catalog service or search service
-     * @param  {Object} $element directive element
-     * @param  {Object} $scope directive scope
      * @param  {Object} CatalogService catalog service
      * @param  {Object} SearchService search service
      * @param  {Object} BrandingModel Branding Model service
@@ -89,7 +87,8 @@
                     addresses: []
                 },
                 orderProducts: [],
-                deliveryAddress: {}
+                deliveryAddress: {},
+                bike: {}
             };
 
             ordersCtrl.selectedStep = ordersCtrl.steps[0];
@@ -222,7 +221,7 @@
                 return bike.selected;
             }
             var bike = _.find(ordersCtrl.todayBikes, findSelectedBike);
-
+            ordersCtrl.order.bike = bike;
             validateStep(KEYS.BIKE, !_.isUndefined(bike));
         }
 
