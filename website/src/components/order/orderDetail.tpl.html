@@ -10,10 +10,10 @@
         </thead>
         <tbody>
             <tr ng-repeat="op in orderDtlCtr.orderProducts">
-                <td>{{op.product.codSubfix}}</td>
-                <td>{{op.product.name}}</td>
-                <td>{{op.quantity}}</td>
-                <td class="div-btn no-width-padding" ng-click="ordersCtrl.removeCartProduct(op)">
+                <td class="td-middle-text">{{op.product.codSubfix}}</td>
+                <td class="td-middle-text">{{op.product.name}}</td>
+                <td class="td-middle-text">{{op.quantity}}</td>
+                <td class="div-btn no-width-padding td-middle-text" ng-click="ordersCtrl.removeCartProduct(op)">
                         <i class="fa fa-times red-button fa-2x"></i>
                 </td>
             </tr>

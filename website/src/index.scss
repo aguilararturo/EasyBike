@@ -115,6 +115,9 @@ legend {
   border-width: 1px;
 }
 
+.td-middle-text {
+  vertical-align:middle !important;
+}
 
 @import "menu/menu";
 @import "common";

@@ -78,8 +78,7 @@ namespace easyBike.Api.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 var original = db.Clients
-                    .Where(item => item.Id == id).FirstOrDefault();
-                original.LastName = value.LastName;
+                    .Where(item => item.Id == id).FirstOrDefault();                
                 original.Name = value.Name;
                 original.Phones = value.Phones;
                 original.Addresses = value.Addresses;               

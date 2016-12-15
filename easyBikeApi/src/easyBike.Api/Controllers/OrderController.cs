@@ -62,6 +62,11 @@ namespace easyBikeApi.Controllers
                 {
                     db.Entry(value.DeliveryAddress).State = EntityState.Modified;
                 }
+
+                if (value.Bike.Id > 0)
+                {
+                    db.Entry(value.Bike).State = EntityState.Modified;
+                }
                 db.Orders.Add(value);
                 db.SaveChanges();
                 return Ok(value);

@@ -3,35 +3,35 @@
     "id": 1,
     "name": "Clientes",
     "href": "#/user",
-    "order": 0,
+    "order": 2,
     "content": "fa-user"
   },
   {
     "id": 2,
     "name": "Ordenes",
     "href": "#/orders",
-    "order": 0,
+    "order": 1,
     "content": "fa-shopping-cart"
   },
   {
     "id": 3,
     "name": "Motos",
     "href": "#/bike",
-    "order": 0,
+    "order": 3,
     "content": "fa-motorcycle"
   },
   {
     "id": 4,
     "name": "Empresas",
     "href": "#/business",
-    "order": 0,
+    "order": 4,
     "content": "fa-cutlery"
   },
   {
     "id": 5,
     "name": "Productos",
     "href": "#/product",
-    "order": 0,
+    "order": 5,
     "content": "fa-glass"
   }
 ]
