@@ -12,7 +12,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility) {
         var ordersCtrl = this;
         var KEYS = {
             ORDER: 'Pedido',
@@ -75,6 +75,15 @@
                 }
             ];
 
+            initializeNewOrder();
+
+            ordersCtrl.selectedStep = ordersCtrl.steps[0];
+            BussinessService.getBusinessesWithCategories().then(loadBusiness);
+            BikeEnabledService.getTodayBikes().then(loadTodayBikes);
+            initializeNewOrderProduct();
+        }
+
+        function initializeNewOrder() {
             ordersCtrl.order = {
                 id: '',
                 client: {
@@ -90,11 +99,6 @@
                 deliveryAddress: {},
                 bike: {}
             };
-
-            ordersCtrl.selectedStep = ordersCtrl.steps[0];
-            BussinessService.getBusinessesWithCategories().then(loadBusiness);
-            BikeEnabledService.getTodayBikes().then(loadTodayBikes);
-            initializeNewOrderProduct();
         }
 
         function initializeNewOrderProduct() {
@@ -212,8 +216,22 @@
             step.validated = selected;
         }
 
+        function isStepsValidated() {
+            var validated = true;
+            function verifyStep(step) {
+                validated = step.validated;
+            }
+            _.forEach(ordersCtrl.steps, verifyStep);
+
+            return validated;
+        }
+
         function saveOrder() {
-            OrderService.saveOrder(ordersCtrl.order);
+            if (isStepsValidated()) {
+                OrderService.saveOrder(ordersCtrl.order);
+            } else {
+                ModalUtility.openVerifyOrdenData();
+            }
         }
 
         function selectionBikeChange() {

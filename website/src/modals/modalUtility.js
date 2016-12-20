@@ -101,6 +101,16 @@
             ], msg);
         }
 
+        function openVerifyOrdenData() {
+            var msg = 'No se puede guardar la orden Por favor verifique todos los datos necesarios';
+            return openMessage(msg, [
+                {
+                    text: 'Aceptar',
+                    class: 'btn btn-default btn-success col-xs-12'
+                }
+            ], msg);
+        }
+
         /**
          * @function openSaveCompleteModal
          * @memberof ModalUtility
@@ -139,7 +149,8 @@
             openExpiredSessionModal: openExpiredSessionModal,
             openNoCatalogsModal: openNoCatalogsModal,
             openSaveCompleteModal: openSaveCompleteModal,
-            openAskEnableBikeModal: openAskEnableBikeModal
+            openAskEnableBikeModal: openAskEnableBikeModal,
+            openVerifyOrdenData: openVerifyOrdenData
         };
     }
 

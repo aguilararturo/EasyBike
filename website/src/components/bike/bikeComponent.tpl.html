@@ -3,7 +3,7 @@
         <legend><h3>Datos Motocicleta</h3></legend>
     </div>
     <form class="form">
-        <div class="body col-xs-12">
+        <div class="body col-xs-8">
                 <div class="form-group col-md-4 col-xs-12">
                     <label class="control-label">Codigo</label>
                     <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="bikeCompCtrl.bike.code">
@@ -17,7 +17,7 @@
                     <input type="text" class="form-control" placeholder="Ingrese Model" ng-model="bikeCompCtrl.bike.model">
                 </div>
 
-            <user-component class="col-xs-8 no-width-padding" user="bikeCompCtrl.bike.driver" text-title="bikeCompCtrl.text" save-action="bikeCompCtrl.saveAction()" save-text="'Guardar Motocicleta'"></user-component>
+            <user-component class="col-xs-12 no-width-padding" user="bikeCompCtrl.bike.driver" text-title="bikeCompCtrl.text" save-action="bikeCompCtrl.saveAction()" save-text="'Guardar Motocicleta'"></user-component>
         </div>
     </form>
 </div>

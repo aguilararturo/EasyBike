@@ -28,6 +28,10 @@
 			</div>
 			<div class="col-md-4 no-left-padding">
 				<legend>Carrito</legend>
+				<div class="alert alert-danger" role="alert" ng-if="ordersCtrl.order.orderProducts.length<=0">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only">Error:</span> Debe exstir al menos 1 producto en el carrito
+				</div>
 				<order-detail order-products="ordersCtrl.order.orderProducts"></order-detail>
 			</div>
 			<div class="col-md-8" ng-if="!ordersCtrl.showAddProductOrder">
