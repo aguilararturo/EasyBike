@@ -11,8 +11,8 @@ namespace easyBike.DataModel
     {
         public DbSet<Address> Adresses { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Menbership> Menberships { get; set; }
-        public DbSet<MenbershipType> MenbershipTypes { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+        public DbSet<MembershipType> MembershipTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<Product> Products { get; set; }

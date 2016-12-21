@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using easyBike.DataModel.DataClasess;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
-using easyBike.DataModel.DataClasess;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace easyBike.Api.Controllers
+namespace easyBikeApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientController : Controller
+    public class MembershipControllercs : Controller
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Client> Get()
+        public IEnumerable<Membership> Get()
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
-                    .Include(client => client.Addresses)
-                    .Include(Client => Client.Phones)
+                var Data = db.Memberships
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
@@ -31,55 +29,51 @@ namespace easyBike.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Client Get(int id)
+        public Membership Get(int id)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
+                var Data = db.Memberships
                     .Where(item => item.Id == id);
                 return Data.First();
             }
         }
 
-        // GET api/values/5
-        [HttpGet("GetByPhone/{phoneNumber}")]
-        public Client GetByPhone(int phoneNumber)
-        {               
+        // GET: api/values
+        [HttpGet("GetMountly")]
+        public MembershipDetail GetMountly(Business business)
+        {
             using (var db = new EasyBikeDataContext())
-            {                
-                var data = db.Clients
-                    .Include(client => client.Addresses)
-                    .Include(Client => Client.Phones)
-                    .Where(item => item.Phones.Any(phone=> phone.Number == phoneNumber));
-                return data.FirstOrDefault();
+            {
+                var prod = db.Products
+                    .Where(p => p.Business.Id == business.Id);
+
+                var orders = db.Orders.Where(o => o.OrderProducts.Any(op => prod.Contains(op.Product)));
+                   
+
+                return Data;
             }
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Client value)
+        public void Post([FromBody]Membership value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                db.Clients.Add(value);
+                db.Memberships.Add(value);
                 db.SaveChanges();
-                return Ok(value);
             }
-
-            return NotFound();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Client value)
+        public void Put(int id, [FromBody]Membership value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var original = db.Clients
-                    .Where(item => item.Id == id).FirstOrDefault();                
-                original.Name = value.Name;
-                original.Phones = value.Phones;
-                original.Addresses = value.Addresses;               
+                var original = db.Memberships
+                    .Where(item => item.Id == id).FirstOrDefault();
                 
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();
@@ -92,10 +86,10 @@ namespace easyBike.Api.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
+                var Data = db.Memberships
                     .Where(item => item.Id == id);
 
-                db.Clients.Remove(Data.First());
+                db.Memberships.Remove(Data.First());
                 db.SaveChanges();
             }
         }
