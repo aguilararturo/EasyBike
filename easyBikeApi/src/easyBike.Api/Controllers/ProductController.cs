@@ -26,7 +26,21 @@ namespace easyBikeApi.Controllers
                     .ToList();
                 return Data;
             }
-        }        
+        }
+        // GET: api/values
+        [HttpGet("getByBussiness")]
+        public IEnumerable<Product> getByBussiness([FromQuery] Business business)
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var Data = db.Products
+                    .Where(p => p.Business.Id == business.Id)
+                    .Include(product => product.Category)
+                    .OrderBy(item => item.Id)
+                    .ToList();
+                return Data;
+            }
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]

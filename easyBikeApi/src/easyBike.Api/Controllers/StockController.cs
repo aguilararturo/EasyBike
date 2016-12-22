@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore;
 namespace easyBikeApi.Controllers
 {
     [Route("api/[controller]")]
-    public class MembershipControllercs : Controller
+    public class StockController : Controller
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Membership> Get()
+        public IEnumerable<Stock> Get()
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Memberships
+                var Data = db.Stock
                     .OrderBy(item => item.Id)
                     .ToList();
                 return Data;
@@ -29,52 +29,36 @@ namespace easyBikeApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Membership Get(int id)
+        public Stock Get(int id)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Memberships
+                var Data = db.Stock
                     .Where(item => item.Id == id);
                 return Data.First();
             }
         }
 
-        // GET: api/values
-        [HttpGet("GetMountly")]
-        public MembershipDetail GetMountly(Business business)
-        {
-            using (var db = new EasyBikeDataContext())
-            {
-                var prod = db.Products
-                    .Where(p => p.Business.Id == business.Id);
-
-                var orders = db.Orders.Where(o => o.OrderProducts.Any(op => prod.Contains(op.Product)));
-                   
-
-                return null;
-            }
-        }
-
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Membership value)
+        public void Post([FromBody]Stock value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                db.Memberships.Add(value);
+                db.Stock.Add(value);
                 db.SaveChanges();
             }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Membership value)
+        public void Put(int id, [FromBody]Stock value)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var original = db.Memberships
+                var original = db.Stock
                     .Where(item => item.Id == id).FirstOrDefault();
-                
+
                 db.Entry(original).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -86,10 +70,10 @@ namespace easyBikeApi.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Memberships
+                var Data = db.Stock
                     .Where(item => item.Id == id);
 
-                db.Memberships.Remove(Data.First());
+                db.Stock.Remove(Data.First());
                 db.SaveChanges();
             }
         }

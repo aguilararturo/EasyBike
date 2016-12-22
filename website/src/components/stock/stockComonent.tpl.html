@@ -1,0 +1,21 @@
+<legend><h2>stockCompCtrl.title</h2></legend>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Fecha de Vencimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="stock in stockCompCtrl.Stocks">
+                <td>{{stock.product.CodSubfix}}</td>
+                <td>{{stock.product.name}}</td>
+                <td>{{stock.quantity}}</td>
+                <td>{{stock.dueDate}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
