@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel.DataClasess;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Web.Http;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -47,6 +50,56 @@ namespace easyBikeApi.Controllers
             {
                 db.Stock.Add(value);
                 db.SaveChanges();
+            }
+        }
+
+        // POST api/values
+        [HttpPost("AddStocks")]
+        public void AddStocks([FromBody]IEnumerable<Stock> values)
+        {            
+            using (var db = new EasyBikeDataContext())
+            {
+                foreach (var item in values)
+                {
+                    db.Entry(item.Product).State = EntityState.Modified;
+                    item.RegisterDate = DateTime.UtcNow;
+                }
+                db.Stock.AddRange(values);
+                db.SaveChanges();
+            }
+        }
+
+
+        // GET: api/values
+        [HttpGet("getStockProductsQuantity")]
+        public IEnumerable<Stock> getStockProductsQuantity()
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var ss = ConfigurationsNames.DefaultBusiness.ToString();
+                var configData = db.Configurations.Where(c => c.Id == ConfigurationsNames.DefaultBusiness.ToString()).FirstOrDefault();
+
+                if (configData == null)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Default Business not exists", System.Text.Encoding.UTF8, "text/plain"),
+                        StatusCode = HttpStatusCode.NotFound
+
+                    };
+
+                    throw new HttpResponseException(response);
+                }
+                var stock = db.Stock.GroupBy(s => s.Product.Id)
+                    .Select(s => new Stock
+                    {
+                        Quantity = s.Sum(item => item.Quantity),
+                        Product = s.Select(pro => pro.Product).FirstOrDefault(),
+                        DueDate = DateTime.Now,
+                        RegisterDate = DateTime.Now
+                    }).ToList();
+
+                return stock;
             }
         }
 

@@ -26,8 +26,8 @@
                 <th>Codigo</th>
                 <th>Nombre</th>
                 <th>Cantidad</th>
-                <th>Fecha de Vencimiento</th>
-                <th>Borrar</th>
+                <th ng-if="!stockCompCtrl.hideDueDate">Fecha de Vencimiento</th>
+                <th ng-if="stockCompCtrl.readOnly">Borrar</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                 <td><span ng-bind="stock.quantity" ng-if="!stockCompCtrl.readOnly"></span>
                     <input type="number" class="form-control" placeholder="Ingrese Cantidad" ng-model="stock.quantity" max="999999" min="1" ng-if="stockCompCtrl.readOnly">
                 </td>
-                <td>
+                <td ng-if="!stockCompCtrl.hideDueDate">
                     <span ng-bind="stock.dueDate | date" ng-if="!stockCompCtrl.readOnly"></span>
                     <div class="input-group date" id="datetimepicker1" ng-if="stockCompCtrl.readOnly">
                         <input type="text" class="form-control" uib-datepicker-popup ng-model="stock.dueDate" is-open="stockCompCtrl.datePicks[$index]"
@@ -47,10 +47,15 @@
                         </span>
                     </div>
                 </td>
-                <td>
-                    <list-buttons class="input-group-addon no-padding transparent-back" remove="stockCompCtrl.removeStock(stock)"></list-buttons>
+                <td ng-if="stockCompCtrl.readOnly">
+                    <list-buttons class="input-group-addon no-padding transparent-back" remove="stockCompCtrl.removeStock(stock)" ></list-buttons>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<div ng-if="stockCompCtrl.displaySave">
+    <save-button click-action="stockCompCtrl.saveAction()" text-title="'Guardar Stock'"></save-button>
+
 </div>

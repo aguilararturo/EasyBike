@@ -1,37 +1,44 @@
 [
   {
     "id": 1,
+    "name": "Pedido",
+    "href": "#/orders",
+    "order": 1,
+    "content": "fa-shopping-cart"
+  }
+  {
+    "id": 1,
     "name": "Clientes",
     "href": "#/user",
-    "order": 2,
+    "order": 3,
     "content": "fa-user"
   },
   {
     "id": 2,
     "name": "Ordenes",
-    "href": "#/orders",
-    "order": 1,
-    "content": "fa-shopping-cart"
+    "href": "#/ordersStatus",
+    "order": 2,
+    "content": "fa-cart-plus"
   },
   {
     "id": 3,
     "name": "Motos",
     "href": "#/bike",
-    "order": 3,
+    "order": 4,
     "content": "fa-motorcycle"
   },
   {
     "id": 4,
     "name": "Empresas",
     "href": "#/business",
-    "order": 4,
+    "order": 5,
     "content": "fa-cutlery"
   },
   {
     "id": 5,
     "name": "Productos",
     "href": "#/product",
-    "order": 5,
+    "order": 6,
     "content": "fa-glass"
   }
 ]

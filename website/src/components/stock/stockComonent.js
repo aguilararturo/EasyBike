@@ -18,7 +18,10 @@
                 products: '=',
                 title: '@',
                 stocks: '=',
-                allowSearch: '@'
+                allowSearch: '@',
+                saveAction: '&?',
+                readOnly: '@',
+                hideDueDate: '@'
             },
             scope: true
         };
@@ -45,6 +48,8 @@
             };
             stockCompCtrl.displaySearchOptions = false;
             stockCompCtrl.datePicks = [];
+
+            stockCompCtrl.displaySave = !_.isUndefined(stockCompCtrl.saveAction);
         }
 
         function searchChange() {

@@ -2,7 +2,7 @@
     'use strict';
 
 
-    function ProductController(CommonService, ProductService) {
+    function ProductController(CommonService, StockService) {
         var prodCtrl = this;
 
         /**
@@ -12,19 +12,15 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
-            CommonService.getUser().then(loadMenuItems);
-            ProductService.getStockProducts().then(loadStockProducts);
+            StockService.getStockProductsQuantity().then(loadStockProducts);
             prodCtrl.stocks = [];
             prodCtrl.products = [];
         }
 
         function loadStockProducts(response) {
-            prodCtrl.products = response;
+            prodCtrl.stocks = response;
         }
 
-        function loadMenuItems(response) {
-            prodCtrl.users = response;
-        }
 
         prodCtrl.$onInit = $onInit;
     }

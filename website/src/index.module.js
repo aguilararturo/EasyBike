@@ -22,6 +22,7 @@
             'EasyBikeApp.Modals',
             'EasyBikeApp.Product',
             'EasyBikeApp.Business',
-            'EasyBikeApp.Utils'
+            'EasyBikeApp.Utils',
+            'EasyBikeApp.Stock'
         ]);
 })();

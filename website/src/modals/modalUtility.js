@@ -73,18 +73,6 @@
         }
 
         /**
-         * @function openNoCatalogsModal
-         * @memberof ModalUtility
-         * @author Arturo Aguilar
-         * @desc Opens an no catalogs message modal.
-         * @returns {Object} The message modal.
-         */
-        function openNoCatalogsModal() {
-            var msg = localStorageService.get(STORAGE_KEYS.NO_CATALOGS_MESSAGE);
-            return openMessage(msg, 'OKAY', 'No Active Catalogs');
-        }
-
-        /**
          * @function openSaveCompleteModal
          * @memberof ModalUtility
          * @author Arturo Aguilar
@@ -103,6 +91,16 @@
 
         function openVerifyOrdenData() {
             var msg = 'No se puede guardar la orden Por favor verifique todos los datos necesarios';
+            return openMessage(msg, [
+                {
+                    text: 'Aceptar',
+                    class: 'btn btn-default btn-success col-xs-12'
+                }
+            ], msg);
+        }
+
+        function openVerifyStockData() {
+            var msg = 'No se puede guardar el Stock Por favor verifique todos los datos necesarios';
             return openMessage(msg, [
                 {
                     text: 'Aceptar',
@@ -133,13 +131,15 @@
         }
 
         function openGenericError() {
-            var messages = [{
-                text: 'An error occurred while processing your request and we were unable to complete the action. ' +
-                'Please try again or call customer support at:'
-            },
-            {
-                text: '<b>' + CONFIGURATION.contact.customerService + '</b>'
-            }];
+            var messages = [
+                {
+                    text: 'An error occurred while processing your request and we were unable to complete the action. ' +
+                    'Please try again or call customer support at:'
+                },
+                {
+                    text: '<b>' + 'ERROR GENERIC' + '</b>'
+                }
+            ];
             openMessage(messages, 'Okay', 'Error');
         }
 
@@ -147,10 +147,10 @@
             openGenericError: openGenericError,
             openMessage: openMessage,
             openExpiredSessionModal: openExpiredSessionModal,
-            openNoCatalogsModal: openNoCatalogsModal,
             openSaveCompleteModal: openSaveCompleteModal,
             openAskEnableBikeModal: openAskEnableBikeModal,
-            openVerifyOrdenData: openVerifyOrdenData
+            openVerifyOrdenData: openVerifyOrdenData,
+            openVerifyStockData: openVerifyStockData
         };
     }
 
