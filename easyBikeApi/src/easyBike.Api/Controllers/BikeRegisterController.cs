@@ -45,6 +45,25 @@ namespace easyBikeApi.Controllers
             }
         }
 
+        // GET: api/values
+        [HttpGet("GetTodayAvaliableWithouOrder")]
+        public IEnumerable<BikeRegister> GetTodayAvaliableWithouOrder()
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var Data = db.RegistredBikes
+                    .Where(b => !db.Orders.Where(o => o.state == OrderState.Transit).Select(o => o.Bike)                    
+                    .Contains(b.Bike))
+                    .Where(b => b.Date.Date == DateTime.Today && b.Active)                                   
+                   .Include(b => b.Bike)
+                   .ThenInclude(b => b.Driver)
+                    .OrderByDescending(item => item.Date)
+                    .ToList();
+
+                return Data;
+            }
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public BikeRegister Get(int id)

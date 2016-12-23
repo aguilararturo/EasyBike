@@ -12,7 +12,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility, $q) {
         var ordersCtrl = this;
         var KEYS = {
             ORDER: 'Pedido',
@@ -79,7 +79,7 @@
 
             ordersCtrl.selectedStep = ordersCtrl.steps[0];
             BussinessService.getBusinessesWithCategories().then(loadBusiness);
-            BikeEnabledService.getTodayBikes().then(loadTodayBikes);
+            BikeEnabledService.getTodayAvaliableWithouOrder().then(loadTodayBikes);
             initializeNewOrderProduct();
         }
 
@@ -154,6 +154,10 @@
 
         function searchUser(number) {
             console.log('search User', number);
+            if (_.isNull(number)) {
+                return;
+            }
+
             if (!_.isEmpty(number.toString())) {
                 CommonService.getUserByPhone(number).then(loadUser);
             }
@@ -227,11 +231,15 @@
         }
 
         function saveOrder() {
+            var deferred = $q.defer();
             if (isStepsValidated()) {
-                OrderService.saveOrder(ordersCtrl.order);
+                deferred.resolve(OrderService.saveOrder(ordersCtrl.order));
             } else {
                 ModalUtility.openVerifyOrdenData();
+                deferred.reject();
             }
+
+            return deferred.promise;
         }
 
         function selectionBikeChange() {

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel.DataClasess;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Http;
+using System.Net.Http;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,6 +38,36 @@ namespace easyBikeApi.Controllers
             {
                 var Data = db.Products
                     .Where(p => p.Business.Id == business.Id)
+                    .Include(product => product.Category)
+                    .OrderBy(item => item.Id)
+                    .ToList();
+                return Data;
+            }
+        }
+
+        // GET: api/values
+        [HttpGet("getStockProducts")]
+        public IEnumerable<Product> getStockProducts()
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var ss = ConfigurationsNames.DefaultBusiness.ToString();
+                var configData = db.Configurations.Where(c => c.Id == ConfigurationsNames.DefaultBusiness.ToString()).FirstOrDefault();
+
+                if (configData == null)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Default Business not exists", System.Text.Encoding.UTF8, "text/plain"),
+                        StatusCode = HttpStatusCode.NotFound
+
+                    };
+
+                    throw new HttpResponseException(response);
+                }
+                
+                var Data = db.Products
+                    .Where(p => p.Business.Name == configData.Name)
                     .Include(product => product.Category)
                     .OrderBy(item => item.Id)
                     .ToList();

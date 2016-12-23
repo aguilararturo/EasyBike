@@ -1,40 +1,44 @@
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th ng-if="bikeTblCompCtrl.enableSelection">
-                    <i class="fa" ng-class="fa-square-o" aria-hidden="true"></i>
-                </th>
-                <th>Codigo</th>
-                <th>Placa</th>
-                <th>Conductor</th>
-                <th>stado</th>
-                <th>Model</th>
-                <th ng-if="bikeTblCompCtrl.enabledOption">Habilitar</th>
-                <th ng-if="bikeTblCompCtrl.disableOption">Deshabilitar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="bike in bikeTblCompCtrl.bikes" ng-click="bikeTblCompCtrl.selection(bike)">
-                <td ng-if="bikeTblCompCtrl.enableSelection" class="selection-column text-center">
-                    <i class="fa" ng-class="bike.selected ? 'check-icon-color fa-check-square-o' : 'fa-square-o'" aria-hidden="true"></i>
-                </td>
-                <td>{{bike.code}}</td>
-                <td>{{bike.plate}}</td>
-                <td>{{bike.driver.name}} {{bike.driver.lastName}}</td>
-                <td>{{bike.state}}</td>
-                <td>{{bike.model}}</td>
-                <td ng-if="bikeTblCompCtrl.enabledOption" class="text-center">
-                    <button class="button" ng-click="bikeTblCompCtrl.enableBike(bike)">
-                        <i class="fa fa-check"></i> 
+    <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input id="searchBikeTextId" type="text" class="form-control" placeholder="Buscar Motocicleta" ng-model="bikeTblCompCtrl.searchText">
+    </div>
+    <div class="small-top-padding">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th ng-if="bikeTblCompCtrl.enableSelection">
+                        <i class="fa" ng-class="fa-square-o" aria-hidden="true"></i>
+                    </th>
+                    <th>Codigo</th>
+                    <th>Placa</th>
+                    <th>Conductor</th>
+                    <th>Model</th>
+                    <th ng-if="bikeTblCompCtrl.enabledOption">Habilitar</th>
+                    <th ng-if="bikeTblCompCtrl.disableOption">Deshabilitar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bike in bikeTblCompCtrl.bikes | filter: bikeTblCompCtrl.searchText" ng-click="bikeTblCompCtrl.selection(bike)">
+                    <td ng-if="bikeTblCompCtrl.enableSelection" class="selection-column text-center">
+                        <i class="fa" ng-class="bike.selected ? 'check-icon-color fa-check-square-o' : 'fa-square-o'" aria-hidden="true"></i>
+                    </td>
+                    <td>{{bike.code}}</td>
+                    <td>{{bike.plate}}</td>
+                    <td>{{bike.driver.name}} {{bike.driver.lastName}}</td>
+                    <td>{{bike.model}}</td>
+                    <td ng-if="bikeTblCompCtrl.enabledOption" class="text-center">
+                        <button class="button" ng-click="bikeTblCompCtrl.enableBike(bike)">
+                        <i class="fa fa-check"></i>
                          </button>
-                </td>
-                <td ng-if="bikeTblCompCtrl.disableOption" class="text-center">
-                    <button class="button" ng-click="bikeTblCompCtrl.disableBike(bike)">
-                        <i class="fa fa-minus"></i> 
+                    </td>
+                    <td ng-if="bikeTblCompCtrl.disableOption" class="text-center">
+                        <button class="button" ng-click="bikeTblCompCtrl.disableBike(bike)">
+                        <i class="fa fa-minus"></i>
                          </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -67,6 +67,7 @@ namespace easyBikeApi.Controllers
                 {
                     db.Entry(value.Bike).State = EntityState.Modified;
                 }
+                value.state = OrderState.Transit;
                 db.Orders.Add(value);
                 db.SaveChanges();
                 return Ok(value);

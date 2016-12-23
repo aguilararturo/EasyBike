@@ -51,6 +51,7 @@
         function $onInit() {
             bikeTblCompCtrl.text = 'Datos Motociclista';
             _.map(bikeTblCompCtrl.bikes, setFalseSelection);
+            bikeTblCompCtrl.searchText = '';
         }
 
         function enableBike(bike) {

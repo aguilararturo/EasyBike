@@ -20,12 +20,12 @@ namespace easyBike.Api.Controllers
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Clients
+                var data= db.Clients.Where(c => !db.Bikes.Select(b => b.Driver).Contains(c))                                    
                     .Include(client => client.Addresses)
                     .Include(Client => Client.Phones)
                     .OrderBy(item => item.Id)
                     .ToList();
-                return Data;
+                return data;
             }
         }
 

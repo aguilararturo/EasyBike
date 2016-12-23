@@ -11,12 +11,14 @@
     function stockComonent() {
         return {
             restrict: 'E',
-            templateUrl: 'components/user/userComp.tpl.html',
+            templateUrl: 'components/stock/stockComonent.tpl.html',
             controller: 'StockComonentController',
             controllerAs: 'stockCompCtrl',
             bindToController: {
                 products: '=',
-                title: '='
+                title: '@',
+                stocks: '=',
+                allowSearch: '@'
             },
             scope: true
         };
@@ -35,10 +37,46 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
+            stockCompCtrl.searchText = '';
+            stockCompCtrl.stock = {
+                product: {},
+                quantity: 0,
+                dueDate: null
+            };
+            stockCompCtrl.displaySearchOptions = false;
+            stockCompCtrl.datePicks = [];
+        }
 
+        function searchChange() {
+            if (stockCompCtrl.searchText.length > 0) {
+                stockCompCtrl.displaySearchOptions = true;
+            }
+        }
+
+        function addProduct(product) {
+            stockCompCtrl.stocks.push({
+                product: product,
+                quantity: 1,
+                dueDate: new Date()
+            });
+            stockCompCtrl.searchText = '';
+        }
+
+        function openDatePick(index) {
+            stockCompCtrl.datePicks[index] = true;
+        }
+
+        function removeStock(stock) {
+            _.remove(stockCompCtrl.stocks, function removeItem(n) {
+                return n === stock;
+            });
         }
 
         stockCompCtrl.$onInit = $onInit;
+        stockCompCtrl.searchChange = searchChange;
+        stockCompCtrl.addProduct = addProduct;
+        stockCompCtrl.openDatePick = openDatePick;
+        stockCompCtrl.removeStock = removeStock;
     }
     angular
         .module('EasyBikeApp.User')

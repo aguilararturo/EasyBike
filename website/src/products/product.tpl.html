@@ -6,26 +6,6 @@
 				<i class="fa fa-plus add-menu-item"></i> Agregar Producto
 			</a>
 		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Apellido</th>
-						<th>Telefonos</th>
-						<th>Direccion</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="user in userCtrl.users">
-						<td>{{user.name}}</td>
-						<td>{{user.lastName}}</td>
-						<td><span ng-repeat="phone in user.phones" ng-bind="phone.number"></span>
-							</td>
-						<td><span ng-repeat="address in user.addresses" ng-bind="address.location"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<stock-comonent products="prodCtrl.products" stocks="prodCtrl.stocks" title="Registrar Stock" allow-search="true"></stock-comonent>
 	</div>
 </div>

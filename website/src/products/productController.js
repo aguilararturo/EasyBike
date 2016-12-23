@@ -1,8 +1,8 @@
-(function() {
+(function () {
     'use strict';
 
 
-    function ProductController(CommonService) {
+    function ProductController(CommonService, ProductService) {
         var prodCtrl = this;
 
         /**
@@ -13,12 +13,18 @@
          */
         function $onInit() {
             CommonService.getUser().then(loadMenuItems);
+            ProductService.getStockProducts().then(loadStockProducts);
+            prodCtrl.stocks = [];
+            prodCtrl.products = [];
+        }
+
+        function loadStockProducts(response) {
+            prodCtrl.products = response;
         }
 
         function loadMenuItems(response) {
             prodCtrl.users = response;
         }
-
 
         prodCtrl.$onInit = $onInit;
     }

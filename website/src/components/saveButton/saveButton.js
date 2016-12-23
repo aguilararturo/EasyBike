@@ -33,16 +33,21 @@
             saveBtnCtrl.disabled = false;
         }
 
+        function errorHandler() {
+            saveBtnCtrl.disabled = false;
+        }
+
         function saveAction() {
             saveBtnCtrl.disabled = true;
             if (!_.isUndefined(saveBtnCtrl.clickAction)) {
-                saveBtnCtrl.clickAction().then(enableButton);
+                saveBtnCtrl.clickAction()
+                .then(enableButton)
+                .catch(errorHandler);
             }
         }
         saveBtnCtrl.enableButton = enableButton;
         saveBtnCtrl.saveAction = saveAction;
         saveBtnCtrl.$onInit = $onInit;
-
     }
     angular
         .module('EasyBikeApp.Components')

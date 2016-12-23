@@ -22,10 +22,17 @@
             return $http.put(url, bike);
         }
 
+        function getTodayAvaliableWithouOrder() {
+            return $http.get(BikeRegisterURL + '/GetTodayAvaliableWithouOrder')
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('GetTodayAvaliableWithouOrder'));
+        }
+
         return {
             disableBikeRegister: disableBikeRegister,
             getTodayBikes: getTodayBikes,
-            saveBikeRegister: saveBikeRegister
+            saveBikeRegister: saveBikeRegister,
+            getTodayAvaliableWithouOrder: getTodayAvaliableWithouOrder
         };
     }
 

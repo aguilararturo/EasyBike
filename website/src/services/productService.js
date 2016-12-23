@@ -25,10 +25,18 @@
                 .catch(requestService.errorLoadingScripts('getProductsByCategory'));
         }
 
+        function getStockProducts() {
+            var getByCatUrl = productURL + '/getStockProducts';
+            return $http.get(getByCatUrl)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getStockProducts'));
+        }
+
         return {
             saveProduct: saveProduct,
             getProducts: getProducts,
-            getProductsByCategory: getProductsByCategory
+            getProductsByCategory: getProductsByCategory,
+            getStockProducts: getStockProducts
         };
     }
 

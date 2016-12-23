@@ -26,13 +26,17 @@
                     'imageUrl': ''
                 }
             };
+            BikeService.getBikes().then(loadBikes);
+        }
+        function loadBikes(response) {
+            enableBikeCtrl.bikes = response;
         }
 
         function saveBike() {
             function completeSaveBike() {
                 ModalUtility.openSaveCompleteModal();
             }
-            BikeService.saveBike(bikeRegCtrl.bike).then(completeSaveBike);
+            BikeService.saveBike(enableBikeCtrl.bike).then(completeSaveBike);
         }
 
         function searchBike() {

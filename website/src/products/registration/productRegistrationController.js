@@ -10,6 +10,14 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
+            initProduct();
+            prodRegCtrl.categoryValidate = false;
+            prodRegCtrl.businessValidate = false;
+            prodRegCtrl.displayProductSelection = false;
+            prodRegCtrl.textTitle = 'Registro de producto';
+        }
+
+        function initProduct() {
             prodRegCtrl.product = {
                 id: 0,
                 codSubfix: '',
@@ -28,10 +36,6 @@
                 ],
                 imageUrl: ''
             };
-            prodRegCtrl.categoryValidate = false;
-            prodRegCtrl.businessValidate = false;
-            prodRegCtrl.displayProductSelection = false;
-            prodRegCtrl.textTitle = 'Registro de producto';
         }
 
         function selectCategory(category) {
@@ -45,6 +49,7 @@
         function saveProduct() {
             function saveSussess(response) {
                 ModalUtility.openSaveCompleteModal();
+                initProduct();
             }
             return ProductService.saveProduct(prodRegCtrl.product)
                 .then(saveSussess);
