@@ -1,6 +1,6 @@
-(function() {
+(function () {
     'use strict';
-    function BusinessRegistrationController(CommonService, BussinessService, ModalUtility) {
+    function BusinessRegistrationController(CommonService, BussinessService, ModalUtility,  $state) {
         var busRegCtrl = this;
 
         /**
@@ -11,34 +11,36 @@
          */
         function $onInit() {
             busRegCtrl.displaySave = true;
-            busRegCtrl.bussines =
-                {
+            busRegCtrl.bussines = {
+                id: 0,
+                codSubfix: '',
+                name: '',
+                addresses: [{
                     id: 0,
-                    codSubfix: "",
-                    name: "",
-                    addresses: [{
+                    location: '',
+                    date: '',
+                    direction: '',
+                    number: 0
+                }],
+                phones: [
+                    {
                         id: 0,
-                        location: "",
-                        date: "",
-                        direction: "",
-                        number: 0
-                    }],
-                    phones: [
-                        {
-                            id: 0,
-                            number: ''
-                        }
-                    ],
-                    imageUrl: "",
-                    categories:[]
-                };
+                        number: ''
+                    }
+                ],
+                imageUrl: '',
+                categories: []
+            };
 
             busRegCtrl.textTitle = 'Datos Empresa';
         }
 
         function saveAction() {
             function completeSave() {
-                ModalUtility.openSaveCompleteModal();
+                ModalUtility.openSaveCompleteModal().result.then(
+                function () {
+                    $state.reload();
+                });
             }
             BussinessService.saveBusiness(busRegCtrl.bussines).then(completeSave);
         }

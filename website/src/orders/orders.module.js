@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('EasyBikeApp.orders', []);
+        .module('EasyBikeApp.Orders', []);
 })();

@@ -36,7 +36,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function ProductCategoryRegistrationComponentController(_, ProductCategoryService) {
+    function ProductCategoryRegistrationComponentController(_, ProductCategoryService, $state, ModalUtility) {
         var prodCatRegCompCtrl = this;
         /**
         * @function $onInit
@@ -48,8 +48,15 @@
 
         }
 
+        function reloadThis() {
+            ModalUtility.openSaveCompleteModal().result.then(
+                function () {
+                    $state.reload();
+                });
+        }
+
         function saveProductCategory(category) {
-            ProductCategoryService.saveProductCategory(category);
+            ProductCategoryService.saveProductCategory(category).then(reloadThis);
         }
 
         prodCatRegCompCtrl.$onInit = $onInit;

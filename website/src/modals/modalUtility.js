@@ -130,6 +130,20 @@
             ], msg);
         }
 
+        function openAskDeliverOrderModal(key) {
+            var msg = 'Usted desea ' + key;
+            return openMessage(msg, [
+                {
+                    text: key,
+                    class: 'btn btn-default btn-success col-xs-6'
+                },
+                {
+                    text: 'Cancelar',
+                    class: 'btn btn-default btn-Error col-xs-6'
+                }
+            ], msg);
+        }
+
         function openGenericError() {
             var messages = [
                 {
@@ -150,7 +164,8 @@
             openSaveCompleteModal: openSaveCompleteModal,
             openAskEnableBikeModal: openAskEnableBikeModal,
             openVerifyOrdenData: openVerifyOrdenData,
-            openVerifyStockData: openVerifyStockData
+            openVerifyStockData: openVerifyStockData,
+            openAskDeliverOrderModal: openAskDeliverOrderModal
         };
     }
 

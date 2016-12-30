@@ -56,7 +56,7 @@
         ordersCtrl.$onInit = $onInit;
     }
     angular
-        .module('EasyBikeApp.orders')
+        .module('EasyBikeApp.Orders')
         .controller('OrderPanelController', OrderPanelController)
         .directive('orderPanel', orderPanel);
 })();

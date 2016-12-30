@@ -1,0 +1,34 @@
+<div class="col-xs-12">
+    <legend>
+        <h2>Ordenes en proceso</h2>
+    </legend>
+    <div class="stock-table">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Nombre Cliente</th>
+                    <th>Direccion</th>
+                    <th>Motocicleta</th>
+                    <th>Estado</th>
+                    <th>Completar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in ordersStatusCtrl.orders">
+                    <td>{{order.date | date:'medium' }}</td>
+                    <td>{{order.client.name}}</td>
+                    <td>{{order.deliveryAddress.location}}</td>
+                    <td>{{order.bike.plate}} {{order.bike.driver.name}}</td>
+                    <td>{{order.state}}</td>
+                    <td class="text-center">
+                        <button class="button" ng-click="ordersStatusCtrl.deliverOrder(order)">
+                        <i class="fa fa-check"></i>
+                         </button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

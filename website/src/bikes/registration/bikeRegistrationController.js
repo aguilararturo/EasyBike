@@ -1,6 +1,6 @@
-(function() {
+(function () {
     'use strict';
-    function BikeRegistrationController(BikeService, ModalUtility) {
+    function BikeRegistrationController(BikeService, ModalUtility, $state) {
         var bikeRegCtrl = this;
 
         /**
@@ -10,6 +10,12 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
+            initBike();
+
+            bikeRegCtrl.text = 'Datos Motociclista';
+        }
+
+        function initBike() {
             bikeRegCtrl.bike = {
                 'id': 0,
                 'code': '',
@@ -25,13 +31,14 @@
                     'imageUrl': ''
                 }
             };
-
-            bikeRegCtrl.text = "Datos Motociclista";
         }
 
         function saveBike() {
             function completeSaveBike() {
-                ModalUtility.openSaveCompleteModal();
+                ModalUtility.openSaveCompleteModal().result.then(
+                    function () {
+                        $state.reload();
+                    });
             }
             BikeService.saveBike(bikeRegCtrl.bike).then(completeSaveBike);
         }

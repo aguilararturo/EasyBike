@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace easyBike.DataModel.DataClasess
         public string BarCode { get; set; }
         public string Description { get; set; }
         public ProductCategory Category { get; set; }
-        public Business Business { get; set; }        
+        public Business Business { get; set; }
+        [NotMapped]
+        public decimal Price { get; set; }
     }
 }

@@ -26,6 +26,23 @@ namespace easyBikeApi.Controllers
             }
         }
 
+        // GET: api/values
+        [HttpGet("GetTodayInTransit")]
+        public IEnumerable<Order> GetTodayInTransit()
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                var Data = db.Orders
+                    .Where(o => o.state == OrderState.Transit && o.Date.Date == DateTime.Today)
+                    .Include(o => o.Client)
+                    .Include(o => o.DeliveryAddress)
+                    .Include(o => o.Bike)
+                    .ThenInclude(b => b.Driver)
+                    .ToList();
+                return Data;
+            }
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public Order Get(int id)
@@ -53,8 +70,10 @@ namespace easyBikeApi.Controllers
                 {
                     db.Entry(value.Client).State = EntityState.Modified;
                 }
+
                 foreach (var op in value.OrderProducts)
                 {
+                    op.Price = op.Product.Price * op.Quantity;
                     db.Entry(op.Product).State = EntityState.Modified;
                 }
 
@@ -66,9 +85,40 @@ namespace easyBikeApi.Controllers
                 if (value.Bike.Id > 0)
                 {
                     db.Entry(value.Bike).State = EntityState.Modified;
-                }
+                }                
                 value.state = OrderState.Transit;
+                value.Date = DateTime.UtcNow;
                 db.Orders.Add(value);
+                db.SaveChanges();
+                return Ok(value);
+            }
+
+            return NotFound();
+        }
+
+        // POST api/values
+        [HttpPost("DeliverOrder")]
+        public IActionResult DeliverOrder([FromBody] Order value)
+        {
+            using (var db = new EasyBikeDataContext())
+            {
+                db.Entry(value.Client).State = EntityState.Modified;
+
+                if (value.OrderProducts != null)
+                {
+                    foreach (var op in value.OrderProducts)
+                    {
+                        db.Entry(op.Product).State = EntityState.Modified;
+                    }
+                }
+
+                db.Entry(value.DeliveryAddress).State = EntityState.Modified;
+
+                db.Entry(value.Bike).State = EntityState.Modified;
+
+                value.state = OrderState.Delivered;
+                db.Entry(value).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return Ok(value);
             }

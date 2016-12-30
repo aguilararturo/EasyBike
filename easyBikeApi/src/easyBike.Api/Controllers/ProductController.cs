@@ -89,12 +89,22 @@ namespace easyBikeApi.Controllers
 
         // GET api/values/5
         [HttpGet("GetByCategory")]
-        public ICollection< Product> GetByCategory([FromQuery] int businessId, [FromQuery] int categoryId)
+        public ICollection<Product> GetByCategory([FromQuery] int businessId, [FromQuery] int categoryId)
         {
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Products
-                    .Where(item => item.Business.Id == businessId && item.Category.Id == categoryId);
+                    .Where(item => item.Business.Id == businessId && item.Category.Id == categoryId)
+                    .ToList();
+
+                foreach (var item in Data)
+                {
+                    var priceProduct = db.PriceProducts.Where(pp => pp.Product.Id == item.Id).OrderByDescending(pp => pp.RegisteredDate).FirstOrDefault();
+                    if (priceProduct == null)
+                    {
+                        item.Price = priceProduct.Price;
+                    }
+                }
                 return Data.ToList();
             }
         }
@@ -108,6 +118,13 @@ namespace easyBikeApi.Controllers
                 db.Entry(value.Business).State = EntityState.Unchanged;
                 db.Entry(value.Category).State = EntityState.Unchanged;
                 db.Products.Add(value);
+                if(value.Price > 0)
+                {
+                    PriceProduct pp = new PriceProduct();
+                    pp.Price = value.Price;
+                    pp.Product = value;
+                    db.PriceProducts.Add(pp);
+                }
                 db.SaveChanges();
             }
         }

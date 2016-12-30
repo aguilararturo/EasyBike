@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    function ProductRegistrationController(ProductService, ModalUtility, BussinessService, _) {
+    function ProductRegistrationController(ProductService, ModalUtility, BussinessService, _, $state) {
         var prodRegCtrl = this;
 
         /**
@@ -48,8 +48,10 @@
 
         function saveProduct() {
             function saveSussess(response) {
-                ModalUtility.openSaveCompleteModal();
-                initProduct();
+                ModalUtility.openSaveCompleteModal().result.then(
+                    function () {
+                        $state.reload();
+                    });
             }
             return ProductService.saveProduct(prodRegCtrl.product)
                 .then(saveSussess);

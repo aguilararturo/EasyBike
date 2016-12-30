@@ -8,11 +8,11 @@
      * @param {_} _ lodash
      */
     function orderPageConfig($stateProvider) {
-        $stateProvider.state('orders', {
-            url: '/orders',
-            templateUrl: 'orders/orders.tpl.html',
-            controller: 'OrdersController',
-            controllerAs: 'ordersCtrl',
+        $stateProvider.state('ordersStatus', {
+            url: '/ordersStatus',
+            templateUrl: 'orders/orderStatus/orderStatus.tpl.html',
+            controller: 'OrdersStatusController',
+            controllerAs: 'ordersStatusCtrl',
             authenticate: null
         });
     }

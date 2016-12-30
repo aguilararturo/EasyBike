@@ -148,8 +148,6 @@
 
         function loadUser(response) {
             ordersCtrl.order.client = response;
-
-            validateStep(KEYS.USER, true);
         }
 
         function searchUser(number) {
@@ -210,6 +208,11 @@
 
         function selectAddressChange() {
             ordersCtrl.order.deliveryAddress = UtilityService.getSelected(ordersCtrl.order.client.addresses);
+            if (!_.isUndefined(ordersCtrl.order.deliveryAddress)) {
+                if (!_.isEmpty(ordersCtrl.order.deliveryAddress.location)) {
+                    validateStep(KEYS.USER, true);
+                }
+            }
         }
 
         function validateStep(key, selected) {
@@ -224,6 +227,7 @@
             var validated = true;
             function verifyStep(step) {
                 validated = step.validated;
+                return validated;
             }
             _.forEach(ordersCtrl.steps, verifyStep);
 
@@ -264,6 +268,6 @@
         ordersCtrl.selectionBikeChange = selectionBikeChange;
     }
     angular
-        .module('EasyBikeApp.orders')
+        .module('EasyBikeApp.Orders')
         .controller('OrdersController', OrdersController);
 })();

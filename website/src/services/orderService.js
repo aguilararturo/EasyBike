@@ -12,8 +12,20 @@
             return $http.post(orderURL, Product);
         }
 
+        function getTodayInTransit() {
+            return $http.get(orderURL + '/GetTodayInTransit')
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('GetTodayInTransit'));
+        }
+
+        function deliverOrder(order) {
+            return $http.post(orderURL + '/DeliverOrder', order);
+        }
+
         return {
-            saveOrder: saveOrder
+            saveOrder: saveOrder,
+            getTodayInTransit: getTodayInTransit,
+            deliverOrder: deliverOrder
         };
     }
 

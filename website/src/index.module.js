@@ -15,7 +15,7 @@
             'EasyBikeApp.Services',
             'EasyBikeApp.Configuration',
             'EasyBikeApp.Menu',
-            'EasyBikeApp.orders',
+            'EasyBikeApp.Orders',
             'EasyBikeApp.Bikes',
             'EasyBikeApp.User',
             'EasyBikeApp.Components',

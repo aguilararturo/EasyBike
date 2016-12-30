@@ -1,6 +1,6 @@
-(function() {
+(function () {
     'use strict';
-    function UserRegistrationController(CommonService, ModalUtility) {
+    function UserRegistrationController(CommonService, ModalUtility, $state) {
         var userRegCtrl = this;
 
         /**
@@ -26,6 +26,7 @@
         function saveUser() {
             function saveSussess(response) {
                 ModalUtility.openSaveCompleteModal();
+                $state.reload();
             }
             CommonService.saveUser(userRegCtrl.user)
                 .then(saveSussess);
