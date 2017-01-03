@@ -11,14 +11,11 @@
             <input type="checkbox" ng-model="item.selected">
         </div>
         <list-buttons class="input-group-addon no-padding transparent-back" show="addressCompCtrl.showMap(item)" is-displayed="item.displayMap"></list-buttons>
-        <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="item.location">
+        <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="item.direction">
         <list-buttons class="input-group-addon no-padding transparent-back" remove="addressCompCtrl.removeAddress(item)"></list-buttons>
     </div>
     <div class="col-xs-12 no-width-padding  map-container" ng-if="item.displayMap">
-        <map zoom="15" center="{{item.location ? item.location : 'cochabamba'}}">
-                        <marker position="{{item.location}}" />
-                        <control name="overviewMap" opened="true" />
-                        </map>
+        <my-maps location="item.location" direction="item.direction" ></my-maps>
     </div>
     <div class="col-xs-12 no-width-padding">
         <div class="small-top-padding" ng-if="!item.displayMap"></div>
