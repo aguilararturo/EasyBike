@@ -177,6 +177,7 @@
         }
 
         function addCartProduct(orderProduct) {
+            orderProduct.product.business = ordersCtrl.selectedBusiness;
             function searchProd(prod) {
                 return prod.product.id === orderProduct.product.id;
             }

@@ -1,0 +1,19 @@
+<div class="form-inline">
+    <label>Fecha Inicio</label>
+    <div class="input-group" id="initDatePick">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="dateRepCmpCtrl.initDate" is-open="dateRepCmpCtrl.initDateOpen"
+            datepicker-options="dateOptions" ng-required="true" ng-change="dateRepCmpCtrl.changeInitDate()" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="dateRepCmpCtrl.openInitDate(dateRepCmpCtrl.initDateOpen)"><i class="glyphicon glyphicon-calendar calendar-font"></i></button>
+        </span>
+    </div>
+    <label>Fecha Final</label>
+    <div class="input-group" id="endDatePick">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="dateRepCmpCtrl.endDate" is-open="dateRepCmpCtrl.endDateOpen"
+            datepicker-options="dateRepCmpCtrl.dateOptions" ng-required="true" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="dateRepCmpCtrl.openEndDate(dateRepCmpCtrl.endDateOpen)"><i class="glyphicon glyphicon-calendar calendar-font"></i></button>
+        </span>
+    </div>
+
+</div>

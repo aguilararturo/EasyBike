@@ -55,6 +55,25 @@ namespace easyBike.Api.Controllers
             }
         }
 
+        // POST api/values
+        [HttpPost("addPriceGroup")]
+        public void addPriceGroup([FromBody]PriceProduct[] values)
+        {
+            foreach (var value in values)
+            {
+                if (value.Price > 0)
+                {
+                    using (var db = new EasyBikeDataContext())
+                    {
+                        db.Entry(value.Product).State = EntityState.Unchanged;
+                        value.RegisteredDate = DateTime.UtcNow;
+                        db.PriceProducts.Add(value);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]PriceProduct value)

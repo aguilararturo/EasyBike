@@ -12,5 +12,7 @@ namespace easyBike.DataModel.DataClasess
         public int Quantity { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime RegisterDate { get; set; }
+        public int OrderId { get; set; }
+        public int OrderProductId{ get; set; }
     }
 }

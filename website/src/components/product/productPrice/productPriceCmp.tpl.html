@@ -1,0 +1,40 @@
+<legend>
+    <h2>{{prodPriceCmpCtrl.title}}</h2>
+</legend>
+
+<div class="input-group" ng-if="prodPriceCmpCtrl.allowSearch">
+    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+    <input id="searchTextId" type="text" class="form-control" placeholder="Buscar producto" ng-model="prodPriceCmpCtrl.searchText"
+        ng-change="prodPriceCmpCtrl.searchChange()">
+    <div class="input-group-addon">
+        <button class="transparent-button">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
+
+<div class="stock-table">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Precio</th>                
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="stock in prodPriceCmpCtrl.items | filter:prodPriceCmpCtrl.searchText">
+                <td>{{stock.product.codSubfix}}</td>
+                <td>{{stock.product.name}}</td>
+                <td><span ng-bind="stock.price | currency" ng-if="!prodPriceCmpCtrl.readOnly"></span>
+                    <input type="number" class="form-control" placeholder="Ingrese Precio" ng-model="stock.price" max="999999" min="0" ng-if="prodPriceCmpCtrl.readOnly">
+                </td>                
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div ng-if="prodPriceCmpCtrl.displaySave">
+    <save-button click-action="prodPriceCmpCtrl.saveAction()" text-title="'Guardar Stock'"></save-button>
+
+</div>

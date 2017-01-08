@@ -1,12 +1,17 @@
 <div class="row">
-	<div class="col-lg-6">
-		<h2>Productos</h2>
+	<div class="col-lg-8 col-xs-12">
+		<legend>
+			<h2>Productos</h2>
+		</legend>
 		<div class="row">
-			<a href="#/newProduct" class="option-item-link col-sm-6">
+			<a href="#/newProduct" class="option-item-link col-sm-4">
 				<i class="fa fa-plus add-menu-item"></i> Agregar Producto
 			</a>
-			<a href="#/stock" class="option-item-link col-sm-6">
-				<i class="fa fa-plus add-menu-item"></i> Registrar Stock
+			<a href="#/stock" class="option-item-link col-sm-4">
+				<i class="fa fa-list-alt add-menu-item"></i> Registrar Stock
+			</a>
+			<a href="#/productPrice" class="option-item-link col-sm-4">
+				<i class="fa fa-money add-menu-item"></i> Registrar Precios
 			</a>
 		</div>
 		<stock-comonent products="prodCtrl.products" stocks="prodCtrl.stocks" title="Stock de productos" hide-due-date="true"></stock-comonent>

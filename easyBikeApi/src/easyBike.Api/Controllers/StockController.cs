@@ -61,7 +61,7 @@ namespace easyBikeApi.Controllers
             {
                 foreach (var item in values)
                 {
-                    db.Entry(item.Product).State = EntityState.Modified;
+                    db.Entry(item.Product).State = EntityState.Unchanged;                    
                     item.RegisterDate = DateTime.UtcNow;
                 }
                 db.Stock.AddRange(values);
@@ -75,8 +75,7 @@ namespace easyBikeApi.Controllers
         public IEnumerable<Stock> getStockProductsQuantity()
         {
             using (var db = new EasyBikeDataContext())
-            {
-                var ss = ConfigurationsNames.DefaultBusiness.ToString();
+            {                
                 var configData = db.Configurations.Where(c => c.Id == ConfigurationsNames.DefaultBusiness.ToString()).FirstOrDefault();
 
                 if (configData == null)

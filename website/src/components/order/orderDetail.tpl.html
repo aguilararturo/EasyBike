@@ -2,19 +2,24 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
+                <th colspan="3">Total del la Orden</th>
+                <th colspan="2">{{orderDtlCtr.getTotal() | currency}}</th>
+                
+            </tr>
+            <tr>
                 <th>Codigo</th>
                 <th>Nombre</th>
                 <th>Cant.</th>
                 <th>Precio</th>
                 <th></th>
-            </tr>
+            </tr>            
         </thead>
         <tbody>
             <tr ng-repeat="op in orderDtlCtr.orderProducts">
                 <td class="td-middle-text">{{op.product.codSubfix}}</td>
                 <td class="td-middle-text">{{op.product.name}}</td>
                 <td class="td-middle-text">{{op.quantity}}</td>
-                <td class="td-middle-text">{{op.quantity*op.product.price}}</td>
+                <td class="td-middle-text">{{op.quantity*op.product.price | currency}}</td>
                 <td class="div-btn no-width-padding td-middle-text" ng-click="ordersCtrl.removeCartProduct(op)">
                         <i class="fa fa-times red-button fa-2x"></i>
                 </td>

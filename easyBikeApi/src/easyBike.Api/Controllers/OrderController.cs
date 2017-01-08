@@ -66,7 +66,7 @@ namespace easyBikeApi.Controllers
         public IActionResult Post([FromBody] Order value)
         {
             using (var db = new EasyBikeDataContext())
-            {                
+            {
                 if (value.Client.Id > 0)
                 {
                     db.Entry(value.Client).State = EntityState.Modified;
@@ -74,12 +74,31 @@ namespace easyBikeApi.Controllers
 
                 decimal orderTotal = 0;
 
+                var configData = db.Configurations.Where(c => c.Id == ConfigurationsNames.DefaultBusiness.ToString()).FirstOrDefault();
+
                 foreach (var op in value.OrderProducts)
                 {
                     op.Price = op.Product.Price;
                     op.Total = op.Product.Price * op.Quantity;
                     orderTotal += op.Total;
                     db.Entry(op.Product).State = EntityState.Unchanged;
+
+                    if (configData != null)
+                    {
+                        if (configData.Name == op.Product.Business.Name)
+                        {
+                            var stock = new Stock()
+                            {
+                                Quantity = op.Quantity * -1,
+                                Product = op.Product,
+                                RegisterDate = DateTime.UtcNow,
+                                OrderId = value.Id,
+                                OrderProductId = op.Id
+                            };
+                            db.Entry(stock.Product).State = EntityState.Unchanged;
+                            db.Stock.Add(stock);
+                        }
+                    }
                 }
 
                 if (value.DeliveryAddress.Id > 0)
@@ -97,8 +116,8 @@ namespace easyBikeApi.Controllers
                     value.Bike = null;
                     value.state = OrderState.Waiting;
                 }
-                                
-                
+
+
                 value.Date = DateTime.UtcNow;
                 value.Total = orderTotal;
                 db.Orders.Add(value);
@@ -114,6 +133,13 @@ namespace easyBikeApi.Controllers
         public IActionResult DeliverOrder([FromBody] Order value)
         {
             return changeOrderState(value, OrderState.Delivered);
+        }
+
+        // POST api/values
+        [HttpPost("SetBike")]
+        public IActionResult SetBike([FromBody] Order value)
+        {
+            return changeOrderState(value, OrderState.Transit);
         }
 
         private IActionResult changeOrderState(Order value, OrderState state)
@@ -142,13 +168,6 @@ namespace easyBikeApi.Controllers
             }
 
             return NotFound();
-        }
-
-        // POST api/values
-        [HttpPost("SetBike")]
-        public IActionResult SetBike([FromBody] Order value)
-        {
-            return changeOrderState(value, OrderState.Transit);
         }
 
         // PUT api/values/5

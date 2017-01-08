@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -23,6 +23,8 @@
             'EasyBikeApp.Product',
             'EasyBikeApp.Business',
             'EasyBikeApp.Utils',
-            'EasyBikeApp.Stock'
+            'EasyBikeApp.Stock',
+            'EasyBikeApp.ProductPrice',
+            'EasyBikeApp.Report'
         ]);
 })();

@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "name": "Pedido",
+    "name": "Ordenes",
     "href": "#/orders",
-    "order": 1,
+    "order": 2,
     "content": "fa-shopping-cart"
-  }
+  },
   {
     "id": 1,
     "name": "Clientes",
@@ -15,9 +15,9 @@
   },
   {
     "id": 2,
-    "name": "Ordenes",
+    "name": "Nueva Orden",
     "href": "#/ordersStatus",
-    "order": 2,
+    "order": 1,
     "content": "fa-cart-plus"
   },
   {

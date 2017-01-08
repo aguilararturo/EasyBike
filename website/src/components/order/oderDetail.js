@@ -28,7 +28,19 @@
 
         }
 
+        function getTotal() {
+            var total = 0;
+            function sumTotal(item) {
+                total = total + (item.product.price * item.quantity);
+            }
+            if (!_.isUndefined(orderDtlCtr.orderProducts)) {
+                _.forEach(orderDtlCtr.orderProducts, sumTotal);
+            }
+            return total;
+        }
+
         orderDtlCtr.$onInit = $onInit;
+        orderDtlCtr.getTotal = getTotal;
     }
     angular
         .module('EasyBikeApp.Components')
