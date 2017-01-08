@@ -90,7 +90,7 @@ namespace easyBikeApi.Controllers
                 if (null == data)
                 {
                     db.Entry(value.Bike).State = EntityState.Unchanged;
-                    value.Date = DateTime.Now;
+                    value.Date = DateTime.UtcNow;
                     value.Active = true;
                     db.RegistredBikes.Add(value);
                     db.SaveChanges();

@@ -18,7 +18,7 @@
         </div>
         <div id="cntTextRow" class="row text-center content-container">
             <p id="prgMessageText" class="col-xs-offset-1 col-xs-10 {{::message.class}}"
-               ng-repeat="message in ::messageModalCtrl.message track by $index" ng-bind-html="message.text">
+               ng-repeat="message in ::messageModalCtrl.messages track by $index" ng-bind-html="message.text">
             </p>
         </div>
         <div id="cntButtonRow" class="row">

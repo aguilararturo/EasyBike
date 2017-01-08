@@ -28,12 +28,12 @@
                     <td>{{bike.driver.name}} {{bike.driver.lastName}}</td>
                     <td>{{bike.model}}</td>
                     <td ng-if="bikeTblCompCtrl.enabledOption" class="text-center">
-                        <button class="button" ng-click="bikeTblCompCtrl.enableBike(bike)">
+                        <button class="btn btn-success" ng-click="bikeTblCompCtrl.enableBike(bike)" data-toggle="tooltip" data-placement="top" title="Habilitar Motocicleta">
                         <i class="fa fa-check"></i>
                          </button>
                     </td>
                     <td ng-if="bikeTblCompCtrl.disableOption" class="text-center">
-                        <button class="button" ng-click="bikeTblCompCtrl.disableBike(bike)">
+                        <button class="btn btn-warning" ng-click="bikeTblCompCtrl.disableBike(bike)" data-toggle="tooltip" data-placement="top" title="Deshabilitar Motocicleta">
                         <i class="fa fa-minus"></i>
                          </button>
                     </td>

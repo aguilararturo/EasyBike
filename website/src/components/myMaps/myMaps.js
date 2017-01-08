@@ -26,7 +26,7 @@
      * @desc Controller to load maps directive
      * @param  {Object} _ Lodash lodash
      */
-    function MyMapsController(_, NgMap) {
+    function MyMapsController(_, NgMap, $scope) {
         var myMapsCtrl = this;
 
         /**
@@ -58,7 +58,8 @@
             myMapsCtrl.map.markers[0].setPosition(latLng);
             myMapsCtrl.location = latLng.lat() + ',' + latLng.lng();
             //myMapsCtrl.position = [latLng.lat(), latLng.lng()];
-            myMapsCtrl.map.panTo(latLng);
+            console.log('mymap',myMapsCtrl.location);
+            $scope.$apply();
         }
 
         myMapsCtrl.$onInit = $onInit;

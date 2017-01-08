@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace easyBike.DataModel.DataClasess
 {
@@ -13,7 +15,9 @@ namespace easyBike.DataModel.DataClasess
         public Client Client{ get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public Address DeliveryAddress { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public OrderState state { get; set; }
         public Bike Bike { get; set; }
+        public decimal Total { get; set; }
     }
 }

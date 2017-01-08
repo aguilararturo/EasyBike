@@ -6,17 +6,11 @@
     <div class="input-group-addon"><i class="fa fa-search"></i></div>
     <input id="searchTextId" type="text" class="form-control" placeholder="Buscar producto" ng-model="stockCompCtrl.searchText"
         ng-change="stockCompCtrl.searchChange()">
-</div>
-
-<div uib-dropdown keyboard-nav dropdown-append-to="searchTextId" is-open="stockCompCtrl.displaySearchOptions">
-    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-        <li role="menuitem" ng-repeat="product in filtered = (stockCompCtrl.products | filter:stockCompCtrl.searchText)">
-            <a href="#" ng-click="stockCompCtrl.addProduct(product)">
-                <span ng-bind="product.codSubfix"></span>
-                <span ng-bind="product.name"></span>
-            </a>
-        </li>
-    </ul>
+    <div class="input-group-addon">
+        <button class="transparent-button">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
 </div>
 
 <div class="stock-table">
@@ -27,15 +21,14 @@
                 <th>Nombre</th>
                 <th>Cantidad</th>
                 <th ng-if="!stockCompCtrl.hideDueDate">Fecha de Vencimiento</th>
-                <th ng-if="stockCompCtrl.readOnly">Borrar</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="stock in stockCompCtrl.stocks">
+            <tr ng-repeat="stock in stockCompCtrl.stocks | filter:stockCompCtrl.searchText">
                 <td>{{stock.product.codSubfix}}</td>
                 <td>{{stock.product.name}}</td>
                 <td><span ng-bind="stock.quantity" ng-if="!stockCompCtrl.readOnly"></span>
-                    <input type="number" class="form-control" placeholder="Ingrese Cantidad" ng-model="stock.quantity" max="999999" min="1" ng-if="stockCompCtrl.readOnly">
+                    <input type="number" class="form-control" placeholder="Ingrese Cantidad" ng-model="stock.quantity" max="999999" min="0" ng-if="stockCompCtrl.readOnly">
                 </td>
                 <td ng-if="!stockCompCtrl.hideDueDate">
                     <span ng-bind="stock.dueDate | date" ng-if="!stockCompCtrl.readOnly"></span>
@@ -46,9 +39,6 @@
                             <button type="button" class="btn btn-default" ng-click="stockCompCtrl.openDatePick($index)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
                     </div>
-                </td>
-                <td ng-if="stockCompCtrl.readOnly">
-                    <list-buttons class="input-group-addon no-padding transparent-back" remove="stockCompCtrl.removeStock(stock)" ></list-buttons>
                 </td>
             </tr>
         </tbody>

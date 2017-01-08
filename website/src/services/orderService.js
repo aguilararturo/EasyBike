@@ -22,8 +22,13 @@
             return $http.post(orderURL + '/DeliverOrder', order);
         }
 
+        function setBike(order) {
+            return $http.post(orderURL + '/SetBike', order);
+        }
+
         return {
             saveOrder: saveOrder,
+            setBike: setBike,
             getTodayInTransit: getTodayInTransit,
             deliverOrder: deliverOrder
         };

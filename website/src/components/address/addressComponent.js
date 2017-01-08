@@ -62,6 +62,7 @@
         function addAddress(address) {
             addressCompCtrl.addresses.push(_.clone(address));
             initDummyAdress();
+            console.log('addresses',addressCompCtrl.addresses);
         }
 
         function removeAddress(address) {

@@ -234,10 +234,32 @@
             return validated;
         }
 
+        function onlyBikeIsNotValidated() {
+            var validated = true;
+            function verifyStepIgnoringBike(step) {
+                if (step.title !== KEYS.BIKE) {
+                    validated = step.validated;
+                }
+                return validated;
+            }
+            _.forEach(ordersCtrl.steps, verifyStepIgnoringBike);
+
+            return validated;
+        }
+
         function saveOrder() {
             var deferred = $q.defer();
+            function closemod(option) {
+                if (option === okeyKey) {
+                    deferred.resolve(OrderService.saveOrder(ordersCtrl.order));
+                }
+            }
             if (isStepsValidated()) {
                 deferred.resolve(OrderService.saveOrder(ordersCtrl.order));
+            } else if (onlyBikeIsNotValidated()) {
+                var okeyKey = 'Guardar Orden sin moto';
+                var modResult = ModalUtility.openAskOrderWithoutBikeModal(okeyKey);
+                modResult.result.then(closemod);
             } else {
                 ModalUtility.openVerifyOrdenData();
                 deferred.reject();

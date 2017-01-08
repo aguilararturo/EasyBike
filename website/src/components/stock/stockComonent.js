@@ -31,7 +31,7 @@
      * @desc Controller to load the brands from Catalog service or search service
      * @param  {Object} _ Lodash lodash
      */
-    function StockComonentController(_) {
+    function StockComonentController(_, $scope) {
         var stockCompCtrl = this;
         /**
         * @function $onInit
@@ -40,7 +40,7 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            stockCompCtrl.searchText = '';
+            stockCompCtrl.searchText = {};
             stockCompCtrl.stock = {
                 product: {},
                 quantity: 0,
@@ -50,6 +50,15 @@
             stockCompCtrl.datePicks = [];
 
             stockCompCtrl.displaySave = !_.isUndefined(stockCompCtrl.saveAction);
+            $scope.$watch(getProduct, loadProducts);
+        }
+
+        function getProduct() {
+            return stockCompCtrl.products;
+        }
+
+        function loadProducts(product) {
+            _.forEach(stockCompCtrl.products, addProduct);
         }
 
         function searchChange() {
@@ -61,7 +70,7 @@
         function addProduct(product) {
             stockCompCtrl.stocks.push({
                 product: product,
-                quantity: 1,
+                quantity: 0,
                 dueDate: new Date()
             });
             stockCompCtrl.searchText = '';

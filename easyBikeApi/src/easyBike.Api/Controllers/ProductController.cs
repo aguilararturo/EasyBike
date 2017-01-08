@@ -100,7 +100,7 @@ namespace easyBikeApi.Controllers
                 foreach (var item in Data)
                 {
                     var priceProduct = db.PriceProducts.Where(pp => pp.Product.Id == item.Id).OrderByDescending(pp => pp.RegisteredDate).FirstOrDefault();
-                    if (priceProduct == null)
+                    if (priceProduct != null)
                     {
                         item.Price = priceProduct.Price;
                     }
@@ -123,6 +123,7 @@ namespace easyBikeApi.Controllers
                     PriceProduct pp = new PriceProduct();
                     pp.Price = value.Price;
                     pp.Product = value;
+                    pp.RegisteredDate = DateTime.UtcNow;
                     db.PriceProducts.Add(pp);
                 }
                 db.SaveChanges();

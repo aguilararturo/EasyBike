@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-lg-12">
 		<legend><h3>Clientes</h3></legend>
 		<div class="row">
 			<a href="#/newUser" class="option-item-link">
@@ -10,6 +10,7 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
+						<th>Nit</th>
 						<th>Nombre</th>
 						<th>Telefonos</th>
 						<th>Direccion</th>
@@ -17,10 +18,11 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in userCtrl.users">
+						<th>{{user.nit}}</th>
 						<td>{{user.name}}</td>
 						<td><span ng-repeat="phone in user.phones" ng-bind="phone.number"></span>
 							</td>
-						<td><span ng-repeat="address in user.addresses" ng-bind="address.location"></span></td>
+						<td><span ng-repeat="address in user.addresses" ng-bind="address.direction"></span></td>
 					</tr>
 				</tbody>
 			</table>

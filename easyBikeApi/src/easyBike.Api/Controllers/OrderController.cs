@@ -33,11 +33,12 @@ namespace easyBikeApi.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Orders
-                    .Where(o => o.state == OrderState.Transit && o.Date.Date == DateTime.Today)
+                    .Where(o => (o.state == OrderState.Transit || o.state == OrderState.Waiting) && o.Date.Date == DateTime.Today)
                     .Include(o => o.Client)
                     .Include(o => o.DeliveryAddress)
                     .Include(o => o.Bike)
                     .ThenInclude(b => b.Driver)
+                    .OrderByDescending(o => o.Date)
                     .ToList();
                 return Data;
             }
@@ -71,10 +72,14 @@ namespace easyBikeApi.Controllers
                     db.Entry(value.Client).State = EntityState.Modified;
                 }
 
+                decimal orderTotal = 0;
+
                 foreach (var op in value.OrderProducts)
                 {
-                    op.Price = op.Product.Price * op.Quantity;
-                    db.Entry(op.Product).State = EntityState.Modified;
+                    op.Price = op.Product.Price;
+                    op.Total = op.Product.Price * op.Quantity;
+                    orderTotal += op.Total;
+                    db.Entry(op.Product).State = EntityState.Unchanged;
                 }
 
                 if (value.DeliveryAddress.Id > 0)
@@ -84,10 +89,18 @@ namespace easyBikeApi.Controllers
 
                 if (value.Bike.Id > 0)
                 {
-                    db.Entry(value.Bike).State = EntityState.Modified;
-                }                
-                value.state = OrderState.Transit;
+                    db.Entry(value.Bike).State = EntityState.Unchanged;
+                    value.state = OrderState.Transit;
+                }
+                else
+                {
+                    value.Bike = null;
+                    value.state = OrderState.Waiting;
+                }
+                                
+                
                 value.Date = DateTime.UtcNow;
+                value.Total = orderTotal;
                 db.Orders.Add(value);
                 db.SaveChanges();
                 return Ok(value);
@@ -100,23 +113,28 @@ namespace easyBikeApi.Controllers
         [HttpPost("DeliverOrder")]
         public IActionResult DeliverOrder([FromBody] Order value)
         {
+            return changeOrderState(value, OrderState.Delivered);
+        }
+
+        private IActionResult changeOrderState(Order value, OrderState state)
+        {
             using (var db = new EasyBikeDataContext())
             {
-                db.Entry(value.Client).State = EntityState.Modified;
+                db.Entry(value.Client).State = EntityState.Unchanged;
 
                 if (value.OrderProducts != null)
                 {
                     foreach (var op in value.OrderProducts)
                     {
-                        db.Entry(op.Product).State = EntityState.Modified;
+                        db.Entry(op.Product).State = EntityState.Unchanged;
                     }
                 }
 
-                db.Entry(value.DeliveryAddress).State = EntityState.Modified;
+                db.Entry(value.DeliveryAddress).State = EntityState.Unchanged;
 
-                db.Entry(value.Bike).State = EntityState.Modified;
+                db.Entry(value.Bike).State = EntityState.Unchanged;
 
-                value.state = OrderState.Delivered;
+                value.state = state;
                 db.Entry(value).State = EntityState.Modified;
 
                 db.SaveChanges();
@@ -124,6 +142,13 @@ namespace easyBikeApi.Controllers
             }
 
             return NotFound();
+        }
+
+        // POST api/values
+        [HttpPost("SetBike")]
+        public IActionResult SetBike([FromBody] Order value)
+        {
+            return changeOrderState(value, OrderState.Transit);
         }
 
         // PUT api/values/5

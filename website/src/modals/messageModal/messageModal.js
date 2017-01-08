@@ -26,7 +26,7 @@
 
         messageModalCtrl.titleIcon = TITLE_ICON;
         messageModalCtrl.title = TITLE;
-        messageModalCtrl.message = MESSAGE;
+        messageModalCtrl.messages = MESSAGE;
         messageModalCtrl.buttonText = BUTTON_TEXT;
         messageModalCtrl.buttonCommandExecuted = buttonCommandExecuted;
     }

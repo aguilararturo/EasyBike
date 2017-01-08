@@ -130,6 +130,49 @@
             ], msg);
         }
 
+        /**
+         * @function openAskOrderBikeModal
+         * @memberof ModalUtility
+         * @author Arturo Aguilar
+         * @desc Save complete message.
+         * @returns {Object} The message modal.
+         */
+        function openAskOrderBikeModal(order, key) {
+            var msg = 'Usted desea ' + key + ' a la Order: ' + order.id;
+            return openMessage(msg, [
+                {
+                    text: key,
+                    class: 'btn btn-default btn-success col-xs-6'
+                },
+                {
+                    text: 'Cancelar',
+                    class: 'btn btn-default btn-Error col-xs-6'
+                }
+            ], msg);
+        }
+
+
+        /**
+         * @function openAskOrderWithoutBikeModal
+         * @memberof ModalUtility
+         * @author Arturo Aguilar
+         * @desc Ask question about save order without bike
+         * @returns {Object} The message modal.
+         */
+        function openAskOrderWithoutBikeModal(key) {
+            var msg = 'Usted desea Guardar la orden sin una motocicleta asignada?';
+            return openMessage(msg, [
+                {
+                    text: key,
+                    class: 'btn btn-default btn-success col-xs-6'
+                },
+                {
+                    text: 'Cancelar',
+                    class: 'btn btn-default btn-Error col-xs-6'
+                }
+            ], msg);
+        }
+
         function openAskDeliverOrderModal(key) {
             var msg = 'Usted desea ' + key;
             return openMessage(msg, [
@@ -165,7 +208,9 @@
             openAskEnableBikeModal: openAskEnableBikeModal,
             openVerifyOrdenData: openVerifyOrdenData,
             openVerifyStockData: openVerifyStockData,
-            openAskDeliverOrderModal: openAskDeliverOrderModal
+            openAskDeliverOrderModal: openAskDeliverOrderModal,
+            openAskOrderWithoutBikeModal: openAskOrderWithoutBikeModal,
+            openAskOrderBikeModal: openAskOrderBikeModal
         };
     }
 

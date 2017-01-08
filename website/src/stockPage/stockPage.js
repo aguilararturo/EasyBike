@@ -16,7 +16,7 @@
         }
 
         function loadStockProducts(response) {
-            stockPageCtrl.products = response;
+            stockPageCtrl.products = response;        
         }
 
         function isValidated() {
