@@ -7,8 +7,8 @@
     <input id="searchTextId" type="text" class="form-control" placeholder="Buscar producto" ng-model="stockCompCtrl.searchText"
         ng-change="stockCompCtrl.searchChange()">
     <div class="input-group-addon">
-        <button class="transparent-button">
-            <i class="fa fa-search"></i>
+        <button class="transparent-button" ng-click="stockCompCtrl.searchText=''">
+            <i class="fa fa-refresh"></i>
         </button>
     </div>
 </div>

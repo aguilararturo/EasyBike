@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Ordenes",
-    "href": "#/orders",
+    "href": "#/ordersStatus",
     "order": 2,
     "content": "fa-shopping-cart"
   },
@@ -16,7 +16,7 @@
   {
     "id": 2,
     "name": "Nueva Orden",
-    "href": "#/ordersStatus",
+    "href": "#/orders",
     "order": 1,
     "content": "fa-cart-plus"
   },
@@ -40,5 +40,13 @@
     "href": "#/product",
     "order": 6,
     "content": "fa-glass"
+  },
+  {
+    "id": 6,
+    "name": "Report",
+    "href": "#/report",
+    "order": 7,
+    "content": "fa-area-chart"
   }
+  
 ]

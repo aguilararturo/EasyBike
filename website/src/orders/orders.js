@@ -12,7 +12,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility, $q) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility, $q, $scope) {
         var ordersCtrl = this;
         var KEYS = {
             ORDER: 'Pedido',
@@ -28,6 +28,8 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
+            ordersCtrl.searchBussinesText = '';
+
             ordersCtrl.userEnable = false;
             ordersCtrl.oderTypeEnable = false;
             ordersCtrl.cartEnable = false;
@@ -278,6 +280,10 @@
             validateStep(KEYS.BIKE, !_.isUndefined(bike));
         }
 
+        function searchBusinessChange() {
+            console.log('text', ordersCtrl.searchBussinesText);
+        }
+
         ordersCtrl.$onInit = $onInit;
         ordersCtrl.selectBusiness = selectBusiness;
         ordersCtrl.searchUser = searchUser;
@@ -289,6 +295,7 @@
         ordersCtrl.selectAddressChange = selectAddressChange;
         ordersCtrl.saveOrder = saveOrder;
         ordersCtrl.selectionBikeChange = selectionBikeChange;
+        ordersCtrl.searchBusinessChange = searchBusinessChange;
     }
     angular
         .module('EasyBikeApp.Orders')

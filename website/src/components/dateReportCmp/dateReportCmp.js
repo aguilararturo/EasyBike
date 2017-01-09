@@ -16,7 +16,8 @@
             controllerAs: 'dateRepCmpCtrl',
             bindToController: {
                 initDate: '=',
-                endDate: '='
+                endDate: '=',
+                action: '&?'
             },
             scope: true
         };
@@ -35,7 +36,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function DateReportCmpController() {
+    function DateReportCmpController(_) {
         var dateRepCmpCtrl = this;
         /**
         * @function $onInit
@@ -47,16 +48,12 @@
             dateRepCmpCtrl.initDateOpen = false;
             dateRepCmpCtrl.endDateOpen = false;
             dateRepCmpCtrl.dateOptions = {
-                formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
                 startingDay: 1
             };
-        }
 
-        function openDate(flag) {
-            flag = !flag;
-            console.log(flag, dateRepCmpCtrl.initDateOpen, dateRepCmpCtrl.endDateOpen);
+            dateRepCmpCtrl.displayActionBtn = !_.isUndefined(dateRepCmpCtrl.action);
         }
 
         function openInitDate() {
@@ -74,11 +71,17 @@
             dateRepCmpCtrl.dateOptions.minDate = dateRepCmpCtrl.initDate;
         }
 
+        function launchAction() {
+            if (!_.isUndefined(dateRepCmpCtrl.action)) {
+                dateRepCmpCtrl.action();
+            }
+        }
+
         dateRepCmpCtrl.$onInit = $onInit;
-        dateRepCmpCtrl.openDate = openDate;
         dateRepCmpCtrl.openInitDate = openInitDate;
         dateRepCmpCtrl.openEndDate = openEndDate;
         dateRepCmpCtrl.changeInitDate = changeInitDate;
+        dateRepCmpCtrl.launchAction = launchAction;
     }
     angular
         .module('EasyBikeApp.Bikes')

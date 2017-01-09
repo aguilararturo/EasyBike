@@ -15,5 +15,10 @@
             <button type="button" class="btn btn-default" ng-click="dateRepCmpCtrl.openEndDate(dateRepCmpCtrl.endDateOpen)"><i class="glyphicon glyphicon-calendar calendar-font"></i></button>
         </span>
     </div>
+    <div class="input-group" ng-if="dateRepCmpCtrl.displayActionBtn">
+        <button class="btn btn-success" ng-click="dateRepCmpCtrl.launchAction()">
+            <i class="fa fa-bar-chart"></i>Generar Reporte
+        </button>
+    </div>
 
 </div>

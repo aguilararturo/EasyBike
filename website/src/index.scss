@@ -43,7 +43,7 @@
   padding-bottom: 10px;
 }
 .calendar-font {
-  font-size: 16px;
+  font-size: 15px;
 }
 .transparent-button {
   opacity: 0.75;
@@ -139,3 +139,4 @@ legend {
 @import "orders/panel/orderPanel";
 @import "orders/orders";
 @import "components/stock/stockComonent";
+@import "report/report";

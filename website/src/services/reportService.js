@@ -7,15 +7,40 @@
 
         var stockUrl = BASE_URL + '/Report';
 
-        function GetTopSellBike() {
-            var getByCatUrl = stockUrl + '/GetTopSellBike';
+        function getTopSellBike(initDate, endDate) {
+            var getByCatUrl = stockUrl + '/GetTopSellBike/' + initDate + '/' + endDate;
             return $http.get(getByCatUrl)
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts('GetTopSellBike'));
         }
 
+        function getTopSellBikePerDay(initDate, endDate) {
+            var getByCatUrl = stockUrl + '/getTopSellBikePerDay/' + initDate + '/' + endDate;
+            return $http.get(getByCatUrl)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getTopSellBikePerDay'));
+        }
+
+        function getTopOrderUserPerDay(initDate, endDate) {
+            var getByCatUrl = stockUrl + '/getTopOrderUserPerDay/' + initDate + '/' + endDate;
+            return $http.get(getByCatUrl)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getTopOrderUserPerDay'));
+        }
+
+        function getTopOrderUser(initDate, endDate) {
+            var getByCatUrl = stockUrl + '/getTopOrderUser/' + initDate + '/' + endDate;
+            return $http.get(getByCatUrl)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getTopOrderUser'));
+        }
+
+
         return {
-            GetTopSellBike: GetTopSellBike
+            getTopSellBike: getTopSellBike,
+            getTopSellBikePerDay: getTopSellBikePerDay,
+            getTopOrderUserPerDay: getTopOrderUserPerDay,
+            getTopOrderUser: getTopOrderUser
         };
     }
 

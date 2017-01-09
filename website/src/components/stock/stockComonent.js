@@ -40,7 +40,6 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-            stockCompCtrl.searchText = {};
             stockCompCtrl.stock = {
                 product: {},
                 quantity: 0,

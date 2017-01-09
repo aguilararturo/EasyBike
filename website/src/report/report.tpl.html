@@ -3,12 +3,135 @@
 		<legend class="col-xs-12 no-width-padding">
 			<h3 class="col-xs-12 col-lg-8 no-width-padding">Reportes</h3>
 		</legend>
-		<div class="col-xs-12 no-width-padding">
-			<a href="#/newBusiness" class="option-item-link">
-				<i class="fa fa-plus add-menu-item"></i> Numero Ventas Motocicleta
+		<div class="col-xs-12 col-lg-4 no-width-padding report-link" ng-repeat="rep in reportCtrl.reportsKey">
+			<a href="" class="option-item-link" ng-click="reportCtrl.goToReport(rep.key)">
+				<i class="fa fa-plus add-menu-item"></i>{{rep.title}}
 			</a>
 		</div>
 	</div>
 </div>
+<div class="col-xs-12" ng-if="reportCtrl.selectedReport === reportCtrl.REPORT.BIKE_ORDERS">
+	<date-report-cmp class="col-xs-12" end-date="reportCtrl.endDate" init-date="reportCtrl.initDate" action="reportCtrl.getData()"></date-report-cmp>
+	<div class="col-xs-12 report-table table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Codigo</th>
+					<th>Conductor</th>
+					<th>Moto</th>
+					<th>Ordernes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in reportCtrl.items">
+					<td class="td-middle-text">{{item.bike.code}}</td>
+					<td class="td-middle-text">{{item.bike.driver.name}}</td>
+					<td class="td-middle-text">{{item.bike.plate}}</td>
+					<td class="td-middle-text">{{item.numberOrder}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 
-<date-report-cmp class="col-xs-12" end-date="reportCtrl.endDate" init-date="reportCtrl.initDate"></date-report-cmp>
+<div class="col-xs-12" ng-if="reportCtrl.selectedReport === reportCtrl.REPORT.BIKE_DAY_ORDERS">
+	<date-report-cmp class="col-xs-12" end-date="reportCtrl.endDate" init-date="reportCtrl.initDate" action="reportCtrl.getData()"></date-report-cmp>
+	<div class="col-xs-12 report-table table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Codigo</th>
+					<th>Conductor</th>
+					<th>Moto</th>
+					<th>Ordernes</th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="item in reportCtrl.items">
+				<tr>
+					<td class="td-middle-text">{{item.bike.code}}</td>
+					<td class="td-middle-text">{{item.bike.driver.name}}</td>
+					<td class="td-middle-text">{{item.bike.plate}}</td>
+					<td class="td-middle-text">{{item.numberOrder}}</td>
+				</tr>
+				<tr class="active">
+					<td colspan="3">
+						<table class="table">
+							<thead>
+								<th>Dia</th>
+								<th>Ordenes</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="subItem in item.dates">
+									<td class="td-middle-text">{{subItem.day | date }}</td>
+									<td class="td-middle-text">{{subItem.count}}</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="col-xs-12" ng-if="reportCtrl.selectedReport === reportCtrl.REPORT.CLIENT_ORDERS">
+	<date-report-cmp class="col-xs-12" end-date="reportCtrl.endDate" init-date="reportCtrl.initDate" action="reportCtrl.getData()"></date-report-cmp>
+	<div class="col-xs-12 report-table table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Nit</th>
+					<th>Nombre</th>
+					<th>Ordernes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in reportCtrl.items">
+					<td class="td-middle-text">{{item.client.nit}}</td>
+					<td class="td-middle-text">{{item.client.name}}</td>
+					<td class="td-middle-text">{{item.numberOrder}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="col-xs-12" ng-if="reportCtrl.selectedReport === reportCtrl.REPORT.CLIENT_DAY_ORDERS">
+	<date-report-cmp class="col-xs-12" end-date="reportCtrl.endDate" init-date="reportCtrl.initDate" action="reportCtrl.getData()"></date-report-cmp>
+	<div class="col-xs-12 report-table table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Nit</th>
+					<th>Nombre</th>
+					<th>Ordernes</th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="item in reportCtrl.items">
+				<tr>
+					<td class="td-middle-text">{{item.client.nit}}</td>
+					<td class="td-middle-text">{{item.client.name}}</td>
+					<td class="td-middle-text">{{item.numberOrder}}</td>
+				</tr>
+				<tr class="active">
+					<td colspan="3">
+						<table class="table">
+							<thead>
+								<th>Dia</th>
+								<th>Ordenes</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="subItem in item.dates">
+									<td class="td-middle-text">{{subItem.day | date }}</td>
+									<td class="td-middle-text">{{subItem.count}}</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
