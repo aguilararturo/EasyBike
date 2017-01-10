@@ -35,7 +35,7 @@ namespace easyBikeApi.Controllers
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.RegistredBikes
-                    .Where(b => b.Date.Date == DateTime.Today && b.Active)
+                    .Where(b => b.Date.Date == DateTime.Today.Date && b.Active)
                    .Include(b => b.Bike)
                    .ThenInclude(b => b.Driver)
                     .OrderByDescending(item => item.Date)                    
@@ -90,7 +90,7 @@ namespace easyBikeApi.Controllers
                 if (null == data)
                 {
                     db.Entry(value.Bike).State = EntityState.Unchanged;
-                    value.Date = DateTime.UtcNow;
+                    value.Date = DateTime.Now;
                     value.Active = true;
                     db.RegistredBikes.Add(value);
                     db.SaveChanges();

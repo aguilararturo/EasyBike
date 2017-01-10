@@ -91,7 +91,7 @@ namespace easyBikeApi.Controllers
                             {
                                 Quantity = op.Quantity * -1,
                                 Product = op.Product,
-                                RegisterDate = DateTime.UtcNow,
+                                RegisterDate = DateTime.Now,
                                 OrderId = value.Id,
                                 OrderProductId = op.Id
                             };
@@ -118,7 +118,7 @@ namespace easyBikeApi.Controllers
                 }
 
 
-                value.Date = DateTime.UtcNow;
+                value.Date = DateTime.Now;
                 value.Total = orderTotal;
                 db.Orders.Add(value);
                 db.SaveChanges();

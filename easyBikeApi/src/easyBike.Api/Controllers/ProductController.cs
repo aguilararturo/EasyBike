@@ -123,7 +123,7 @@ namespace easyBikeApi.Controllers
                     PriceProduct pp = new PriceProduct();
                     pp.Price = value.Price;
                     pp.Product = value;
-                    pp.RegisteredDate = DateTime.UtcNow;
+                    pp.RegisteredDate = DateTime.Now;
                     db.PriceProducts.Add(pp);
                 }
                 db.SaveChanges();

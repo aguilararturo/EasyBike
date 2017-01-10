@@ -66,7 +66,7 @@ namespace easyBike.Api.Controllers
                     using (var db = new EasyBikeDataContext())
                     {
                         db.Entry(value.Product).State = EntityState.Unchanged;
-                        value.RegisteredDate = DateTime.UtcNow;
+                        value.RegisteredDate = DateTime.Now;
                         db.PriceProducts.Add(value);
                         db.SaveChanges();
                     }

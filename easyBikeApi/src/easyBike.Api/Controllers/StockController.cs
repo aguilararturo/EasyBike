@@ -62,7 +62,7 @@ namespace easyBikeApi.Controllers
                 foreach (var item in values)
                 {
                     db.Entry(item.Product).State = EntityState.Unchanged;                    
-                    item.RegisterDate = DateTime.UtcNow;
+                    item.RegisterDate = DateTime.Now;
                 }
                 db.Stock.AddRange(values);
                 db.SaveChanges();
