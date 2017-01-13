@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel.DataClasess;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Http;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,11 +47,13 @@ namespace easyBikeApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Order Get(int id)
+        public Order Get([FromUri]int id, [FromUri]int page, [FromUri]int count)
         {
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Orders
+                    .Skip((page - 1) * count)
+                    .Take(count)
                     .Include(item => item.Client)
                     .Include(item => item.DeliveryAddress)
                     .Include(item => item.OrderProducts)
