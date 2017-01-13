@@ -1,8 +1,21 @@
-complete order
-select address to ship
-complete order detail - Save
+done -complete order
+done - select address to ship
+done - complete order detail - Save
+done - stock - productos locales
+done - option hide show map
+
+display waiting time and add color acording time
+add view orders and detail - list or individual
+Add validations empty values
+add validations codes
+Add more reports
 edit bussiness
 display bussiness products
+edit products
+link add category to one business
+temporal order cache
 
-stock - productos locales
-option hide show map
+
+
+
+

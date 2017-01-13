@@ -19,5 +19,7 @@ namespace easyBike.DataModel.DataClasess
         public OrderState state { get; set; }
         public Bike Bike { get; set; }
         public decimal Total { get; set; }
+        public DateTime DeliverDate { get; set; }
+        public DateTime InTrantirDate { get; set; }
     }
 }

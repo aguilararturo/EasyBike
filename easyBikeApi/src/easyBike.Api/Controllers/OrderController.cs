@@ -161,6 +161,24 @@ namespace easyBikeApi.Controllers
                 db.Entry(value.Bike).State = EntityState.Unchanged;
 
                 value.state = state;
+
+                switch (state)
+                {
+                    case OrderState.Delivered:
+                        value.DeliverDate = DateTime.Now;
+                        break;
+                    case OrderState.Transit:
+                        value.InTrantirDate = DateTime.Now;
+                        break;
+                    case OrderState.Waiting:
+                        break;
+                    case OrderState.Sended:
+                        break;
+                    default:
+                        break;
+                }
+
+
                 db.Entry(value).State = EntityState.Modified;
 
                 db.SaveChanges();
