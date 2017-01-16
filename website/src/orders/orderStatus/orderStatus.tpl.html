@@ -1,11 +1,22 @@
 <div class="col-xs-12">
     <legend>
         <h2 ng-if="ordersStatusCtrl.displayBikes">Asignar Motocicleta</h2>
-        <h2 ng-if="!ordersStatusCtrl.displayBikes">Ordenes en proceso</h2>
+        <h2 ng-if="!ordersStatusCtrl.displayBikes && !ordersStatusCtrl.displayDelivery">Ordenes en proceso</h2>
+        <h2 ng-if="ordersStatusCtrl.displayDelivery">Ordenes entregadas</h2>
     </legend>
     <div class="row pull-right back-button" ng-if="ordersStatusCtrl.displayBikes">
         <button class="btn btn-danger back-button" ng-click="ordersStatusCtrl.cancel()">
             <i class="fa fa-times"></i> Regresar a lista de ordenes
+        </button>
+    </div>
+    <div class="row pull-right back-button" ng-if="ordersStatusCtrl.displayDelivery">
+        <button class="btn btn-danger back-button" ng-click="ordersStatusCtrl.loadOrders()">
+            <i class="fa fa-times"></i> Regresar a lista de ordenes
+        </button>
+    </div>
+    <div class="row pull-left back-button" ng-if="!ordersStatusCtrl.displayDelivery">
+        <button class="btn btn-success back-button" ng-click="ordersStatusCtrl.selectDeliverOrders()">
+            <i class="fa fa-times"></i> Ordenes entregadas
         </button>
     </div>
     <div class="stock-table">
@@ -24,7 +35,19 @@
             <tbody>
                 <tr ng-repeat="order in ordersStatusCtrl.orders">
                     <td>{{order.id}}</td>
-                    <td>{{order.date | date:'medium' }}</td>
+                    <td>
+                        <span class="time-order" ng-bind="order.date | amCalendar"></span>
+                        <span class="text-primary">
+                            <i class="fa fa-shopping-cart"></i>
+                            <time class="time-counter" ng-if="!ordersStatusCtrl.displayDelivery" am-time-ago="order.date"></time>
+                            <time class="time-counter" ng-if="ordersStatusCtrl.displayDelivery">{{order.deliverDate | amDifference : order.date : 'minute'}} Minutos</time>
+                        </span>
+                        <span class="text-success">
+                            <i class="fa fa-motorcycle"></i>
+                            <time class="time-counter" ng-if="!ordersStatusCtrl.displayDelivery" am-time-ago="order.inTransitDate"></time>
+                            <time class="time-counter" ng-if="ordersStatusCtrl.displayDelivery">{{order.deliverDate | amDifference : order.inTransitDate : 'minute'}} Minutos</time>
+                        </span>
+                    </td>
                     <td>{{order.client.name}}</td>
                     <td>{{order.deliveryAddress.direction}}</td>
                     <td>{{order.bike.plate}} {{order.bike.driver.name}}</td>

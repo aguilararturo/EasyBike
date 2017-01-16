@@ -20,6 +20,6 @@ namespace easyBike.DataModel.DataClasess
         public Bike Bike { get; set; }
         public decimal Total { get; set; }
         public DateTime DeliverDate { get; set; }
-        public DateTime InTrantirDate { get; set; }
+        public DateTime InTransitDate { get; set; }
     }
 }

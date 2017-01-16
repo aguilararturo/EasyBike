@@ -46,7 +46,9 @@ module.exports = {
             'node_modules/ez-plus/src/jquery.ez-plus.js',			
 			'node_modules/ngmap/build/scripts/ng-map.min.js',
 			'node_modules/croppie/croppie.js',
-			'node_modules/angular-wizard/dist/angular-wizard.min.js'
+			'node_modules/angular-wizard/dist/angular-wizard.min.js',
+			'node_modules/moment/moment.js',
+			'node_modules/angular-moment/angular-moment.js'
         ],
         styles: [
             'node_modules/angular-carousel/dist/angular-carousel.min.css',

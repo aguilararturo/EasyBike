@@ -25,12 +25,18 @@
         function setBike(order) {
             return $http.post(orderURL + '/SetBike', order);
         }
+        function getOrders() {
+            return $http.get(orderURL)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getOrders'));
+        }
 
         return {
             saveOrder: saveOrder,
             setBike: setBike,
             getTodayInTransit: getTodayInTransit,
-            deliverOrder: deliverOrder
+            deliverOrder: deliverOrder,
+            getOrders: getOrders
         };
     }
 

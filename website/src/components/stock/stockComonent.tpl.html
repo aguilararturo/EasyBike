@@ -21,6 +21,7 @@
                 <th>Nombre</th>
                 <th>Cantidad</th>
                 <th ng-if="!stockCompCtrl.hideDueDate">Fecha de Vencimiento</th>
+                <th ng-if="stockCompCtrl.readOnly">Codigo</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,9 @@
                             <button type="button" class="btn btn-default" ng-click="stockCompCtrl.openDatePick($index)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
                     </div>
+                </td>
+                <td ng-if="stockCompCtrl.readOnly">
+                    <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="stock.stockCode">
                 </td>
             </tr>
         </tbody>

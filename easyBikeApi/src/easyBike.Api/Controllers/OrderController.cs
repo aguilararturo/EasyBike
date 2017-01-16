@@ -17,19 +17,25 @@ namespace easyBikeApi.Controllers
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Order> Get()
+        public IActionResult Get([FromUri]int page, [FromUri]int count)
         {
             using (var db = new EasyBikeDataContext())
             {
-                var Data = db.Orders               
-                    .ToList();
-                return Data;
+                var Data = db.Orders
+                    //.Skip((page - 1) * count)
+                    //.Take(count)
+                    .Include(o => o.Client)
+                    .Include(o => o.DeliveryAddress)
+                    .Include(o => o.Bike)
+                    .ThenInclude(b => b.Driver)
+                    .OrderByDescending(o => o.Date);
+                return Ok(Data.ToList());
             }
         }
 
         // GET: api/values
         [HttpGet("GetTodayInTransit")]
-        public IEnumerable<Order> GetTodayInTransit()
+        public IActionResult GetTodayInTransit()
         {
             using (var db = new EasyBikeDataContext())
             {
@@ -41,26 +47,26 @@ namespace easyBikeApi.Controllers
                     .ThenInclude(b => b.Driver)
                     .OrderByDescending(o => o.Date)
                     .ToList();
-                return Data;
+                return Ok(Data);
             }
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Order Get([FromUri]int id, [FromUri]int page, [FromUri]int count)
+        public IActionResult Get([FromUri]int id)
         {
             using (var db = new EasyBikeDataContext())
             {
                 var Data = db.Orders
-                    .Skip((page - 1) * count)
-                    .Take(count)
-                    .Include(item => item.Client)
-                    .Include(item => item.DeliveryAddress)
+                    .Include(o => o.Client)
+                    .Include(o => o.DeliveryAddress)
+                    .Include(o => o.Bike)
+                    .ThenInclude(b => b.Driver)                    
                     .Include(item => item.OrderProducts)
                     .ThenInclude(op => op.Product)                    
                     .ThenInclude(p => p.Business)                    
                     .Where(item => item.Id == id);
-                return Data.First();
+                return Ok(Data.First());
             }
         }
 
@@ -171,7 +177,7 @@ namespace easyBikeApi.Controllers
                         value.DeliverDate = DateTime.Now;
                         break;
                     case OrderState.Transit:
-                        value.InTrantirDate = DateTime.Now;
+                        value.InTransitDate = DateTime.Now;
                         break;
                     case OrderState.Waiting:
                         break;

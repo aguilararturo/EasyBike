@@ -10,10 +10,17 @@
          * @author Arturo Aguilar
          */
         function $onInit() {
+            ordersStatusCtrl.currentDate = new Date();
             ordersStatusCtrl.displayBikes = false;
+            ordersStatusCtrl.displayDelivery = false;
             ordersStatusCtrl.orders = [];
             ordersStatusCtrl.bikes = {};
             OrderService.getTodayInTransit().then(loadOrdersStatus);
+        }
+
+        function selectDeliverOrders() {
+            ordersStatusCtrl.displayDelivery = true;
+            OrderService.getOrders().then(loadOrdersStatus);
         }
 
         function loadOrdersStatus(response) {
@@ -85,9 +92,14 @@
             modResult.result.then(closemod);
         }
 
-        function cancel(){
+        function cancel() {
             ordersStatusCtrl.displayBikes = false;
             ordersStatusCtrl.orders = ordersStatusCtrl.dumpOrders;
+        }
+
+        function loadOrders() {
+            ordersStatusCtrl.displayDelivery = false;
+            OrderService.getTodayInTransit().then(loadOrdersStatus);
         }
 
         ordersStatusCtrl.$onInit = $onInit;
@@ -95,6 +107,8 @@
         ordersStatusCtrl.addBikeToOrder = addBikeToOrder;
         ordersStatusCtrl.selectionBikeChange = selectionBikeChange;
         ordersStatusCtrl.cancel = cancel;
+        ordersStatusCtrl.selectDeliverOrders = selectDeliverOrders;
+        ordersStatusCtrl.loadOrders = loadOrders;
     }
     angular
         .module('EasyBikeApp.Orders')
