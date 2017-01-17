@@ -35,12 +35,19 @@
                 .catch(requestService.errorLoadingScripts('getTopOrderUser'));
         }
 
+        function getEnabledBikePerDay(initDate, endDate) {
+            var getByCatUrl = stockUrl + '/getEnabledBikePerDay/' + initDate + '/' + endDate;
+            return $http.get(getByCatUrl)
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getEnabledBikePerDay'));
+        }
 
         return {
             getTopSellBike: getTopSellBike,
             getTopSellBikePerDay: getTopSellBikePerDay,
             getTopOrderUserPerDay: getTopOrderUserPerDay,
-            getTopOrderUser: getTopOrderUser
+            getTopOrderUser: getTopOrderUser,
+            getEnabledBikePerDay: getEnabledBikePerDay
         };
     }
 

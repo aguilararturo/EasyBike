@@ -128,8 +128,29 @@
 								</tr>
 							</tbody>
 						</table>
-
 					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="col-xs-12" ng-if="reportCtrl.selectedReport === reportCtrl.REPORT.BIKE_ENABLED">
+	<date-report-cmp class="col-xs-12" end-date="reportCtrl.endDate" init-date="reportCtrl.initDate" action="reportCtrl.getData()"></date-report-cmp>
+	<div class="col-xs-12 report-table table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Numero Habilitados</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in reportCtrl.items">
+					<td class="td-middle-text">{{item.date | date }}</td>
+					<td class="td-middle-text">{{item.count}}</td>
+					<td class="td-middle-text">{{item.priceTotal}}</td>
 				</tr>
 			</tbody>
 		</table>

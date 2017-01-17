@@ -142,5 +142,31 @@ namespace easyBikeApi.Controllers
             return data;
         }
 
+        [HttpGet("GetEnabledBikePerDay/{initDate}/{endDate}")]
+        public IEnumerable<BikeEnabledCounterDay> GetEnabledBikePerDay(string initDate, string endDate)
+        {
+            var init = DateTime.ParseExact(initDate, "MM-dd-yyyy", CultureInfo.InvariantCulture);
+            var end = DateTime.ParseExact(endDate, "MM-dd-yyyy", CultureInfo.InvariantCulture);
+            List<BikeEnabledCounterDay> data = new List<BikeEnabledCounterDay>();
+            using (var db = new EasyBikeDataContext())
+            {
+                var data1 = db.RegistredBikes
+                .Where(o => o.Date.Date >= init.Date && o.Date.Date <= end.Date)
+                .GroupBy(rb => rb.Date.Date)
+                .Select(s => new BikeEnabledCounterDay
+                {
+                    Date = s.Key,
+                    PriceTotal = s.Sum(o => o.Price),
+                    Count = s.Count()
+                });
+
+                foreach (var item in data1)
+                {
+                    data.Add(item);
+                }          
+            }
+            return data;
+        }
+
     }
 }

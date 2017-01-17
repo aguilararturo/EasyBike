@@ -18,7 +18,9 @@
                 BIKE_ORDERS: 'bikeOrderCount',
                 BIKE_DAY_ORDERS: 'bikeDayOrderCount',
                 CLIENT_ORDERS: 'clientOrderCount',
-                CLIENT_DAY_ORDERS: 'clientDayOrderCount'
+                CLIENT_DAY_ORDERS: 'clientDayOrderCount',
+                ORDERS_DETAIL: 'orderDetail',
+                BIKE_ENABLED: 'bikeEnabledDay'
             };
             reportCtrl.selectedReport = {};
             setReports();
@@ -40,6 +42,10 @@
             {
                 key: reportCtrl.REPORT.CLIENT_DAY_ORDERS,
                 title: 'Pedidos por dia Cliente'
+            },
+            {
+                key: reportCtrl.REPORT.BIKE_ENABLED,
+                title: 'Reporte Habilitaciones por dia'
             }
             ];
         }
@@ -68,6 +74,9 @@
                     break;
                 case reportCtrl.REPORT.CLIENT_DAY_ORDERS:
                     ReportService.getTopOrderUserPerDay(iDate, eDate).then(loadData);
+                    break;
+                case reportCtrl.REPORT.BIKE_ENABLED:
+                    ReportService.getEnabledBikePerDay(iDate, eDate).then(loadData);
                     break;
                 default:
 

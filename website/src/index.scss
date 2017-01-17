@@ -125,6 +125,16 @@ legend {
   vertical-align:middle !important;
 }
 
+.error-content {
+  display: inline-flex;
+  .error-field {
+    padding-right: 5px;
+  }
+  .error-point {
+    display: inline;
+  }
+}
+
 @import "menu/menu";
 @import "common";
 @import "components/user/userComp";

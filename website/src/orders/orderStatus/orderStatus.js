@@ -33,7 +33,8 @@
             modResult.result.then(closemod);
 
             function closemod(option) {
-                if (option === okeyKey) {
+                if (option.btn === okeyKey) {
+                    order.bikePrice = option.price;
                     OrderService.deliverOrder(order).then(
                         function completeSave() {
                             ModalUtility.openSaveCompleteModal().result.then(

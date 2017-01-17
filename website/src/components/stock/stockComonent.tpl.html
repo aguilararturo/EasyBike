@@ -22,6 +22,7 @@
                 <th>Cantidad</th>
                 <th ng-if="!stockCompCtrl.hideDueDate">Fecha de Vencimiento</th>
                 <th ng-if="stockCompCtrl.readOnly">Codigo</th>
+                <th ng-if="stockCompCtrl.readOnly">Costo Unidad</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +44,9 @@
                 </td>
                 <td ng-if="stockCompCtrl.readOnly">
                     <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="stock.stockCode">
+                </td>
+                <td ng-if="stockCompCtrl.readOnly">
+                    <input type="text" class="form-control" placeholder="Ingrese Costo" ng-model="stock.cost">
                 </td>
             </tr>
         </tbody>

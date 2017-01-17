@@ -13,7 +13,7 @@
             </business-component>
         </div>
     </div>
-    <form class="form col-xs-12 col-lg-6" ng-if="!prodRegCtrl.displayProductSelection">
+    <form name="prodForm" class="form col-xs-12 col-lg-6" novalidate ng-if="!prodRegCtrl.displayProductSelection">
         <div class="form-group">
             <label class="control-label">Empresa</label>
             <div class="form-group col-xs-12 no-width-padding">
@@ -33,28 +33,42 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label aligment-left">Codigo Producto</label>
-            <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="prodRegCtrl.product.codSubfix">
+        <div class="form-group" ng-class="{ 'has-error' : prodForm.prodCod.$invalid &&    prodRegCtrl.submited  }">
+            <label class="control-label aligment-left">Codigo Producto <span ng-show="prodForm.prodCod.$invalid &&  prodRegCtrl.submited " class="error-point">*</span></label>
+            <input name="prodCod" type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="prodRegCtrl.product.codSubfix"
+                ng-minlength="3" ng-maxlength="15" required>
+            <div class="error-content">
+                <span ng-show="prodForm.prodCod.$error.minlength" class="help-block error-field && prodRegCtrl.submited">minimo 3 caracteres</span>
+                <span ng-show="prodForm.prodCod.$error.maxlength" class="help-block error-field">maximo 10 caracteres.</span>
+            </div>
         </div>
         <div class="form-group">
             <image-component class="col-xs-12 no-width-padding" image-url="prodRegCtrl.product.imageUrl"></image-component>
         </div>
-        <div class="form-group">
-            <label class="control-label">Nombre</label>
-            <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="prodRegCtrl.product.name">
+        <div class="form-group" ng-class="{ 'has-error' : prodForm.prodName.$invalid && prodRegCtrl.submited }">
+            <label class="control-label">Nombre <span ng-show="prodForm.prodName.$invalid && prodRegCtrl.submited" class="error-point">*</span></label>
+            <input name="prodName" type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="prodRegCtrl.product.name"
+                required ng-minlength="3" ng-maxlength="15">
+            <div class="error-content">
+                <p ng-show="prodForm.prodName.$error.minlength" class="help-block error-field">minimo 3 caracteres.</p>
+                <p ng-show="prodForm.prodName.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</p>
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label">Description</label>
-            <textarea class="form-control" rows="3" type="text" class="form-control" placeholder="Ingrese Description" ng-model="prodRegCtrl.product.description"></textarea>
+            <textarea class="form-control" rows="3" type="text" placeholder="Ingrese Description" ng-model="prodRegCtrl.product.description"></textarea>
         </div>
-        <div class="form-group">
-            <label class="control-label">Precio</label>
-            <input type="number" class="form-control" placeholder="Ingrese Precio" ng-model="prodRegCtrl.product.price" min="1">
+        <div class="form-group" ng-class="{ 'has-error' : prodForm.prodPrice.$invalid && prodRegCtrl.submited }">
+            <label class="control-label">Precio <span ng-show="prodForm.prodPrice.$invalid && prodRegCtrl.submited" class="error-point">*</span></label>
+            <input name="prodPrice" type="number" class="form-control" placeholder="Ingrese Precio" ng-model="prodRegCtrl.product.price"
+                required min="1">
+            <div class="error-content">
+                <p ng-show="prodForm.prodPrice.$error.min" class="help-block error-field">minimo es 1.</p>
+            </div>
         </div>
 
-        <div class="">
-            <save-button click-action="prodRegCtrl.saveProduct()" text-title="'Guardar Producto'"></save-button>
+        <div>
+            <save-button click-action="prodRegCtrl.saveProduct(prodForm.$invalid)" text-title="'Guardar Producto'"></save-button>
         </div>
 
     </form>

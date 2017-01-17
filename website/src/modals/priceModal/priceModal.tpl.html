@@ -1,0 +1,46 @@
+<div id="cntMessageModal" class="message-modal">
+    <div id="cntMessageModalHeader" class="message-modal-header">
+        <div id="cntCloseRow" class="row">
+            <button id="btnClose" class="close-btn" align="right" ng-click="$close()">
+                <div id="cntCloseGlyphicon" class="glyphicon glyphicon-remove"></div>
+            </button>
+        </div>
+    </div>
+    <div id="cntMessageModalBody" class="message-modal-body">
+        <div id="cntTitleRow" class="row text-center title">
+            <h1 id="hdrTitle" class="col-xs-offset-2 col-xs-8" ng-if="::priceModalCtrl.title">
+                {{ ::priceModalCtrl.title }}
+            </h1>
+        </div>
+        <div id="cntTextRow" class="row text-center content-container">
+            <p id="prgMessageText" class="col-xs-offset-1 col-xs-10" ng-repeat="message in ::priceModalCtrl.messages track by $index"
+                ng-bind="message.text">
+            </p>
+        </div>
+        <div id="priceSection" class="form-group col-xs-12">
+            <div class="form-inline col-xs-offset-1 col-xs-10">
+                <label class="control-label">{{priceModalCtrl.priceTitle}}</label>
+                <input type="number" class="form-control" placeholder="Ingrese Presio" ng-model="priceModalCtrl.price"
+                    min="1">
+                <button class="btn btn-info fa fa-plus" ng-click="priceModalCtrl.plusQuantity()"></button>
+                <button class="btn btn-info fa fa-minus" ng-click="priceModalCtrl.minusQuantity()"></button>
+
+            </div>
+        </div>
+        <div id="cntButtonRow" class="row">
+            <dir id="cntButtonCol" class="col-xs-offset-2 col-xs-8">
+
+                <button id="btnModalOk" type="submit" ng-click="priceModalCtrl.buttonCommandExecuted(priceModalCtrl.okbtnText)"
+                class="btn btn-success col-xs-6" ng-disabled="priceModalCtrl.price <= 0">
+                    {{ ::priceModalCtrl.okbtnText}}
+                </button>
+
+                <button id="btnModalCancel" type="submit"  ng-click="priceModalCtrl.buttonCommandExecuted(priceModalCtrl.cancelbtnText)"
+                class="btn btn-warning col-xs-6">
+                    {{ ::priceModalCtrl.cancelbtnText}}
+                </button>
+
+            </dir>
+        </div>
+    </div>
+</div>

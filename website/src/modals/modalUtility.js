@@ -60,6 +60,40 @@
             });
         }
 
+        function openPriceModal(messageArray, title, okTitle, priceTitle, cancelTitle) {
+            return $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/priceModal/priceModal.tpl.html',
+                controller: 'PriceModalController',
+                controllerAs: 'priceModalCtrl',
+                backdrop: 'static',
+                keyboard: false,
+                resolve: {
+                    MESSAGE: function () {
+                        var updatedMessageArray = messageArray;
+                        if (!_.isNull(messageArray) && !_.isArray(messageArray)) {
+                            updatedMessageArray = [{
+                                text: messageArray
+                            }];
+                        }
+                        return updatedMessageArray;
+                    },
+                    TITLE: function () {
+                        return title;
+                    },
+                    OK_BTN_TEXT: function () {
+                        return okTitle;
+                    },
+                    PRICE_TITLE: function () {
+                        return priceTitle;
+                    },
+                    CANCEL_BTN_TITLE: function () {
+                        return cancelTitle;
+                    }
+                }
+            });
+        }
+
         /**
          * @function openExpiredSessionModal
          * @memberof ModalUtility
@@ -118,6 +152,22 @@
          */
         function openAskEnableBikeModal(placa, key) {
             var msg = 'Usted desea habilitar la motocicleta ' + placa;
+            /*   return openMessage(msg, [
+                   {
+                       text: key,
+                       class: 'btn btn-default btn-success col-xs-6'
+                   },
+                   {
+                       text: 'Cancelar',
+                       class: 'btn btn-default btn-Error col-xs-6'
+                   }
+               ], msg);*/
+
+            return openPriceModal('', msg, key, 'Costo Habilitacion', 'Cancelar');
+        }
+
+        function openAskDisableBikeModal(placa, key) {
+            var msg = 'Usted desea Desabilitar la motocicleta ' + placa;
             return openMessage(msg, [
                 {
                     text: key,
@@ -175,16 +225,18 @@
 
         function openAskDeliverOrderModal(key) {
             var msg = 'Usted desea ' + key;
-            return openMessage(msg, [
-                {
-                    text: key,
-                    class: 'btn btn-default btn-success col-xs-6'
-                },
-                {
-                    text: 'Cancelar',
-                    class: 'btn btn-default btn-Error col-xs-6'
-                }
-            ], msg);
+            /* return openMessage(msg, [
+                 {
+                     text: key,
+                     class: 'btn btn-default btn-success col-xs-6'
+                 },
+                 {
+                     text: 'Cancelar',
+                     class: 'btn btn-default btn-Error col-xs-6'
+                 }
+ ], msg);*/
+
+            return openPriceModal('', msg, key, 'Costo Carrera', 'Cancelar');
         }
 
         function openGenericError() {
@@ -200,6 +252,7 @@
             openMessage(messages, 'Okay', 'Error');
         }
 
+
         return {
             openGenericError: openGenericError,
             openMessage: openMessage,
@@ -210,7 +263,8 @@
             openVerifyStockData: openVerifyStockData,
             openAskDeliverOrderModal: openAskDeliverOrderModal,
             openAskOrderWithoutBikeModal: openAskOrderWithoutBikeModal,
-            openAskOrderBikeModal: openAskOrderBikeModal
+            openAskOrderBikeModal: openAskOrderBikeModal,
+            openAskDisableBikeModal: openAskDisableBikeModal
         };
     }
 

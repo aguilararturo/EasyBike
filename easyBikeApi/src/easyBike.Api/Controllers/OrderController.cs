@@ -24,6 +24,7 @@ namespace easyBikeApi.Controllers
                 var Data = db.Orders
                     //.Skip((page - 1) * count)
                     //.Take(count)
+                    .Where(o => o.state == OrderState.Delivered)
                     .Include(o => o.Client)
                     .Include(o => o.DeliveryAddress)
                     .Include(o => o.Bike)

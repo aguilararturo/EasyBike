@@ -44,9 +44,11 @@
                         </span>
                         <span class="text-success">
                             <i class="fa fa-motorcycle"></i>
-                            <time class="time-counter" ng-if="!ordersStatusCtrl.displayDelivery" am-time-ago="order.inTransitDate"></time>
+                            <time class="time-counter" ng-if="!ordersStatusCtrl.displayDelivery && order.state === 'Transit'" am-time-ago="order.inTransitDate"></time>
                             <time class="time-counter" ng-if="ordersStatusCtrl.displayDelivery">{{order.deliverDate | amDifference : order.inTransitDate : 'minute'}} Minutos</time>
+                            <span class="time-counter" ng-bind="order.bikePrice | currency" ng-if="ordersStatusCtrl.displayDelivery"></span>
                         </span>
+
                     </td>
                     <td>{{order.client.name}}</td>
                     <td>{{order.deliveryAddress.direction}}</td>

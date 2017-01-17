@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    function ProductRegistrationController(ProductService, ModalUtility, BussinessService, _, $state) {
+    function ProductRegistrationController(ProductService, ModalUtility, BussinessService, _, $state, $q, $timeout) {
         var prodRegCtrl = this;
 
         /**
@@ -15,6 +15,7 @@
             prodRegCtrl.businessValidate = false;
             prodRegCtrl.displayProductSelection = false;
             prodRegCtrl.textTitle = 'Registro de producto';
+            prodRegCtrl.submited = false;
         }
 
         function initProduct() {
@@ -46,7 +47,17 @@
             prodRegCtrl.categoryValidate = true;
         }
 
-        function saveProduct() {
+        function validateProduct() {
+            return prodRegCtrl.businessValidate && prodRegCtrl.categoryValidate;
+        }
+
+        function saveProduct(invalid) {
+            prodRegCtrl.submited = true;
+            if (invalid && !validateProduct()) {
+                var deferrer = $q.defer();
+                deferrer.reject();
+                return deferrer.promise;
+            }
             function saveSussess(response) {
                 ModalUtility.openSaveCompleteModal().result.then(
                     function () {

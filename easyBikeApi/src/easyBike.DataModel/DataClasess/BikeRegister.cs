@@ -12,5 +12,6 @@ namespace easyBike.DataModel.DataClasess
         public DateTime Date { get; set; }
         public User User { get; set; }
         public bool Active { get; set; }
+        public decimal Price { get; set; }
     }
 }

@@ -60,7 +60,7 @@
             modResult.result.then(closemod);
 
             function closemod(option) {
-                if (option === okeyKey) {
+                if (option.btn === okeyKey) {
                     var regBike = {
                         id: 0,
                         bike: bike,
@@ -70,7 +70,8 @@
                             nick: '',
                             password: '',
                             name: ''
-                        }
+                        },
+                        price: option.price
                     };
                     BikeEnabledService.saveBikeRegister(regBike).then(
                         function completeSave() {
@@ -84,7 +85,7 @@
 
         function disableBike(bike) {
             var okeyKey = 'Deshabilitar Moto';
-            var modResult = ModalUtility.openAskEnableBikeModal(bike.code, okeyKey);
+            var modResult = ModalUtility.openAskDisableBikeModal(bike.code, okeyKey);
             modResult.result.then(closemod);
 
             function closemod(option) {
