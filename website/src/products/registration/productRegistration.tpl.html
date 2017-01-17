@@ -66,7 +66,12 @@
                 <p ng-show="prodForm.prodPrice.$error.min" class="help-block error-field">minimo es 1.</p>
             </div>
         </div>
-
+        <div class="col-xs-12" ng-if="prodRegCtrl.displayError">
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span> Revise todos los datos (*) campos requeridos
+            </div>
+        </div>
         <div>
             <save-button click-action="prodRegCtrl.saveProduct(prodForm.$invalid)" text-title="'Guardar Producto'"></save-button>
         </div>

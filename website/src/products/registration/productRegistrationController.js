@@ -16,6 +16,7 @@
             prodRegCtrl.displayProductSelection = false;
             prodRegCtrl.textTitle = 'Registro de producto';
             prodRegCtrl.submited = false;
+            prodRegCtrl.displayError = false;
         }
 
         function initProduct() {
@@ -54,6 +55,7 @@
         function saveProduct(invalid) {
             prodRegCtrl.submited = true;
             if (invalid && !validateProduct()) {
+                prodRegCtrl.displayError = true;
                 var deferrer = $q.defer();
                 deferrer.reject();
                 return deferrer.promise;
@@ -64,6 +66,8 @@
                         $state.reload();
                     });
             }
+
+            prodRegCtrl.displayError = false;
             return ProductService.saveProduct(prodRegCtrl.product)
                 .then(saveSussess);
         }
