@@ -2,25 +2,51 @@
     <legend>
         <h3>{{userCompCtrl.textTitle}}</h3>
     </legend>
-    <form class="form">
-            <div class="form-group col-xs-12">
-                <label class="control-label">NIT / CI</label>
-                <input type="number" class="form-control" placeholder="Ingrese Nit / CI" ng-model="userCompCtrl.user.nit">
+    <form class="form" name="clientForm" novalidate>
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : clientForm.clientNit.$invalid && userCompCtrl.submited }">
+            <label class="control-label">NIT / CI <span ng-show="clientForm.clientNit.$invalid && userCompCtrl.submited" class="error-point">*</span></label>
+            <input name="clientNit" type="number" class="form-control" placeholder="Ingrese Nit / CI" ng-model="userCompCtrl.user.nit"
+                required ng-minlength="5" ng-maxlength="15">
+            <div class="error-content">
+                <span ng-show="clientForm.clientNit.$error.minlength" class="help-block error-field">minimo 5 caracteres.</span>
+                <span ng-show="clientForm.clientNit.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
             </div>
-            <div class="form-group col-xs-12">
-                <label class="control-label">Nombre</label>
-                <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="userCompCtrl.user.name">
+        </div>
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : clientForm.clientName.$invalid && userCompCtrl.submited }">
+            <label class="control-label">Nombre <span ng-show="clientForm.clientName.$invalid && userCompCtrl.submited" class="error-point">*</span></label>
+            <input type="text" name="clientName" class="form-control" placeholder="Ingrese Nombre" required ng-model="userCompCtrl.user.name">
+            <div class="error-content">
+                <span ng-show="clientForm.clientName.$error.minlength" class="help-block error-field">minimo 5 caracteres.</span>
+                <span ng-show="clientForm.clientName.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
             </div>
-            <div class="form-group col-xs-12">
-                <phone-component phones="userCompCtrl.user.phones" class="col-xs-12 no-width-padding"></phone-component>
+        </div>
+        <div class="form-group col-xs-12">
+            <div class="error-content" ng-if="userCompCtrl.errorPhone">
+                <span class="help-block error-field">Se necesita 1 numero telefonico *</span>
             </div>
-            <div class="form-group col-xs-12">
-                <address-component addresses="userCompCtrl.user.addresses" class="col-xs-12 no-width-padding" selection-change="userCompCtrl.selectionAddressChange()"
-                    enable-selection="userCompCtrl.selectionAddressEnabled"></address-component>
+            <phone-component phones="userCompCtrl.user.phones" class="col-xs-12 no-width-padding"></phone-component>
+        </div>
+        <div class="form-group col-xs-12">
+            <div class="error-content" ng-if="userCompCtrl.errorAddress">
+                <span class="help-block error-field">Se necesita una direccion *</span>
             </div>
-        <div class="row col-xs-12" ng-if="userCompCtrl.displaySave">
-            <save-button click-action="userCompCtrl.saveAction()" text-title="userCompCtrl.saveText"></save-button>
+            <address-component addresses="userCompCtrl.user.addresses" class="col-xs-12 no-width-padding" selection-change="userCompCtrl.selectionAddressChange()"
+                enable-selection="userCompCtrl.selectionAddressEnabled"></address-component>
         </div>
 
+        <div class="col-xs-12" ng-if="userCompCtrl.displayError">
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span><span> Revise todos los datos (*) campos requeridos
+                </span>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span><p class="sr-only" ng-if="userCompCtrl.errorPhone">Se necesita 1 numero telefonico</p>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span><p class="sr-only" ng-if="userCompCtrl.errorAddress">Se necesita una direccion</p>
+            </div>
+        </div>
+        <div class="row col-xs-12" ng-if="userCompCtrl.displaySave">
+            <save-button click-action="userCompCtrl.saveData(clientForm.$invalid)" text-title="userCompCtrl.saveText"></save-button>
+        </div>
     </form>
 </div>

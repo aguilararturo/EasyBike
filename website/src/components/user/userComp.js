@@ -38,7 +38,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function UserComponetController(_) {
+    function UserComponetController(_, $q) {
         var userCompCtrl = this;
         /**
         * @function $onInit
@@ -50,6 +50,10 @@
             userCompCtrl.displaySave = !_.isUndefined(userCompCtrl.saveAction);
             userCompCtrl.searchMode = !_.isUndefined(userCompCtrl.searchAction);
             userCompCtrl.selectionAddressEnabled = !_.isUndefined(userCompCtrl.selectionAddressChange);
+            userCompCtrl.displayError = false;
+            userCompCtrl.submited = false;
+            userCompCtrl.errorPhone = false;
+            userCompCtrl.errorAddress = false;
             initDummyPhone();
             initDummyAdress();
             if (_.isEmpty(userCompCtrl.saveText)) {
@@ -95,11 +99,43 @@
             initDummyPhone();
         }
 
+        function validateUser() {
+            function phoneIterator(phone) {
+                return !_.isEmpty(phone.number);
+            }
+            function iterateAddress(address) {
+                return !_.isEmpty(address.direction) && !_.isEmpty(address.location);
+            }
+
+            if (!_.every(userCompCtrl.user.phones, phoneIterator)) {
+                userCompCtrl.errorPhone = true;
+            }
+
+            if (!_.every(userCompCtrl.user.addresses, iterateAddress)) {
+                userCompCtrl.errorAddress = true;
+            }
+            return !userCompCtrl.errorAddress && !userCompCtrl.errorPhone;
+        }
+
+        function saveData(invalid) {
+            userCompCtrl.submited = true;
+            var deferrer = $q.defer();
+            if (invalid && !validateUser()) {
+                userCompCtrl.displayError = true;
+                deferrer.reject();
+            }
+            if (!_.isUndefined(userCompCtrl.saveAction)) {
+                //    return userCompCtrl.saveAction();
+            }
+            return deferrer.promise;
+        }
+
         userCompCtrl.$onInit = $onInit;
         userCompCtrl.addPhone = addPhone;
         userCompCtrl.removePhone = removePhone;
         userCompCtrl.addAddress = addAddress;
         userCompCtrl.removeAddress = removeAddress;
+        userCompCtrl.saveData = saveData;
     }
     angular
         .module('EasyBikeApp.User')
