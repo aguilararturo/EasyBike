@@ -28,7 +28,7 @@
                 ModalUtility.openSaveCompleteModal();
                 $state.reload();
             }
-            CommonService.saveUser(userRegCtrl.user)
+            return CommonService.saveUser(userRegCtrl.user)
                 .then(saveSussess);
         }
 

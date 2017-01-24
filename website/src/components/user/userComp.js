@@ -125,7 +125,7 @@
                 deferrer.reject();
             }
             if (!_.isUndefined(userCompCtrl.saveAction)) {
-                //    return userCompCtrl.saveAction();
+                deferrer.resolve(userCompCtrl.saveAction());
             }
             return deferrer.promise;
         }
