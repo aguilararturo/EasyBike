@@ -2,30 +2,46 @@
     <legend>
         <h3>{{busRegCtrl.textTitle}}</h3>
     </legend>
-    <form class="form col-xs-12 col-lg-8">
-        <div class="form-group col-xs-12 col-md-4">
-            <label class="control-label aligment-left">Codigo</label>
-            <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="busRegCtrl.bussines.codSubfix">
+    <product-category-registration-component product-category="busRegCtrl.newCategory" save-clicked="busRegCtrl.addCategory()" ng-if="busRegCtrl.displayNewCat" display-save-action="true" ></product-category-registration-component>
+    <form class="form col-xs-12 col-lg-8" ng-if="!busRegCtrl.displayNewCat" name="dataForm" novalidate>
+        <div class="form-group col-xs-12 col-md-4" ng-class="{ 'has-error' : dataForm.code.$invalid && busRegCtrl.submited }">
+            <label class="control-label aligment-left">Codigo <span ng-show="dataForm.code.$invalid && busRegCtrl.submited" class="error-point">*</span></label>
+            <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="busRegCtrl.bussines.codSubfix" name="code" required ng-minlength="3" ng-maxlength="10">
+            <div class="error-content">
+                <span ng-show="dataForm.code.$error.minlength" class="help-block error-field">minimo 3 caracteres.</span>
+                <span ng-show="dataForm.code.$error.maxlength" class="help-block error-field">maximo 10 caracteres.</span>
+            </div>
         </div>
-        <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label">Nombre</label>
-            <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="busRegCtrl.bussines.name">
+        <div class="form-group col-xs-12 col-md-8" ng-class="{ 'has-error' : dataForm.name.$invalid && busRegCtrl.submited }">
+            <label class="control-label">Nombre <span ng-show="dataForm.name.$invalid && busRegCtrl.submited" class="error-point">*</span></label>
+            <input type="text" class="form-control" placeholder="Ingrese Nombre" ng-model="busRegCtrl.bussines.name" name="name" required ng-minlength="3" ng-maxlength="15">
+
+            <div class="error-content">
+                <span ng-show="dataForm.name.$error.minlength" class="help-block error-field">minimo 3 caracteres.</span>
+                <span ng-show="dataForm.name.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
+            </div>
         </div>
         <div class="form-group col-xs-12">
             <image-component class="col-xs-12 no-width-padding" image-url="busRegCtrl.bussines.imageUrl"></image-component>
         </div>
         <div class="form-group col-xs-12">
             <label class="control-label">Categorias</label>
-            <product-category-component multiple-selection="true" enable-add-new="true" selected-categories="busRegCtrl.bussines.categories"></product-category-component>
+            <product-category-component multiple-selection="true" enable-add-new="true" selected-categories="busRegCtrl.bussines.categories" add-category-click="busRegCtrl.addNewCategory()" custom-categories="busRegCtrl.customCategories" ></product-category-component>
         </div>
         <div class="form-group col-xs-12">
-            <phone-component phones="busRegCtrl.bussines.phones" class="col-xs-12 no-width-padding"></phone-component>
+            <phone-component phones="busRegCtrl.bussines.phones" class="col-xs-12 no-width-padding" ng-class="{ 'has-error' : busRegCtrl.errorPhone  && busRegCtrl.submited }"></phone-component>
         </div>
-        <div class="form-group col-xs-12">
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : busRegCtrl.errorAddress && busRegCtrl.submited }">
             <address-component addresses="busRegCtrl.bussines.addresses" class="col-xs-12 no-width-padding"></address-component>
         </div>
+        <div class="col-xs-12" ng-if="busRegCtrl.displayError">
+            <div class="alert alert-danger" role="alert">
+                <span>(*) Campos requeridos</span>
+                <span ng-if="busRegCtrl.errorPhone"><br>Se necesita 1 numero telefonico</span> <span ng-if="busRegCtrl.errorAddress"><br>Se necesita una direccion</span>
+            </div>
+        </div>
         <div class="form-group col-xs-12" ng-if="busRegCtrl.displaySave">
-            <save-button click-action="busRegCtrl.saveAction()" text-title="'Guardar Empresa'"></save-button>
+            <save-button click-action="busRegCtrl.saveAction(dataForm.$invalid)" text-title="'Guardar Empresa'"></save-button>
         </div>
     </form>
 </div>

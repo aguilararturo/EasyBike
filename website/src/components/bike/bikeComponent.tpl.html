@@ -1,23 +1,41 @@
 <div id="apstMoleculeModal" class="reg-user" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="col-xs-12">
-        <legend><h3>Datos Motocicleta</h3></legend>
+        <legend>
+            <h3>Datos Motocicleta</h3>
+        </legend>
     </div>
-    <form class="form">
+    <form class="form" novalidate name="dataForm">
         <div class="body col-xs-8">
-                <div class="form-group col-md-4 col-xs-12">
-                    <label class="control-label">Codigo</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="bikeCompCtrl.bike.code">
+            <div class="form-group col-md-4 col-xs-12" ng-class="{ 'has-error' : dataForm.code.$invalid && bikeCompCtrl.submited }">
+                <label class="control-label">Codigo <span ng-show="dataForm.code.$invalid && bikeCompCtrl.submited" class="error-point">*</span></label>
+                <input type="text" class="form-control" placeholder="Ingrese Codigo" ng-model="bikeCompCtrl.bike.code" name="code" required
+                    ng-minlength="3" ng-maxlength="10">
+                <div class="error-content">
+                    <span ng-show="dataForm.code.$error.minlength" class="help-block error-field">minimo 3 caracteres.</span>
+                    <span ng-show="dataForm.code.$error.maxlength" class="help-block error-field">maximo 10 caracteres.</span>
                 </div>
-                <div class="form-group col-md-4 col-xs-12">
-                    <label class="control-label">Placa</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Placa" ng-model="bikeCompCtrl.bike.plate">
+            </div>
+            <div class="form-group col-md-4 col-xs-12" ng-class="{ 'has-error' : dataForm.plate.$invalid && bikeCompCtrl.submited }">
+                <label class="control-label">Placa <span ng-show="dataForm.plate.$invalid && bikeCompCtrl.submited" class="error-point">*</span></label>
+                <input type="text" class="form-control" placeholder="Ingrese Placa" ng-model="bikeCompCtrl.bike.plate" name="plate" required
+                    ng-minlength="3" ng-maxlength="8">
+                <div class="error-content">
+                    <span ng-show="dataForm.plate.$error.minlength" class="help-block error-field">minimo 3 caracteres.</span>
+                    <span ng-show="dataForm.plate.$error.maxlength" class="help-block error-field">maximo 8 caracteres.</span>
                 </div>
-                <div class="form-group col-md-4 col-xs-12">
-                    <label class="control-label">Modelo</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Model" ng-model="bikeCompCtrl.bike.model">
+            </div>
+            <div class="form-group col-md-4 col-xs-12" ng-class="{ 'has-error' : dataForm.model.$invalid && bikeCompCtrl.submited }">
+                <label class="control-label">Modelo <span ng-show="dataForm.model.$invalid && bikeCompCtrl.submited" class="error-point">*</span></label>
+                <input type="text" class="form-control" placeholder="Ingrese Model" ng-model="bikeCompCtrl.bike.model" name="model" required
+                    ng-minlength="3" ng-maxlength="10">
+                <div class="error-content">
+                    <span ng-show="dataForm.model.$error.minlength" class="help-block error-field">minimo 3 caracteres.</span>
+                    <span ng-show="dataForm.model.$error.maxlength" class="help-block error-field">maximo 10 caracteres.</span>
                 </div>
+            </div>
 
-            <user-component class="col-xs-12 no-width-padding" user="bikeCompCtrl.bike.driver" text-title="bikeCompCtrl.text" save-action="bikeCompCtrl.saveAction()" save-text="'Guardar Motocicleta'"></user-component>
+            <user-component class="col-xs-12 no-width-padding" user="bikeCompCtrl.bike.driver" text-title="bikeCompCtrl.text" save-action="bikeCompCtrl.saveAction()"
+                save-text="'Guardar Motocicleta'" external-validate="bikeCompCtrl.validateBike()"></user-component>
         </div>
     </form>
 </div>

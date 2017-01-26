@@ -83,7 +83,7 @@ namespace easyBike.Api.Controllers
                 return Data.First();
             }
         }
-       
+
         // POST api/values
         [HttpPost]
         public void Post([FromBody]Business value)
@@ -95,26 +95,46 @@ namespace easyBike.Api.Controllers
 
             using (var db = new EasyBikeDataContext())
             {
-                value.BusinesCategories = new List<BusinessCategory>();
-                foreach (var item in value.Categories)
+                using (var transaction = db.Database.BeginTransaction())
                 {
-                    if (item.Id > 0)
-                    {                       
-                        db.ProductCategories.Attach(item);
-                        db.Entry(item).State = EntityState.Unchanged;
-                    }
-                    var busCat = new BusinessCategory()
+                    value.BusinesCategories = new List<BusinessCategory>();
+                    foreach (var item in value.Categories)
                     {
-                        Bussiness = value,
-                        BussinessId = value.Id,
-                        ProductCategory = item,
-                        ProductCategoryId = item.Id
-                    };
-                    value.BusinesCategories.Add(busCat);
+                        if (item.Id > 0)
+                        {
+                            db.ProductCategories.Attach(item);
+                            db.Entry(item).State = EntityState.Unchanged;
+                        }
+                        else
+                        {
+                            db.ProductCategories.Add(item);
+                            db.SaveChanges();
+                        }
+
+                        var busCat = new BusinessCategory()
+                        {
+                            Bussiness = value,
+                            BussinessId = value.Id,
+                            ProductCategory = item,
+                            ProductCategoryId = item.Id
+                        };
+                        value.BusinesCategories.Add(busCat);
+                    }
+
+                    try
+                    {
+                        db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+                    }
                 }
-                
+
                 db.Businesses.Add(value);
-                db.SaveChanges();                               
+                db.SaveChanges();
             }
 
             ImageUtility.SaveImage(imageUrls.imageDir, imageString);

@@ -35,7 +35,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function BikeComponetController() {
+    function BikeComponetController(_) {
         var bikeCompCtrl = this;
         /**
         * @function $onInit
@@ -45,9 +45,15 @@
         */
         function $onInit() {
             bikeCompCtrl.text = 'Datos Motociclista';
+            bikeCompCtrl.submited = false;
+        }
+
+        function validateBike() {
+            bikeCompCtrl.submited = true;
         }
 
         bikeCompCtrl.$onInit = $onInit;
+        bikeCompCtrl.validateBike = validateBike;
     }
     angular
         .module('EasyBikeApp.Bikes')

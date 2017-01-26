@@ -17,7 +17,8 @@
             bindToController: {
                 productCategory: '=',
                 textTitle: '=',
-                displaySaveAction: '='
+                displaySaveAction: '=',
+                saveClicked: '&?'
             },
             scope: true
         };
@@ -45,7 +46,7 @@
         * @author Arturo Aguilar
         */
         function $onInit() {
-
+            prodCatRegCompCtrl.displayCategories = _.isUndefined(prodCatRegCompCtrl.saveClicked);
         }
 
         function reloadThis() {
@@ -56,7 +57,11 @@
         }
 
         function saveProductCategory(category) {
-            ProductCategoryService.saveProductCategory(category).then(reloadThis);
+            if (_.isUndefined(prodCatRegCompCtrl.saveClicked)) {
+                ProductCategoryService.saveProductCategory(category).then(reloadThis);
+            } else {
+                prodCatRegCompCtrl.saveClicked();
+            }
         }
 
         prodCatRegCompCtrl.$onInit = $onInit;

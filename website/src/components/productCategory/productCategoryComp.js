@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -22,7 +22,8 @@
                 selectionChange: '&?',
                 selectedCategories: '=',
                 customCategories: '=',
-                displaySelectionError: '@'
+                displaySelectionError: '@',
+                addCategoryClick: '&?'
             },
             scope: true
         };
@@ -41,7 +42,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function ProductCategoryComponetController(_, ProductCategoryService, $state) {
+    function ProductCategoryComponetController(_, ProductCategoryService, $state, $scope) {
         var prodCatCompCtrl = this;
         /**
         * @function $onInit
@@ -58,6 +59,11 @@
             }
             prodCatCompCtrl.multipleSelection = !_.isUndefined(prodCatCompCtrl.multipleSelection);
             prodCatCompCtrl.enableAddNew = !_.isUndefined(prodCatCompCtrl.enableAddNew);
+            function getCustomCategories() { return prodCatCompCtrl.customCategories; }
+            function setCustomCategories() {
+                prodCatCompCtrl.categories = prodCatCompCtrl.customCategories;
+            }
+            $scope.$watch(getCustomCategories, setCustomCategories);
 
             validateCategories();
         }
@@ -70,7 +76,7 @@
 
         function setSelectCategories(selected) {
             prodCatCompCtrl.categories = _.mapValues(prodCatCompCtrl.categories,
-                function(category) {
+                function (category) {
                     category.selected = selected;
                     return category;
                 });
@@ -78,7 +84,7 @@
 
         function validateCategories() {
             if (prodCatCompCtrl.displaySelectionError) {
-                prodCatCompCtrl.displayError = _.isEmpty(_.find(prodCatCompCtrl.categories, function(o) { return o.selected; }));
+                prodCatCompCtrl.displayError = _.isEmpty(_.find(prodCatCompCtrl.categories, function (o) { return o.selected; }));
             }
         }
 
@@ -95,7 +101,7 @@
                 category.selected = !category.selected;
             }
             if (!_.isUndefined(prodCatCompCtrl.selectedCategories)) {
-                prodCatCompCtrl.selectedCategories = _.filter(prodCatCompCtrl.categories, function(cat) {
+                prodCatCompCtrl.selectedCategories = _.filter(prodCatCompCtrl.categories, function (cat) {
                     return cat.selected;
                 });
             }
@@ -111,7 +117,11 @@
         }
 
         function addNewCategory() {
-            $state.go('new-productCategory');
+            if (_.isUndefined(prodCatCompCtrl.addCategoryClick)) {
+                $state.go('new-productCategory');
+            } else {
+                prodCatCompCtrl.addCategoryClick();
+            }
         }
 
         prodCatCompCtrl.clickProduct = clickProduct;

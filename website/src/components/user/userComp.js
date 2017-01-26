@@ -19,7 +19,8 @@
                 textTitle: '=',
                 saveAction: '&?',
                 selectionAddressChange: '&?',
-                saveText: '<'
+                saveText: '<',
+                externalValidate: '&?'
             },
             scope: true
         };
@@ -118,6 +119,9 @@
             userCompCtrl.submited = true;
             var deferrer = $q.defer();
             var validateFlag = validateUser();
+            if (!_.isUndefined(userCompCtrl.externalValidate)) {
+                userCompCtrl.externalValidate();
+            }
             if (invalid || !validateFlag) {
                 userCompCtrl.displayError = true;
                 deferrer.reject();

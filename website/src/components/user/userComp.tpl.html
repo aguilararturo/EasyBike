@@ -2,22 +2,22 @@
     <legend>
         <h3>{{userCompCtrl.textTitle}}</h3>
     </legend>
-    <form class="form" name="clientForm" novalidate>
-        <div class="form-group col-xs-12" ng-class="{ 'has-error' : clientForm.clientNit.$invalid && userCompCtrl.submited }">
-            <label class="control-label">NIT / CI <span ng-show="clientForm.clientNit.$invalid && userCompCtrl.submited" class="error-point">*</span></label>
+    <form class="form" name="dataForm" novalidate>
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : dataForm.clientNit.$invalid && userCompCtrl.submited }">
+            <label class="control-label">NIT / CI <span ng-show="dataForm.clientNit.$invalid && userCompCtrl.submited" class="error-point">*</span></label>
             <input name="clientNit" type="number" class="form-control" placeholder="Ingrese Nit / CI" ng-model="userCompCtrl.user.nit"
                 required ng-minlength="5" ng-maxlength="15">
             <div class="error-content">
-                <span ng-show="clientForm.clientNit.$error.minlength" class="help-block error-field">minimo 5 caracteres.</span>
-                <span ng-show="clientForm.clientNit.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
+                <span ng-show="dataForm.clientNit.$error.minlength" class="help-block error-field">minimo 5 caracteres.</span>
+                <span ng-show="dataForm.clientNit.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
             </div>
         </div>
-        <div class="form-group col-xs-12" ng-class="{ 'has-error' : clientForm.clientName.$invalid && userCompCtrl.submited }">
-            <label class="control-label">Nombre <span ng-show="clientForm.clientName.$invalid && userCompCtrl.submited" class="error-point">*</span></label>
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : dataForm.clientName.$invalid && userCompCtrl.submited }">
+            <label class="control-label">Nombre <span ng-show="dataForm.clientName.$invalid && userCompCtrl.submited" class="error-point">*</span></label>
             <input type="text" name="clientName" class="form-control" placeholder="Ingrese Nombre" required ng-model="userCompCtrl.user.name">
             <div class="error-content">
-                <span ng-show="clientForm.clientName.$error.minlength" class="help-block error-field">minimo 5 caracteres.</span>
-                <span ng-show="clientForm.clientName.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
+                <span ng-show="dataForm.clientName.$error.minlength" class="help-block error-field">minimo 5 caracteres.</span>
+                <span ng-show="dataForm.clientName.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
             </div>
         </div>
         <div class="form-group col-xs-12" ng-class="{ 'has-error' : userCompCtrl.errorPhone  && userCompCtrl.submited }" ng-focus="userCompCtrl.validateUser()">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="row col-xs-12" ng-if="userCompCtrl.displaySave">
-            <save-button click-action="userCompCtrl.saveData(clientForm.$invalid)" text-title="userCompCtrl.saveText"></save-button>
+            <save-button click-action="userCompCtrl.saveData(dataForm.$invalid)" text-title="userCompCtrl.saveText"></save-button>
         </div>
     </form>
 </div>
