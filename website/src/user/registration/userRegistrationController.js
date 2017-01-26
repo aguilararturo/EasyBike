@@ -25,7 +25,6 @@
 
         function saveUser() {
             function saveSussess(response) {
-                ModalUtility.openSaveCompleteModal();
                 $state.reload();
             }
             return CommonService.saveUser(userRegCtrl.user)
