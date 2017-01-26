@@ -101,30 +101,27 @@
 
         function validateUser() {
             function phoneIterator(phone) {
-                return !_.isEmpty(phone.number);
+                return _.isNumber(phone.number);
             }
             function iterateAddress(address) {
                 return !_.isEmpty(address.direction) && !_.isEmpty(address.location);
             }
 
-            if (!_.every(userCompCtrl.user.phones, phoneIterator)) {
-                userCompCtrl.errorPhone = true;
-            }
+            userCompCtrl.errorPhone = !_.every(userCompCtrl.user.phones, phoneIterator);
 
-            if (!_.every(userCompCtrl.user.addresses, iterateAddress)) {
-                userCompCtrl.errorAddress = true;
-            }
+            userCompCtrl.errorAddress = !_.every(userCompCtrl.user.addresses, iterateAddress);
+
             return !userCompCtrl.errorAddress && !userCompCtrl.errorPhone;
         }
 
         function saveData(invalid) {
             userCompCtrl.submited = true;
             var deferrer = $q.defer();
-            if (invalid && !validateUser()) {
+            var validateFlag = validateUser();
+            if (invalid || !validateFlag) {
                 userCompCtrl.displayError = true;
                 deferrer.reject();
-            }
-            if (!_.isUndefined(userCompCtrl.saveAction)) {
+            } else if (!_.isUndefined(userCompCtrl.saveAction)) {
                 deferrer.resolve(userCompCtrl.saveAction());
             }
             return deferrer.promise;
@@ -136,6 +133,7 @@
         userCompCtrl.addAddress = addAddress;
         userCompCtrl.removeAddress = removeAddress;
         userCompCtrl.saveData = saveData;
+        userCompCtrl.validateUser = validateUser;
     }
     angular
         .module('EasyBikeApp.User')

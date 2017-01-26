@@ -20,29 +20,18 @@
                 <span ng-show="clientForm.clientName.$error.maxlength" class="help-block error-field">maximo 15 caracteres.</span>
             </div>
         </div>
-        <div class="form-group col-xs-12">
-            <div class="error-content" ng-if="userCompCtrl.errorPhone">
-                <span class="help-block error-field">Se necesita 1 numero telefonico *</span>
-            </div>
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : userCompCtrl.errorPhone  && userCompCtrl.submited }" ng-focus="userCompCtrl.validateUser()">
             <phone-component phones="userCompCtrl.user.phones" class="col-xs-12 no-width-padding"></phone-component>
         </div>
-        <div class="form-group col-xs-12">
-            <div class="error-content" ng-if="userCompCtrl.errorAddress">
-                <span class="help-block error-field">Se necesita una direccion *</span>
-            </div>
+        <div class="form-group col-xs-12" ng-class="{ 'has-error' : userCompCtrl.errorAddress && userCompCtrl.submited }" ng-validate="userCompCtrl.validateUser()">
             <address-component addresses="userCompCtrl.user.addresses" class="col-xs-12 no-width-padding" selection-change="userCompCtrl.selectionAddressChange()"
                 enable-selection="userCompCtrl.selectionAddressEnabled"></address-component>
         </div>
 
         <div class="col-xs-12" ng-if="userCompCtrl.displayError">
             <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span><span> Revise todos los datos (*) campos requeridos
-                </span>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span><p class="sr-only" ng-if="userCompCtrl.errorPhone">Se necesita 1 numero telefonico</p>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span><p class="sr-only" ng-if="userCompCtrl.errorAddress">Se necesita una direccion</p>
+                <span>(*) Campos requeridos</span>
+                <span ng-if="userCompCtrl.errorPhone"><br>Se necesita 1 numero telefonico</span> <span ng-if="userCompCtrl.errorAddress"><br>Se necesita una direccion</span>
             </div>
         </div>
         <div class="row col-xs-12" ng-if="userCompCtrl.displaySave">
