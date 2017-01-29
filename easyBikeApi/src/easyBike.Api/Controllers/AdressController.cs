@@ -12,71 +12,69 @@ using easyBike.DataModel.DataClasess;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class AddressesController : Controller
+    public class AddressesController : LocalController
     {
+        public AddressesController(EasyBikeDataContext context) : base(context)
+        {
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<Address> Get()
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Adresses
-                    .OrderBy(item => item.Id)
-                    .ToList();
-                return Data;
-            }
+            var Data = _db.Adresses
+                .OrderBy(item => item.Id)
+                .ToList();
+            return Data;
+
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Address Get(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Adresses
-                    .Where(item => item.Id == id);
-                return Data.First();
-            }
+
+            var Data = _db.Adresses
+                .Where(item => item.Id == id);
+            return Data.First();
+
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody]Address value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                db.Adresses.Add(value);
-                db.SaveChanges();
-            }
+
+            _db.Adresses.Add(value);
+            _db.SaveChanges();
+
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Address value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var original = db.Adresses
-                    .Where(item => item.Id == id).FirstOrDefault();
 
-                original.Location = value.Location;
-                db.Entry(original).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            var original = _db.Adresses
+                .Where(item => item.Id == id).FirstOrDefault();
+
+            original.Location = value.Location;
+            _db.Entry(original).State = EntityState.Modified;
+            _db.SaveChanges();
+
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Adresses
-                    .Where(item => item.Id == id);
 
-                db.Adresses.Remove(Data.First());
-                db.SaveChanges();
-            }
+            var Data = _db.Adresses
+                .Where(item => item.Id == id);
+
+            _db.Adresses.Remove(Data.First());
+            _db.SaveChanges();
+
         }
     }
 }

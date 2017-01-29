@@ -9,5 +9,6 @@ namespace easyBike.DataModel.DataClasess
     {
         public int Id { get; set; }
         public int Number { get; set; }
+        public User User { get; set; }
     }
 }

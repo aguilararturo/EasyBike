@@ -14,5 +14,6 @@ namespace easyBike.DataModel.DataClasess
         public ICollection<BusinessCategory> BusinesCategories { get; set; }
         [NotMapped]
         public List<ProductCategory> Categories { get; set; }
+        public User User { get; set; }
     }
 }

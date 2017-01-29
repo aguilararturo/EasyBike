@@ -12,6 +12,8 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using easyBike.DataModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace easyBike.Api
 {
@@ -39,6 +41,7 @@ namespace easyBike.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<EasyBikeDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ServerConnection")));
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -48,7 +51,8 @@ namespace easyBike.Api
                 jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
 
-            services.AddMvc().AddJsonOptions(options => {
+            services.AddMvc().AddJsonOptions(options =>
+            {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
@@ -83,6 +87,9 @@ namespace easyBike.Api
                 app.ApplicationServices.GetRequiredService<IHostingEnvironment>());
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:9000/")
+           .AllowAnyHeader());
+
+            app.UseCors(builder => builder.WithOrigins("http://mototaxbolivia.com/")
            .AllowAnyHeader());
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

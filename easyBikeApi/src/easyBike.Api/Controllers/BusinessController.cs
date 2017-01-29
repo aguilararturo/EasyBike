@@ -17,8 +17,12 @@ using Microsoft.AspNetCore.Mvc.Routing;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class BusinessController : Controller
+    public class BusinessController : LocalController
     {
+        public BusinessController(EasyBikeDataContext context) : base(context)
+        {
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<Business> Get()
@@ -37,18 +41,14 @@ namespace easyBike.Api.Controllers
         {
             List<Business> Data;
             if (withCategories)
-            {                
-                using (var db = new EasyBikeDataContext())
-                {
-                    Data = db.Businesses
-                        .Include(item => item.Addresses)
-                        .Include(item => item.Phones)
-                        .Include(item => item.BusinesCategories)
-                        .ThenInclude(bc => bc.ProductCategory)
-                       .ToList();
-                }
-
-
+            {
+                Data = _db.Businesses
+                    .Include(item => item.Addresses)
+                    .Include(item => item.Phones)
+                    .Include(item => item.BusinesCategories)
+                    .ThenInclude(bc => bc.ProductCategory)
+                    .ToList();
+                
                 foreach (var row in Data)
                 {
                     row.Categories = row.BusinesCategories.Select(bc => bc.ProductCategory).ToList();
@@ -57,31 +57,23 @@ namespace easyBike.Api.Controllers
             }
             else
             {
-                using (var db = new EasyBikeDataContext())
-                {
-                    Data = db.Businesses
-                        .Include(item => item.Addresses)
-                        .Include(item => item.Phones)                       
-                       .ToList();
-                }
+                Data = _db.Businesses
+                    .Include(item => item.Addresses)
+                    .Include(item => item.Phones)
+                   .ToList();
             }
-
-
             return Data;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Business Get(int id)
-        {            
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Businesses
-                    .Include(item => item.Addresses)
-                    .Include(item => item.Phones)                    
-                    .Where(item => item.Id == id);               
-                return Data.First();
-            }
+        {
+            var Data = _db.Businesses
+                .Include(item => item.Addresses)
+                .Include(item => item.Phones)
+                .Where(item => item.Id == id);
+            return Data.First();
         }
 
         // POST api/values
@@ -93,49 +85,47 @@ namespace easyBike.Api.Controllers
             var imageUrls = HttpHelper.getImageName("bussines");
             value.ImageUrl = imageUrls.imageUrl;
 
-            using (var db = new EasyBikeDataContext())
+            using (var transaction = _db.Database.BeginTransaction())
             {
-                using (var transaction = db.Database.BeginTransaction())
+                value.BusinesCategories = new List<BusinessCategory>();
+                foreach (var item in value.Categories)
                 {
-                    value.BusinesCategories = new List<BusinessCategory>();
-                    foreach (var item in value.Categories)
+                    if (item.Id > 0)
                     {
-                        if (item.Id > 0)
-                        {
-                            db.ProductCategories.Attach(item);
-                            db.Entry(item).State = EntityState.Unchanged;
-                        }
-                        else
-                        {
-                            db.ProductCategories.Add(item);
-                            db.SaveChanges();
-                        }
-
-                        var busCat = new BusinessCategory()
-                        {
-                            Bussiness = value,
-                            BussinessId = value.Id,
-                            ProductCategory = item,
-                            ProductCategoryId = item.Id
-                        };
-                        value.BusinesCategories.Add(busCat);
+                        _db.ProductCategories.Attach(item);
+                        _db.Entry(item).State = EntityState.Unchanged;
+                    }
+                    else
+                    {
+                        _db.ProductCategories.Add(item);
+                        _db.SaveChanges();
                     }
 
-                    try
+                    var busCat = new BusinessCategory()
                     {
-                        db.SaveChanges();
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        throw ex;
-                    }
+                        Bussiness = value,
+                        BussinessId = value.Id,
+                        ProductCategory = item,
+                        ProductCategoryId = item.Id
+                    };
+                    value.BusinesCategories.Add(busCat);
                 }
 
-                db.Businesses.Add(value);
-                db.SaveChanges();
+                try
+                {
+                    _db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
+
+            _db.Businesses.Add(value);
+            _db.SaveChanges();
+
 
             ImageUtility.SaveImage(imageUrls.imageDir, imageString);
         }
@@ -164,34 +154,30 @@ namespace easyBike.Api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Business value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var original = db.Businesses
-                    .Where(item => item.Id == id).FirstOrDefault();
 
-                original.Addresses = value.Addresses;
-                original.CodSubfix = value.CodSubfix;
-                original.Name = value.Name;
-                original.ImageUrl = value.ImageUrl;
-                original.Phones = value.Phones;
-                original.Categories = value.Categories;
-                db.Entry(original).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            var original = _db.Businesses
+                .Where(item => item.Id == id).FirstOrDefault();
+
+            original.Addresses = value.Addresses;
+            original.CodSubfix = value.CodSubfix;
+            original.Name = value.Name;
+            original.ImageUrl = value.ImageUrl;
+            original.Phones = value.Phones;
+            original.Categories = value.Categories;
+            _db.Entry(original).State = EntityState.Modified;
+            _db.SaveChanges();
+
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Businesses
-                    .Where(item => item.Id == id);
+            var Data = _db.Businesses
+                .Where(item => item.Id == id);
 
-                db.Businesses.Remove(Data.First());
-                db.SaveChanges();
-            }
+            _db.Businesses.Remove(Data.First());
+            _db.SaveChanges();
         }
     }
 }

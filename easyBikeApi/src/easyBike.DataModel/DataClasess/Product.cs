@@ -18,5 +18,6 @@ namespace easyBike.DataModel.DataClasess
         public Business Business { get; set; }
         [NotMapped]
         public decimal Price { get; set; }
+        public User User { get; set; }
     }
 }

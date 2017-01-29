@@ -13,7 +13,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-karma');
 
-    var DEFAULT_BASE_URL_PATH = 'http://localhost:49177/api';
+    //var DEFAULT_BASE_URL_PATH = 'http://localhost:49177/api';
+	var DEFAULT_BASE_URL_PATH = 'http://service.mototaxbolivia.com/api';
     var DEFAULT_USE_RECAPTCHA_VALUE = true;
     var buildConfig = require('./build_config.js');
     var teamcityProperties = grunt.file.readJSON(grunt.option('teamcity.properties.all') || 'local_config.json');

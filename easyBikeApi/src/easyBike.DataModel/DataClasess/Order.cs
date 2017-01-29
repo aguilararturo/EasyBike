@@ -22,5 +22,6 @@ namespace easyBike.DataModel.DataClasess
         public DateTime DeliverDate { get; set; }
         public DateTime InTransitDate { get; set; }
         public decimal BikePrice { get; set; }
+        public User User { get; set; }
     }
 }

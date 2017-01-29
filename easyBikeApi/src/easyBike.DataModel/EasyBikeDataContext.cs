@@ -9,6 +9,9 @@ namespace easyBike.DataModel
 {
     public class EasyBikeDataContext : DbContext
     {
+        public EasyBikeDataContext(DbContextOptions options) : base(options)
+        {
+        }
         public DbSet<Address> Adresses { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Membership> Memberships { get; set; }
@@ -26,12 +29,6 @@ namespace easyBike.DataModel
         public DbSet<Stock> Stock{ get; set; }
         public DbSet<ConfigurationData> Configurations { get; set; }
         public DbSet<PriceProduct> PriceProducts{ get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            string sConnString = @"Data Source=.\sqlexpress;Initial Catalog=EasyBikeDB;Integrated Security=True;Pooling=False";
-            optionsBuilder.UseSqlServer(sConnString);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

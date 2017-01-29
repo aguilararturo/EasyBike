@@ -11,6 +11,7 @@ namespace easyBike.DataModel.DataClasess
         public string Name { get; set; }
         public string href { get; set; }
         public int Order { get; set; }
-        public string Content { get; set; }        
+        public string Content { get; set; }
+        public User User { get; set; }
     }
 }

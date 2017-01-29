@@ -12,59 +12,51 @@ using easyBike.DataModel.DataClasess;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientController : Controller
+    public class ClientController : LocalController
     {
+        public ClientController(EasyBikeDataContext context) : base(context)
+        {
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<Client> Get()
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var data= db.Clients.Where(c => !db.Bikes.Select(b => b.Driver).Contains(c))                                    
-                    .Include(client => client.Addresses)
-                    .Include(Client => Client.Phones)
-                    .OrderBy(item => item.Id)
-                    .ToList();
-                return data;
-            }
+            var data = _db.Clients.Where(c => !_db.Bikes.Select(b => b.Driver).Contains(c))
+                .Include(client => client.Addresses)
+                .Include(Client => Client.Phones)
+                .OrderBy(item => item.Id)
+                .ToList();
+            return data;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Client Get(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Clients
-                    .Where(item => item.Id == id);
-                return Data.First();
-            }
+            var Data = _db.Clients
+                .Where(item => item.Id == id);
+            return Data.First();
         }
 
         // GET api/values/5
         [HttpGet("GetByPhone/{phoneNumber}")]
         public Client GetByPhone(int phoneNumber)
-        {               
-            using (var db = new EasyBikeDataContext())
-            {                
-                var data = db.Clients
-                    .Include(client => client.Addresses)
-                    .Include(Client => Client.Phones)
-                    .Where(item => item.Phones.Any(phone=> phone.Number == phoneNumber));
-                return data.FirstOrDefault();
-            }
+        {
+            var data = _db.Clients
+                .Include(client => client.Addresses)
+                .Include(Client => Client.Phones)
+                .Where(item => item.Phones.Any(phone => phone.Number == phoneNumber));
+            return data.FirstOrDefault();
         }
 
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody] Client value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                db.Clients.Add(value);
-                db.SaveChanges();
-                return Ok(value);
-            }
+            _db.Clients.Add(value);
+            _db.SaveChanges();
+            return Ok(value);
 
             return NotFound();
         }
@@ -73,31 +65,25 @@ namespace easyBike.Api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Client value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var original = db.Clients
-                    .Where(item => item.Id == id).FirstOrDefault();                
-                original.Name = value.Name;
-                original.Phones = value.Phones;
-                original.Addresses = value.Addresses;               
-                
-                db.Entry(original).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            var original = _db.Clients
+                .Where(item => item.Id == id).FirstOrDefault();
+            original.Name = value.Name;
+            original.Phones = value.Phones;
+            original.Addresses = value.Addresses;
+
+            _db.Entry(original).State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Clients
-                    .Where(item => item.Id == id);
+            var Data = _db.Clients
+                .Where(item => item.Id == id);
 
-                db.Clients.Remove(Data.First());
-                db.SaveChanges();
-            }
+            _db.Clients.Remove(Data.First());
+            _db.SaveChanges();
         }
     }
 }

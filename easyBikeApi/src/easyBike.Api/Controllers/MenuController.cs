@@ -12,31 +12,64 @@ using Microsoft.EntityFrameworkCore;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class MenuController : Controller
+    public class MenuController : LocalController
     {
+        public MenuController(EasyBikeDataContext context) : base(context)
+        {
+        }
+
+        // GET: api/values
+        [HttpGet("/CreateDB")]
+        public IActionResult CreateDB()
+        {
+            try
+            {
+                _db.Database.EnsureCreated();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, "Error in cloud - GetPLUInfo" + ex.Message);
+            }
+                            
+            return Ok("Data Base created correctly");
+        }
+
+        [HttpGet("/CreateConfiguration")]
+        public IActionResult CreateConfiguration()
+        {
+            try
+            {
+                ConfigurationData cd = new ConfigurationData();
+                cd.Name = "MotoTaxBolivia";
+                cd.Id = ConfigurationsNames.DefaultBusiness.ToString();
+                _db.Configurations.Add(cd);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, "Error in cloud - GetPLUInfo" + ex.Message);
+            }
+
+            return Ok("Data Base created correctly");
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<Menu> Get()
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Menus
-                    .OrderBy(item => item.Order)
-                    .ToList();
-                return Data;
-            }
+            var Data = _db.Menus
+                .OrderBy(item => item.Order)
+                .ToList();
+            return Data;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Menu Get(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Menus
-                    .Where(item => item.Id == id);
-                return Data.First();
-            }
+            var Data = _db.Menus
+                .Where(item => item.Id == id);
+            return Data.First();
         }
 
         // POST api/values
@@ -44,58 +77,46 @@ namespace easyBike.Api.Controllers
         public void Post([FromBody]Menu value)
 
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                db.Menus.Add(value);
-                db.SaveChanges();
-            }
+            _db.Menus.Add(value);
+            _db.SaveChanges();
         }
 
         [HttpPost("AddMenus/")]
         public void AddMenus([FromBody]IEnumerable<Menu> values)
-
         {
             foreach (var item in values)
             {
                 item.Id = 0;
             }
-            using (var db = new EasyBikeDataContext())
-            {
-                db.Menus.AddRange(values);
-                db.SaveChanges();
-            }
+
+            _db.Menus.AddRange(values);
+            _db.SaveChanges();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Menu value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var original = db.Menus
-                    .Where(item => item.Id == id).FirstOrDefault();
+            var original = _db.Menus
+                .Where(item => item.Id == id).FirstOrDefault();
 
-                original.Content = value.Content;
-                original.href = value.href;
-                original.Name = value.Name;
-                original.Order = value.Order;
-                db.Entry(original).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            original.Content = value.Content;
+            original.href = value.href;
+            original.Name = value.Name;
+            original.Order = value.Order;
+            _db.Entry(original).State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.Menus
-                    .Where(item => item.Id == id);
+            var Data = _db.Menus
+                .Where(item => item.Id == id);
 
-                db.Menus.Remove(Data.First());
-                db.SaveChanges();
-            }
+            _db.Menus.Remove(Data.First());
+            _db.SaveChanges();
         }
     }
 }

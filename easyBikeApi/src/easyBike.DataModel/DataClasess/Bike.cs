@@ -12,5 +12,6 @@ namespace easyBike.DataModel.DataClasess
         public string Plate { get; set; }
         public string Model { get; set; }
         public Client Driver { get; set; }
+        public User User { get; set; }
     }
 }

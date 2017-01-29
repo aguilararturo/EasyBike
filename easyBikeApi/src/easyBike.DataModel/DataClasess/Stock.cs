@@ -18,5 +18,6 @@ namespace easyBike.DataModel.DataClasess
         public int OrderId { get; set; }
         public int OrderProductId{ get; set; }
         public decimal Cost { get; set; }
+        public User User { get; set; }
     }
 }

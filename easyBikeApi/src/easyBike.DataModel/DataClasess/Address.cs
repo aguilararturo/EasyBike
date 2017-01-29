@@ -12,5 +12,6 @@ namespace easyBike.DataModel.DataClasess
         public DateTime Date { get; set; }
         public string Direction { get; set; }
         public int Number { get; set; }
+        public User User { get; set; }
     }
 }

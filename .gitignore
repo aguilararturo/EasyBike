@@ -6,4 +6,5 @@ easyBikeApi/src/easyBike.Api/bin
 easyBikeApi/src/easyBike.Api/obj
 easyBikeApi/src/easyBike.DataModel/bin
 easyBikeApi/src/easyBike.DataModel/obj
-/easyBikeApi/src/easyBike.Api/images
+easyBikeApi/src/easyBike.Api/images
+DeployApi

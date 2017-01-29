@@ -12,47 +12,42 @@ using easyBike.DataModel.DataClasess;
 namespace easyBike.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class PriceProductController : Controller
+    public class PriceProductController : LocalController
     {
+        public PriceProductController(EasyBikeDataContext context) : base(context)
+        {
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<PriceProduct> Get()
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var q = db.PriceProducts.GroupBy(pp => pp.Product)
-               .Select(g => g.OrderByDescending(i => i.RegisteredDate).First())
-               .ToList();
-                                
-                return q;
-            }
+            var q = _db.PriceProducts.GroupBy(pp => pp.Product)
+           .Select(g => g.OrderByDescending(i => i.RegisteredDate).First())
+           .ToList();
+
+            return q;
         }
 
         // GET api/values/5
         [HttpGet("{ProductId}")]
         public PriceProduct Get(int ProductId)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.PriceProducts
-                    .Where(item => item.Product.Id == ProductId)
-                    .OrderByDescending(i => i.RegisteredDate)
-                    .First();
-                ;
-                return Data;
-            }
+            var Data = _db.PriceProducts
+                .Where(item => item.Product.Id == ProductId)
+                .OrderByDescending(i => i.RegisteredDate)
+                .First();
+            ;
+            return Data;
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody]PriceProduct value)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                db.Entry(value.Product).State = EntityState.Modified;
-                db.PriceProducts.Add(value);
-                db.SaveChanges();
-            }
+            _db.Entry(value.Product).State = EntityState.Modified;
+            _db.PriceProducts.Add(value);
+            _db.SaveChanges();
         }
 
         // POST api/values
@@ -63,13 +58,10 @@ namespace easyBike.Api.Controllers
             {
                 if (value.Price > 0)
                 {
-                    using (var db = new EasyBikeDataContext())
-                    {
-                        db.Entry(value.Product).State = EntityState.Unchanged;
-                        value.RegisteredDate = DateTime.Now;
-                        db.PriceProducts.Add(value);
-                        db.SaveChanges();
-                    }
+                    _db.Entry(value.Product).State = EntityState.Unchanged;
+                    value.RegisteredDate = DateTime.Now;
+                    _db.PriceProducts.Add(value);
+                    _db.SaveChanges();
                 }
             }
         }
@@ -78,25 +70,19 @@ namespace easyBike.Api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]PriceProduct value)
         {
-            using (var db = new EasyBikeDataContext())
-            {                
-                db.Entry(value).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            _db.Entry(value).State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var db = new EasyBikeDataContext())
-            {
-                var Data = db.PriceProducts
-                    .Where(item => item.Id == id);
+            var Data = _db.PriceProducts
+                .Where(item => item.Id == id);
 
-                db.PriceProducts.Remove(Data.First());
-                db.SaveChanges();
-            }
+            _db.PriceProducts.Remove(Data.First());
+            _db.SaveChanges();
         }
     }
 }

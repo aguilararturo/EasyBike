@@ -12,5 +12,6 @@ namespace easyBike.DataModel.DataClasess
         public string ImageUrl { get; set; }
         public bool Default { get; set; }
         public ICollection<BusinessCategory> BusinesCategories { get; set; }
+        public User User { get; set; }
     }
 }
