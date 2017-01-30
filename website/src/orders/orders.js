@@ -34,7 +34,7 @@
             ordersCtrl.oderTypeEnable = false;
             ordersCtrl.cartEnable = false;
             ordersCtrl.bikeEnable = false;
-            ordersCtrl.businesses = {};
+            ordersCtrl.businesses = [];
             ordersCtrl.selectedStep = {};
             ordersCtrl.todayBikes = [];
             ordersCtrl.selectedBusiness = {};

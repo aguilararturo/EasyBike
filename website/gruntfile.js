@@ -1,10 +1,9 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     // loading tasks
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -12,9 +11,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('gruntify-eslint');
+    grunt.loadNpmTasks('grunt-focus');
 
-    //var DEFAULT_BASE_URL_PATH = 'http://localhost:49177/api';
-	var DEFAULT_BASE_URL_PATH = 'http://service.mototaxbolivia.com/api';
+    var DEFAULT_BASE_URL_PATH = 'http://service.mototaxbolivia.com/api';
     var DEFAULT_USE_RECAPTCHA_VALUE = true;
     var buildConfig = require('./build_config.js');
     var teamcityProperties = grunt.file.readJSON(grunt.option('teamcity.properties.all') || 'local_config.json');
@@ -24,6 +24,52 @@ module.exports = function(grunt) {
     if (typeof useReCaptchaMock !== 'boolean') {
         useReCaptchaMock = DEFAULT_USE_RECAPTCHA_VALUE;
     }
+
+    var defaultBuildConfig = {
+        build: {
+            dir: '<%= build_dir %>',
+            src: [
+                '<%= node_modules.scripts %>',
+                '<%= files.scripts %>',
+                '<%= build_dir %>/src/**/*.module.js',
+                '<%= build_dir %>/src/**/*.js',
+                '<%= html2js.app.dest %>',
+                '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.<%= buildNumber %>.css',
+                '<%= node_modules.styles %>'
+            ],
+            lr: ['//<%= connect.options.hostname %>:<%= connect.options.livereload %>/livereload.js'],
+            locale: [ '<%= grunt.option(\'locale\') || \'en\'%>' ]
+        },
+
+        compile: {
+            dir: '<%= compile_dir %>',
+            src: [
+                '<%= concat.compile_vendor_scripts.dest %>',
+                '<%= concat.compile_scripts.dest %>',
+                '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.<%= buildNumber %>.css',
+                '<%= compile_dir %>/assets/vendor.<%= pkg.version %>.<%= buildNumber %>.css'
+            ],
+            lr: [ ],
+            locale: [ '<%= grunt.option(\'locale\') || \'en\'%>' ]
+        }
+    };
+
+    var concatTaskConfiguration = {
+        src: [
+            'module.prefix',
+            '<%= build_dir %>/src/**/*.module.js',
+            '<%= build_dir %>/src/**/*.js',
+            '<%= html2js.app.dest %>',
+            'module.suffix'
+        ],
+        dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.<%= buildNumber %>.js'
+    };
+
+    var uglifyTaskConfiguration = {
+        files: {
+            '<%= concat.compile_scripts.dest %>': '<%= concat.compile_scripts.dest %>'
+        }
+    };
 
     var gruntConfig = {
         pkg: grunt.file.readJSON('package.json'),
@@ -81,6 +127,12 @@ module.exports = function(grunt) {
                         expand: true
                     },
                     {
+                        src: [ 'src/assets/browsers/*' ],
+                        dest: '<%= build_dir %>/',
+                        cwd: '.',
+                        expand: true
+                    },
+                    {
                         src: [ 'bootstrap/*' ],
                         dest: '<%= build_dir %>/fonts/',
                         cwd: '<%= node_modules.bootstrap_assets %>/',
@@ -125,6 +177,12 @@ module.exports = function(grunt) {
                         expand: true
                     },
                     {
+                        src: [ 'assets/browsers/*' ],
+                        dest: '<%= compile_dir %>/src/',
+                        cwd: '<%= build_dir %>/src/',
+                        expand: true
+                    },
+                    {
                         src: [ 'bootstrap/*' ],
                         dest: '<%= compile_dir %>/fonts/',
                         cwd: '<%= node_modules.bootstrap_assets %>/',
@@ -142,15 +200,19 @@ module.exports = function(grunt) {
 
         // concat
         concat: {
+            compile_scripts_with_source_map: {
+                src: concatTaskConfiguration.src,
+                dest: concatTaskConfiguration.dest,
+                options: {
+                    sourceMap: true
+                }
+            },
             compile_scripts: {
-                src: [
-                    'module.prefix',
-                    '<%= build_dir %>/**/*.module.js',
-                    '<%= build_dir %>/**/*.js',
-                    '<%= html2js.app.dest %>',
-                    'module.suffix'
-                ],
-                dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.<%= buildNumber %>.js'
+                src: concatTaskConfiguration.src,
+                dest: concatTaskConfiguration.dest,
+                options: {
+                    sourceMap: false
+                }
             },
             compile_vendor_scripts: {
                 src: [
@@ -186,8 +248,14 @@ module.exports = function(grunt) {
         // uglify
         uglify: {
             compile: {
-                files: {
-                    '<%= concat.compile_scripts.dest %>': '<%= concat.compile_scripts.dest %>'
+                files: uglifyTaskConfiguration.files
+            },
+            compile_with_source_map: {
+                files: uglifyTaskConfiguration.files,
+                options: {
+                    sourceMap: true,
+                    sourceMapIncludeSources: true,
+                    sourceMapIn: '<%= concat.compile_scripts.dest %>' + '.map'
                 }
             }
         },
@@ -205,32 +273,6 @@ module.exports = function(grunt) {
                 },
                 options: {
                     style: 'compressed'
-                }
-            }
-        },
-
-        // js hint
-        jshint: {
-            src: [
-                '<%= files.scripts %>'
-            ],
-            test: [
-                '<%= files.jsunit %>'
-            ],
-            gruntfile: [
-                'Gruntfile.js'
-            ],
-            options: {
-                curly: true,
-                immed: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                boss: true,
-                eqnull: true,
-                loopfunc: true,
-                globals: {
-                    'angular': false
                 }
             }
         },
@@ -272,35 +314,7 @@ module.exports = function(grunt) {
             }
         },
 
-        index: {
-
-            build: {
-                dir: '<%= build_dir %>',
-                src: [
-                    '<%= node_modules.scripts %>',
-                    '<%= files.scripts %>',
-                    '<%= build_dir %>/src/**/*.module.js',
-                    '<%= build_dir %>/src/**/*.js',
-                    '<%= html2js.app.dest %>',
-                    '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.<%= buildNumber %>.css',
-                    '<%= node_modules.styles %>'
-                ],
-                lr: ['//<%= connect.options.hostname %>:<%= connect.options.livereload %>/livereload.js'],
-                locale: [ '<%= grunt.option(\'locale\') || \'en\'%>' ]
-            },
-
-            compile: {
-                dir: '<%= compile_dir %>',
-                src: [
-                    '<%= concat.compile_vendor_scripts.dest %>',
-                    '<%= concat.compile_scripts.dest %>',
-                    '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.<%= buildNumber %>.css',
-                    '<%= compile_dir %>/assets/vendor.<%= pkg.version %>.<%= buildNumber %>.css'
-                ],
-                lr: [ ],
-                locale: [ '<%= grunt.option(\'locale\') || \'en\'%>' ]
-            }
-        },
+        index: defaultBuildConfig,
 
         watch: {
 
@@ -308,19 +322,18 @@ module.exports = function(grunt) {
                 livereload: '<%= connect.options.livereload %>'
             },
 
-            gruntfile: {
-                files: 'Gruntfile.js',
-                tasks: [ 'jshint:gruntfile' ],
-                options: {
-                    livereload: false
-                }
-            },
-
             jssrc: {
                 files: [
                     '<%= files.scripts %>'
                 ],
-                tasks: [ 'jshint:src', 'jsdoc', 'copy:scripts' ]
+                tasks: [ 'eslint', 'jsdoc', 'copy:scripts', 'ngAnnotate']
+            },
+
+            jsSrcDev: {
+                files: [
+                    '<%= files.scripts %>'
+                ],
+                tasks: [ 'copy:scripts', 'ngAnnotate']
             },
 
             index: {
@@ -351,17 +364,26 @@ module.exports = function(grunt) {
                 files: [
                     '<%= files.jsunit %>'
                 ],
-                tasks: [ 'jshint:test', 'karma:unit:run' ],
+                tasks: [ 'eslint', 'karma:unit:run' ],
                 options: {
                     livereload: false
                 }
             }
         },
 
+        focus: {
+            watchAll: {
+                include: ['index', 'tpls', 'sass', 'jssrc', 'jsunit']
+            },
+            watchDev: {
+                include: ['index', 'tpls', 'sass', 'jsSrcDev']
+            }
+        },
+
         connect: {
             options: {
                 port: 9000,
-                hostname: 'localhost',
+                hostname: '*',
                 livereload: 35729
             },
             livereload: {
@@ -376,6 +398,13 @@ module.exports = function(grunt) {
                     base: '<%= compile_dir %>'
                 }
             }
+        },
+
+        eslint: {
+            src: ['Gruntfile.js', '<%= files.scripts %>', '<%= files.jsunit %>'],
+            options: {
+                quiet: true
+            }
         }
     };
 
@@ -384,32 +413,45 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [ 'build', 'compile' ]);
 
     grunt.registerTask('build', [
-        'clean', 'html2js', 'jshint', 'sass:build', 'copy:scripts', 'copy:node_modules',
-        'copy:assets', 'copy:fonts', 'index:build', 'jsdoc'
+        'clean', 'html2js', 'sass:build', 'copy:scripts', 'copy:node_modules',
+        'copy:assets', 'copy:fonts', 'index:build', 'jsdoc', 'ngAnnotate'
     ]);
 
     grunt.registerTask('build-notest', [
-        'clean', 'html2js', 'jshint', 'sass:build', 'copy:scripts', 'copy:node_modules',
-        'copy:assets', 'copy:fonts', 'index:build', 'jsdoc'
+        'clean', 'html2js', 'eslint', 'sass:build', 'copy:scripts', 'copy:node_modules',
+        'copy:assets', 'copy:fonts', 'index:build', 'jsdoc', 'ngAnnotate'
     ]);
 
-    grunt.registerTask('compile', [ 'build', 'sass:compile', 'ngAnnotate', 'copy:compile_assets',
+    grunt.registerTask('buildDev', [
+        'clean', 'html2js', 'sass:build', 'copy:scripts', 'copy:node_modules',
+        'copy:assets', 'copy:fonts', 'index:build', 'ngAnnotate'
+    ]);
+
+    grunt.registerTask('compile', [ 'build', 'sass:compile', 'copy:compile_assets',
         'concat:compile_vendor_scripts', 'concat:compile_scripts', 'concat:build_vendor_styles',
-        'uglify', 'index:compile'
+        'uglify:compile', 'index:compile'
     ]);
 
-    grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
+    grunt.registerTask('compile_with_source_map', [ 'build', 'sass:compile', 'copy:compile_assets',
+        'concat:compile_vendor_scripts', 'concat:compile_scripts_with_source_map', 'concat:build_vendor_styles',
+        'uglify:compile_with_source_map', 'index:compile'
+    ]);
+
+    grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
         if (target === 'dist') {
             return grunt.task.run([
-                'compile',
+                'compile_with_source_map',
                 'connect:dist:keepalive'
             ]);
         }
 
+        var watchTask = target === 'clean' ?  'focus:watchAll' : 'focus:watchDev';
+        var buildTask = target === 'clean' ?  'build' : 'buildDev';
+
         return grunt.task.run([
-            'build',
+            buildTask,
             'connect:livereload',
-            'watch'
+            watchTask
         ]);
     });
 
@@ -419,7 +461,7 @@ module.exports = function(grunt) {
      * @return {Object[]} JS files.
      */
     function filterForJS(files) {
-        return files.filter(function(file) {
+        return files.filter(function (file) {
             return file.match(/\.js$/);
         });
     }
@@ -430,7 +472,7 @@ module.exports = function(grunt) {
      * @return {Object[]} CSS files.
      */
     function filterForCSS(files) {
-        return files.filter(function(file) {
+        return files.filter(function (file) {
             return file.match(/\.css$/);
         });
     }
@@ -441,7 +483,7 @@ module.exports = function(grunt) {
      * @return {Object[]} array without duplicates.
      */
     function removeDuplicates(dupArray) {
-        return dupArray.filter(function(elem, pos, arr) {
+        return dupArray.filter(function (elem, pos, arr) {
             return arr.indexOf(elem) === pos;
         });
     }
@@ -466,17 +508,17 @@ module.exports = function(grunt) {
         });
     }
 
-    grunt.registerMultiTask('index', 'Process index.html template', function() {
+    grunt.registerMultiTask('index', 'Process index.html template', function () {
         var dirRE = new RegExp('^(' + grunt.config('build_dir') + '|' + grunt.config('compile_dir') + ')\/', 'g');
         var fullVersion = grunt.config('pkg.version') + '.' + buildNumber;
 
-        var jsFiles = filterForJS(this.filesSrc).map(function(file) {
+        var jsFiles = filterForJS(this.filesSrc).map(function (file) {
             return file.replace(dirRE, '');
         });
 
         jsFiles = removeDuplicates(jsFiles);
 
-        var cssFiles = filterForCSS(this.filesSrc).map(function(file) {
+        var cssFiles = filterForCSS(this.filesSrc).map(function (file) {
             return file.replace(dirRE, '');
         });
 
@@ -490,7 +532,7 @@ module.exports = function(grunt) {
         var localeValue = this.data.locale;
 
         grunt.file.copy('src/index.html', this.data.dir + '/index.html', {
-            process: function(contents) {
+            process: function (contents) {
                 return grunt.template.process(contents, {
                     data: {
                         scripts: jsFiles,

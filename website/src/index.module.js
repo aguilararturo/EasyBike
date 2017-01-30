@@ -6,9 +6,9 @@
      */
     angular
         .module('EasyBikeApp', [
-            'ngMap',
             'ui.router',
             'ui.bootstrap',
+            'ngMap',
             'angularMoment',
             'EasyBikeApp.Templates',
             'vcRecaptcha',
