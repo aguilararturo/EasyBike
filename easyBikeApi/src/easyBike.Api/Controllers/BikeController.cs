@@ -43,13 +43,27 @@ namespace easyBike.Api.Controllers
             
         }
 
+        // GET api/values/5
+        [HttpGet("/api/validateCode/{code}")]
+        public bool ValidateCode(string code)
+        {
+            var exist = _db.Bikes.Any(o => o.Code == code);
+            return !exist;
+        }
+
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Bike value)
+        public IActionResult Post([FromBody]Bike value)
         {
-
+            if (!_db.Bikes.Any(o => o.Code == value.Code))
+            {
                 _db.Bikes.Add(value);
                 _db.SaveChanges();
+                return Ok();
+            } else
+            {
+                return StatusCode(409, "El codigo de la moto ya existe");
+            }
             
         }
 

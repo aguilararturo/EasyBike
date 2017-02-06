@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    function BikeRegistrationController(BikeService, ModalUtility, $state) {
+    function BikeRegistrationController(BikeService, ModalUtility, $state, $q) {
         var bikeRegCtrl = this;
 
         /**
@@ -34,13 +34,22 @@
         }
 
         function saveBike() {
+            var deferrer = $q.defer();
             function completeSaveBike() {
-                ModalUtility.openSaveCompleteModal().result.then(
-                    function () {
-                        $state.reload();
-                    });
+                $state.reload();
             }
-            BikeService.saveBike(bikeRegCtrl.bike).then(completeSaveBike);
+            function completeValidateCode(response) {
+                if (response) {
+                    deferrer.resolve(BikeService.saveBike(bikeRegCtrl.bike).then(completeSaveBike));
+                } else {
+                    ModalUtility.openErrorMessage();
+                    deferrer.reject();
+                }
+            }
+
+            BikeService.validateCode(bikeRegCtrl.bike.code).then(completeValidateCode);
+
+            return deferrer.promise;
         }
 
         bikeRegCtrl.$onInit = $onInit;

@@ -76,10 +76,12 @@ namespace easyBike.Api.Controllers
             var data = _db.RegistredBikes
                 .Where(b => b.Date.Date == DateTime.Today
                 && b.Active
-                && b.Bike.Plate == value.Bike.Plate).FirstOrDefault();
+                && b.Bike.Id == value.Bike.Id).FirstOrDefault();
             if (null == data)
             {
                 _db.Entry(value.Bike).State = EntityState.Unchanged;
+                _db.Entry(value.Bike.Driver).State = EntityState.Unchanged;                
+                _db.Entry(value.User).State = EntityState.Unchanged;
                 value.Date = DateTime.Now;
                 value.Active = true;
                 _db.RegistredBikes.Add(value);

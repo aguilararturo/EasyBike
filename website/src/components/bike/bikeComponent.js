@@ -35,7 +35,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function BikeComponetController(_) {
+    function BikeComponetController(_, BikeService) {
         var bikeCompCtrl = this;
         /**
         * @function $onInit
@@ -46,14 +46,29 @@
         function $onInit() {
             bikeCompCtrl.text = 'Datos Motociclista';
             bikeCompCtrl.submited = false;
+            bikeCompCtrl.codeError = false;
         }
 
         function validateBike() {
             bikeCompCtrl.submited = true;
         }
 
+        function validateCode(code) {
+            function completeValidateCode(response) {
+                bikeCompCtrl.codeError = !response;
+            }
+
+            function errorInValidateCode(response) {
+                bikeCompCtrl.codeError = false;
+            }
+            BikeService.validateCode(code)
+                .then(completeValidateCode)
+                .catch(errorInValidateCode);
+        }
+
         bikeCompCtrl.$onInit = $onInit;
         bikeCompCtrl.validateBike = validateBike;
+        bikeCompCtrl.validateCode = validateCode;
     }
     angular
         .module('EasyBikeApp.Bikes')

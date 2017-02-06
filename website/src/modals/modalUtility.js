@@ -239,6 +239,15 @@
             return openPriceModal('', msg, key, 'Costo Carrera', 'Cancelar');
         }
 
+        function openErrorMessage() {
+            var messages = [
+                {
+                    text: 'No se pudo registrar la information verifique los datos'
+                }
+            ];
+            openMessage(messages, 'Okay', 'Error');
+        }
+
         function openGenericError() {
             var messages = [
                 {
@@ -254,6 +263,7 @@
 
 
         return {
+            openErrorMessage: openErrorMessage,
             openGenericError: openGenericError,
             openMessage: openMessage,
             openExpiredSessionModal: openExpiredSessionModal,

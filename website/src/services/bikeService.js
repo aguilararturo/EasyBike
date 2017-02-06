@@ -7,10 +7,10 @@
 
         var BikeURL = BASE_URL + '/Bike';
 
-        function getTodayBikes() {
-            return $http.get(BikeRegisterURL + '/GetTodayAvaliable')
+        function validateCode(code) {
+            return $http.get(BASE_URL + '/ValidateCode/' + code)
                 .then(requestService.successRequest)
-                .catch(requestService.errorLoadingScripts('GetTodayAvaliable bikes'));
+                .catch(requestService.errorLoadingScripts('ValidateCode bikes'));
         }
 
         function saveBike(bike) {
@@ -25,7 +25,8 @@
 
         return {
             saveBike: saveBike,
-            getBikes: getBikes
+            getBikes: getBikes,
+            validateCode: validateCode
         };
     }
 
