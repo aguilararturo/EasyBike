@@ -1,29 +1,32 @@
 (function () {
     'use strict';
 
-    function BikeEnabledService($log, $http, $q, BASE_URL, requestService) {
+    function BikeEnabledService($log, $http, $q, BASE_URL, BIKE_URL, requestService) {
         $http.defaults.headers.common.Accept = 'text/plain';
         $http.defaults.headers.common['Content-Type'] = 'application/json';
 
-        var BikeRegisterURL = BASE_URL + '/BikeRegister';
-
         function getTodayBikes() {
-            return $http.get(BikeRegisterURL + '/GetTodayAvaliable')
+            return $http.get(BIKE_URL.TODAY_AVALIABLE, {
+                cache: true
+            })
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts('GetTodayAvaliable bikes'));
         }
 
         function saveBikeRegister(bike) {
-            return $http.post(BikeRegisterURL, bike);
+            return $http.post(BIKE_URL.BIKE_REGISTER, bike)
+                .then(requestService.successRequestClearBikeCache);
         }
 
         function disableBikeRegister(bike) {
-            var url = BikeRegisterURL + '/Disable';
-            return $http.put(url, bike);
+            return $http.put(BIKE_URL.DISABLE_BIKE, bike)
+                .then(requestService.successRequestClearBikeCache);
         }
 
         function getTodayAvaliableWithouOrder() {
-            return $http.get(BikeRegisterURL + '/GetTodayAvaliableWithouOrder')
+            return $http.get(BIKE_URL.TODAY_AVALIABLE_WITHOU_ORDER, {
+                cache: true
+            })
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts('GetTodayAvaliableWithouOrder'));
         }

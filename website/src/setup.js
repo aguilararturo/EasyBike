@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -19,7 +19,23 @@
         function loadAppAndConfiguration(config) {
             angular.module('EasyBikeApp.Configuration')
                 .constant('BASE_URL', window.EASYBIKE_BASE_URL)
-                .constant('USE_RECAPTCHA_MOCK', window.EASYBIKE_USE_RECAPTCHA_MOCK);
+                .constant('USE_RECAPTCHA_MOCK', window.EASYBIKE_USE_RECAPTCHA_MOCK)
+                .constant('BIKE_URL', (function () {
+                    // Define your variable
+                    var bikeRegisterURL = window.EASYBIKE_BASE_URL + '/BikeRegister';
+                    var getTodayAvaliableWithouOrderUrl = bikeRegisterURL + '/GetTodayAvaliableWithouOrder';
+                    var getTodayBikesUrl = bikeRegisterURL + '/GetTodayAvaliable';
+                    var disableUrl = bikeRegisterURL + '/Disable';
+                    var bikeURL = window.EASYBIKE_BASE_URL + '/Bike';
+                    // Use the variable in your constants
+                    return {
+                        BIKE: bikeURL,
+                        BIKE_REGISTER: bikeRegisterURL,
+                        TODAY_AVALIABLE_WITHOU_ORDER: getTodayAvaliableWithouOrderUrl,
+                        TODAY_AVALIABLE: getTodayBikesUrl,
+                        DISABLE_BIKE: disableUrl
+                    };
+                })());
 
             document.title = 'easyBike';
             angular.bootstrap(document.body, ['EasyBikeApp']);

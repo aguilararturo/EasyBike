@@ -1,7 +1,7 @@
-(function() {
+(function () {
     'use strict';
 
-    function requestService($log, $q, _) {
+    function requestService($log, $q, $cacheFactory, BIKE_URL, _) {
         /**
         * @function successfullRequest
         * @author Arturo Aguilar
@@ -16,11 +16,35 @@
             return response.data;
         }
 
-        function successRequestLog(message) {
+        function successRequestLog(message, key) {
+            if (!_.isUndefined(key)) {
+                var $httpDefaultCache = $cacheFactory.get('$http');
+                $httpDefaultCache.remove(key);
+            }
             return function successLogRequest(response) {
                 $log.warn('Success Request for' + message);
                 return response.data;
             };
+        }
+
+        function successRequestClearCache(key) {
+            if (!_.isUndefined(key)) {
+                var $httpDefaultCache = $cacheFactory.get('$http');
+                $httpDefaultCache.remove(key);
+            }
+            return function successLogRequest(response) {
+                return response;
+            };
+        }
+
+        function successRequestClearBikeCache(response) {
+            var $httpDefaultCache = $cacheFactory.get('$http');
+            function removeKey(key) {
+                $httpDefaultCache.remove(key);
+            }
+            _.each(BIKE_URL, removeKey);
+
+            return response;
         }
 
         /**
@@ -41,7 +65,9 @@
         return {
             successRequest: successRequest,
             errorLoadingScripts: errorLoadingScripts,
-            successRequestLog: successRequestLog
+            successRequestLog: successRequestLog,
+            successRequestClearCache: successRequestClearCache,
+            successRequestClearBikeCache: successRequestClearBikeCache
         };
     }
 

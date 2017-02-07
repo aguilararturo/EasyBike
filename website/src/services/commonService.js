@@ -34,7 +34,9 @@
             }
             var ordersURL = BASE_URL + '/menu';
 
-            return $http.get(ordersURL)
+            return $http.get(ordersURL, {
+                cache: true
+            })
                 .then(successfullRequest)
                 .catch(errorLoadingScripts);
         }

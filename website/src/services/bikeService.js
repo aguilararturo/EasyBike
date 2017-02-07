@@ -1,11 +1,10 @@
 (function () {
     'use strict';
 
-    function BikeService($log, $http, $q, BASE_URL, requestService) {
+    function BikeService($log, $http, $q, BASE_URL, BIKE_URL, requestService) {
         $http.defaults.headers.common.Accept = 'text/plain';
         $http.defaults.headers.common['Content-Type'] = 'application/json';
 
-        var BikeURL = BASE_URL + '/Bike';
 
         function validateCode(code) {
             return $http.get(BASE_URL + '/ValidateCode/' + code)
@@ -14,11 +13,12 @@
         }
 
         function saveBike(bike) {
-            return $http.post(BikeURL, bike);
+            return $http.post(BIKE_URL.BIKE, bike)
+                .then(requestService.successRequestClearBikeCache);
         }
 
         function getBikes() {
-            return $http.get(BikeURL)
+            return $http.get(BIKE_URL.BIKE)
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts(' bikes'));
         }

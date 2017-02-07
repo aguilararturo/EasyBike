@@ -8,19 +8,27 @@
         var businessURL = BASE_URL + '/business';
 
         function getBusinesses() {
-            return $http.get(businessURL)
+            return $http.get(businessURL, {
+                cache: true
+            })
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts('Business'));
         }
 
+        var getWithCatsUrl = businessURL + '/GetWithCategories';
+
         function getBusinessesWithCategories() {
-            return $http.get(businessURL + '/GetWithCategories')
+            return $http.get(getWithCatsUrl, {
+                cache: true
+            })
                 .then(requestService.successRequest)
                 .catch(requestService.errorLoadingScripts('Business'));
         }
 
         function saveBusiness(business) {
-            return $http.post(businessURL, business);
+            return $http.post(businessURL, business)
+                .then(requestService.successRequestClearCache(businessURL))
+                .then(requestService.successRequestClearCache(getWithCatsUrl));
         }
 
         return {
