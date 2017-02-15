@@ -120,6 +120,14 @@ namespace easyBike.Api.Controllers
                 value.state = OrderState.Waiting;
             }
 
+            if(value.OrderDelivery != null)
+            {
+                value.OrderType = OrderType.DeliveryOrder;
+            }else
+            {
+                value.OrderType = OrderType.ProductOrder;
+            }
+
 
             value.Date = DateTime.Now;
             value.Total = orderTotal;

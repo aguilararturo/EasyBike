@@ -28,6 +28,15 @@ namespace easyBike.Api.Controllers
             return Data;
 
         }
+        
+        [HttpGet("getSearchable")]
+        public IEnumerable<Address> getSearchable()
+        {
+            var Data = _db.Adresses;
+                
+            return Data.ToArray();
+
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]

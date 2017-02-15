@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace easyBike.DataModel.DataClasess
 {
-    public class OrderType
+    public enum OrderType
     {
+        DeliveryOrder,
+        ProductOrder
     }
 }

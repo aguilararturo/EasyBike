@@ -23,5 +23,8 @@ namespace easyBike.DataModel.DataClasess
         public DateTime InTransitDate { get; set; }
         public decimal BikePrice { get; set; }
         public User User { get; set; }
+        public OrderDelivery OrderDelivery{ get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public OrderType OrderType { get; set; }
     }
 }

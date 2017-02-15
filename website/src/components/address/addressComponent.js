@@ -17,7 +17,8 @@
             bindToController: {
                 addresses: '=',
                 selectionChange: '&?',
-                enableSelection: '='
+                enableSelection: '=',
+                onDirectionChange: '&?'
             },
             scope: true
         };
@@ -44,8 +45,6 @@
             if (_.isEmpty(addressCompCtrl.addresses)) {
                 addAddress(addressCompCtrl.newAdress);
             }
-
-            //addressCompCtrl.enableSelection = !_.isUndefined(addressCompCtrl.selectionChange);
         }
 
         function initDummyAdress() {
@@ -62,7 +61,7 @@
         function addAddress(address) {
             addressCompCtrl.addresses.push(_.clone(address));
             initDummyAdress();
-            console.log('addresses',addressCompCtrl.addresses);
+            console.log('addresses', addressCompCtrl.addresses);
         }
 
         function removeAddress(address) {
@@ -86,11 +85,18 @@
             }
         }
 
+        function directionChange(item) {
+            if (!_.isUndefined(addressCompCtrl.onDirectionChange)) {
+                addressCompCtrl.onDirectionChange()(item);
+            }
+        }
+
         addressCompCtrl.$onInit = $onInit;
         addressCompCtrl.addAddress = addAddress;
         addressCompCtrl.removeAddress = removeAddress;
         addressCompCtrl.showMap = showMap;
         addressCompCtrl.checkAddress = checkAddress;
+        addressCompCtrl.directionChange = directionChange;
     }
     angular
         .module('EasyBikeApp.Components')

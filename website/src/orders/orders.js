@@ -70,7 +70,7 @@
                 },
                 {
                     title: KEYS.BIKE,
-                    content: 'fa fa-road',
+                    content: 'fa fa-motorcycle',
                     number: '4',
                     selected: false,
                     validated: false

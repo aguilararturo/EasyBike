@@ -1,0 +1,32 @@
+<div class="simple-page">
+	<div class="row col-xs-12 small-h-padding no-width-padding order-header">
+		<step-component steps="deliveryCtrl.steps" selected-step="deliveryCtrl.selectedStep"></step-component>
+	</div>
+
+	<div class="col-xs-12 order-panel" auto-fill-screen>
+		<div class="row col-xs-12" ng-if="deliveryCtrl.steps[0].number == deliveryCtrl.selectedStep.number">
+			<search-cmp items="deliveryCtrl.searchableAddress" search-text="deliveryCtrl.searchText"></search-cmp>
+			<delivery-adress-cmp order-delivery="deliveryCtrl.order.orderDelivery" on-direction-change="deliveryCtrl.onDirectionChange()" ></delivery-adress-cmp>
+		</div>
+		<div class="row" ng-if="deliveryCtrl.steps[1].number == deliveryCtrl.selectedStep.number">
+			<div class="row col-xs-12" ng-if="deliveryCtrl.steps[1].number == deliveryCtrl.selectedStep.number">
+				<div class="form-group col-sx-12">
+					<legend class="control-label">Buscar por telefono</legend>
+					<div class="col-xs-12 no-width-padding">
+						<input type="number" class="form-control" placeholder="Ingrese Telefono a buscar" ng-model="deliveryCtrl.number" ng-blur="deliveryCtrl.searchUser(deliveryCtrl.number)">
+					</div>
+				</div>
+				<user-component class="col-xs-12 col-lg-8" user="deliveryCtrl.order.client" text-title="deliveryCtrl.userTitle" selection-address-change="deliveryCtrl.selectAddressChange()"></user-component>
+			</div>
+		</div>
+		<div class="row" ng-if="deliveryCtrl.steps[2].number == deliveryCtrl.selectedStep.number">
+			<div class="col-xs-12 order-bottons text-right">
+				<save-button click-action="deliveryCtrl.saveOrder()" text-title="'Guardar Orden'"></save-button>
+			</div>
+			<div class="col-xs-12">
+				<legend>Lita de motos habilitadas</legend>
+				<bike-table-component bikes="deliveryCtrl.todayBikes" enable-selection="true" selection-change="deliveryCtrl.selectionBikeChange()"></bike-table-component>
+			</div>
+		</div>
+	</div>
+</div>
