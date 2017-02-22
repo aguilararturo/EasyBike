@@ -34,8 +34,48 @@ namespace easyBike.Api.Controllers
         {
             var Data = _db.Adresses;
                 
-            return Data.ToArray();
+            return Data.ToArray();        
+        }
 
+        [HttpGet("getOrderDeliveryAddress")]
+        public IEnumerable<OrderDelivery> getOrderDeliveryAddress()
+        {
+            var ordersWithIdentifier = _db.OrderDeliveries                
+                .Where(a => a.Identifier != "")
+                .Include(od => od.Address)
+                .Select(o => new OrderDelivery
+                {
+                    Address = o.Address,
+                    Id = o.Id,
+                    Identifier = o.Identifier,
+                }).ToArrayAsync();
+
+            var singleAddress = _db.OrderDeliveries
+                .Where(s=> ! ordersWithIdentifier.Select(o=>o.Address).Contains( s.Address))
+                .Select(o=> new OrderDelivery
+                {
+                    Address = o.Address,
+                    Id = o.Id,
+                    Identifier = o.Identifier,
+                }).ToArrayAsync();
+
+            //var listData = _db.OrderDeliveries
+            //    .Where(od=> ids.Contains(od.Address))
+            //    .Include(od => od.Address)    
+
+            //    .Select(o => new OrderDelivery
+            //    {
+            //        Address = o.Address,
+            //        Id = o.Id,
+            //        Identifier = o.Identifier,
+            //    });
+
+            //var deliveryWithoutKey = listData.Where(d => d.Identifier != "");
+
+            var dd = ordersWithIdentifier.ToArray();
+            var dddd = singleAddress.ToArray();
+
+            return dd.Concat(dddd);            
         }
 
         // GET api/values/5

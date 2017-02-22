@@ -1,52 +1,58 @@
 [
   {
-    "id": 1,
-    "name": "Ordenes",
-    "href": "#/ordersStatus",
-    "order": 2,
-    "content": "fa-shopping-cart"
-  },
-  {
-    "id": 1,
-    "name": "Clientes",
-    "href": "#/user",
-    "order": 3,
-    "content": "fa-user"
-  },
-  {
-    "id": 2,
-    "name": "Nueva Orden",
-    "href": "#/orders",
+    "id": 9,
+    "name": "Nueva Entrega",
+    "href": "#/delivery",
     "order": 1,
-    "content": "fa-cart-plus"
+    "content": "fa-rocket"
   },
   {
     "id": 3,
-    "name": "Motos",
-    "href": "#/bike",
+    "name": "Nueva Orden",
+    "href": "#/orders",
+    "order": 2,
+    "content": "fa-cart-plus"
+  },
+  {
+    "id": 1,
+    "name": "Ordenes",
+    "href": "#/ordersStatus",
+    "order": 3,
+    "content": "fa-shopping-cart"
+  },
+  {
+    "id": 2,
+    "name": "Clientes",
+    "href": "#/user",
     "order": 4,
-    "content": "fa-motorcycle"
+    "content": "fa-user"
   },
   {
     "id": 4,
-    "name": "Empresas",
-    "href": "#/business",
+    "name": "Motos",
+    "href": "#/bike",
     "order": 5,
-    "content": "fa-cutlery"
+    "content": "fa-motorcycle"
   },
   {
     "id": 5,
-    "name": "Productos",
-    "href": "#/product",
+    "name": "Empresas",
+    "href": "#/business",
     "order": 6,
-    "content": "fa-glass"
+    "content": "fa-cutlery"
   },
   {
     "id": 6,
+    "name": "Productos",
+    "href": "#/product",
+    "order": 7,
+    "content": "fa-glass"
+  },
+  {
+    "id": 7,
     "name": "Report",
     "href": "#/report",
-    "order": 7,
+    "order": 8,
     "content": "fa-area-chart"
   }
-  
 ]

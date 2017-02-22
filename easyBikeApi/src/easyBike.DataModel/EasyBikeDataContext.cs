@@ -29,6 +29,7 @@ namespace easyBike.DataModel
         public DbSet<Stock> Stock{ get; set; }
         public DbSet<ConfigurationData> Configurations { get; set; }
         public DbSet<PriceProduct> PriceProducts{ get; set; }
+        public DbSet<OrderDelivery> OrderDeliveries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

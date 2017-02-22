@@ -43,7 +43,7 @@ module.exports = {
             'node_modules/angularjs-slider/dist/rzslider.min.js',
             'node_modules/jquery-zoom/jquery.zoom.min.js',
             'node_modules/EasyZoom/dist/easyzoom.js',
-            'node_modules/ez-plus/src/jquery.ez-plus.js',			
+            'node_modules/ez-plus/src/jquery.ez-plus.js',
 			'node_modules/ngmap/build/scripts/ng-map.min.js',
 			'node_modules/croppie/croppie.js',
 			'node_modules/angular-wizard/dist/angular-wizard.min.js',

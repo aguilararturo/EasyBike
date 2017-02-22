@@ -8,6 +8,7 @@
         .module('EasyBikeApp', [
             'ui.router',
             'ui.bootstrap',
+            'ngAnimate',
             'ngMap',
             'angularMoment',
             'EasyBikeApp.Templates',
@@ -28,4 +29,8 @@
             'EasyBikeApp.ProductPrice',
             'EasyBikeApp.Report'
         ]);
+
+    angular.module('EasyBikeApp').config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.hashPrefix('');
+    }]);
 })();

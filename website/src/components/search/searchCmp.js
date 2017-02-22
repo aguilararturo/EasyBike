@@ -20,7 +20,9 @@
                 helpText: '=',
                 onSearchChange: '&?',
                 getItemText: '&?',
-                onSelectedItem: '&?'
+                onSelectedItem: '&?',
+                cleanOnSelect: '=',
+                onBlur: '&?'
             },
             scope: true
         };
@@ -37,6 +39,9 @@
         function $onInit() {
             searchCmpCtrl.displaySearchBox = !_.isEmpty(searchCmpCtrl.searchText);
             searchCmpCtrl.inputContainer = angular.element($element[0].querySelectorAll('#searchTextId'));
+
+            searchCmpCtrl.selectedItem = {};
+            searchCmpCtrl.inputText = '';
         }
 
         function searchChange() {
@@ -45,20 +50,34 @@
             }
 
             searchCmpCtrl.displaySearchBox = !_.isEmpty(searchCmpCtrl.searchText);
+            searchCmpCtrl.inputText = _.clone(searchCmpCtrl.searchText);
         }
 
         function getText(item) {
             if (!_.isNil(searchCmpCtrl.getItemText)) {
-                var text = searchCmpCtrl.getItemText(item);
+                var text = searchCmpCtrl.getItemText()(item);
                 return text;
             }
-
-            return item.direction;
         }
 
-        function onSelected(item) {
+        function onSelected(item, model, label, event) {
+            console.log('selected search', item, model, label, event);
+            var oldText = searchCmpCtrl.searchText;
+            if (!_.isNil(item)) {
+                if (searchCmpCtrl.cleanOnSelect) {
+                    searchCmpCtrl.searchText = '';
+                } else {
+                    searchCmpCtrl.searchText = getText(item);
+                }
+            }
             if (!_.isNil(searchCmpCtrl.onSelectedItem)) {
-                searchCmpCtrl.onSelectedItem()(item);
+                searchCmpCtrl.onSelectedItem()(item, searchCmpCtrl.inputText);
+            }
+        }
+
+        function blurSearch() {
+            if (!_.isUndefined(searchCmpCtrl.onBlur)) {
+                searchCmpCtrl.onBlur()(searchCmpCtrl.inputText);
             }
         }
 
@@ -66,6 +85,7 @@
         searchCmpCtrl.searchChange = searchChange;
         searchCmpCtrl.getText = getText;
         searchCmpCtrl.onSelected = onSelected;
+        searchCmpCtrl.blurSearch = blurSearch;
     }
     angular
         .module('EasyBikeApp.Components')

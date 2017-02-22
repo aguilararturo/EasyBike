@@ -122,12 +122,15 @@ namespace easyBike.Api.Controllers
 
             if(value.OrderDelivery != null)
             {
+                if(value.OrderDelivery.Address.Id > 0)
+                {
+                    _db.Entry(value.OrderDelivery.Address).State = EntityState.Unchanged;
+                }
                 value.OrderType = OrderType.DeliveryOrder;
             }else
             {
                 value.OrderType = OrderType.ProductOrder;
             }
-
 
             value.Date = DateTime.Now;
             value.Total = orderTotal;

@@ -15,7 +15,7 @@
         };
     }
 
-    function DeliveryAdressCmpController(_) {
+    function DeliveryAdressCmpController(_, $scope) {
         var deliveryAdrCmpCtrl = this;
 
         function $onInit() {
@@ -23,10 +23,20 @@
         }
 
         function initDummyAdress() {
-            deliveryAdrCmpCtrl.addresses = [deliveryAdrCmpCtrl.orderDelivery.deliveryAddress];
+            if (!_.isUndefined(deliveryAdrCmpCtrl.orderDelivery)) {
+                console.log('initDummyAdress');
+                deliveryAdrCmpCtrl.addresses = [deliveryAdrCmpCtrl.orderDelivery.address];
+            }
         }
 
+        function getOrderDelivery() {
+            return deliveryAdrCmpCtrl.orderDelivery.address;
+        }
+
+        $scope.$watch(getOrderDelivery, initDummyAdress);
+
         deliveryAdrCmpCtrl.$onInit = $onInit;
+
     }
     angular
         .module('EasyBikeApp.Components')

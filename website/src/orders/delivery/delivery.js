@@ -12,7 +12,7 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function DeliveryController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility, $q, $scope, AddressService) {
+    function DeliveryController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility, $q, AddressService, $filter, $scope, $state) {
         var deliveryCtrl = this;
         var KEYS = {
             PICK: 'Recoger',
@@ -64,11 +64,18 @@
 
             deliveryCtrl.selectedStep = deliveryCtrl.steps[0];
             BikeEnabledService.getTodayAvaliableWithouOrder().then(loadTodayBikes);
-            AddressService.getSearchable().then(loadSearchableBuss);
+            AddressService.getOrderDeliveryAddress().then(loadSearchableBuss);
         }
 
         function loadSearchableBuss(response) {
-            deliveryCtrl.searchableAddress = response;
+            function getAddress(orderDelivery) {
+                return {
+                    identifier: orderDelivery.identifier,
+                    address: orderDelivery.address
+                };
+            }
+
+            deliveryCtrl.searchableAddress = _.map(response, getAddress);
         }
 
         function initializeNewOrder() {
@@ -88,7 +95,7 @@
                 orderDelivery: {
                     id: '',
                     identifier: '',
-                    deliveryAddress: {
+                    address: {
                         id: '',
                         location: '',
                         date: '',
@@ -186,6 +193,12 @@
                 deferred.reject();
             }
 
+            function reload() {
+                $state.reload();
+            }
+
+            deferred.promise.then(reload);
+
             return deferred.promise;
         }
 
@@ -202,14 +215,45 @@
             console.log('text', deliveryCtrl.searchBussinesText);
         }
 
-        function onDirectionChange() {
-            console.log('direction change', deliveryCtrl.order.orderDelivery);
+        function onDirectionChange(direction, searchData) {
+            var itemsToFilter = [direction.identifier, direction.address.direction];
+            var filterRes = $filter('filter')(itemsToFilter, searchData);
 
+            if (_.size(filterRes) == 1) {
+                if (_.isEqual(filterRes[0], direction.identifier)) {
+                    deliveryCtrl.order.orderDelivery.identifier = direction.identifier;
+                } else {
+                    deliveryCtrl.order.orderDelivery.identifier = '';
+                }
+            }
+
+            deliveryCtrl.order.orderDelivery.address = direction.address;
+
+            console.log('direction change', deliveryCtrl.order.orderDelivery);
+            validateDeliveryAddress();
+        }
+
+        function validateDeliveryAddress() {
             if (_.isNil(deliveryCtrl.order.orderDelivery)) {
                 validateStep(KEYS.PICK, false);
                 return;
             }
-            validateStep(KEYS.PICK, !_.isEmpty(deliveryCtrl.order.orderDelivery.deliveryAddress.direction));
+            validateStep(KEYS.PICK, !_.isEmpty(deliveryCtrl.order.orderDelivery.address.direction));
+        }
+
+        function getItemText(item) {
+            if (_.isNil(item)) {
+                return '';
+            } else if (_.has(item, 'identifier')) {
+                return item.identifier + ' ; ' + item.address.direction;
+            } else {
+                return item;
+            }
+        }
+
+        function onBlurSearch(text) {
+            deliveryCtrl.order.orderDelivery.address.direction = text;
+            validateDeliveryAddress();
         }
 
         deliveryCtrl.$onInit = $onInit;
@@ -219,6 +263,8 @@
         deliveryCtrl.selectionBikeChange = selectionBikeChange;
         deliveryCtrl.searchBusinessChange = searchBusinessChange;
         deliveryCtrl.onDirectionChange = onDirectionChange;
+        deliveryCtrl.getItemText = getItemText;
+        deliveryCtrl.onBlurSearch = onBlurSearch;
     }
     angular
         .module('EasyBikeApp.Orders')

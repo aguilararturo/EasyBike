@@ -268,6 +268,12 @@
                 deferred.reject();
             }
 
+             function reload() {
+                $state.reload();
+            }
+
+            deferred.promise.then(reload);
+
             return deferred.promise;
         }
 

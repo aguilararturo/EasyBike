@@ -13,8 +13,17 @@
                 .catch(requestService.errorLoadingScripts('getSearchable'));
         }
 
+        function getOrderDeliveryAddress() {
+            return $http.get(BASE_URL + '/Addresses/getOrderDeliveryAddress', {
+                cache: true
+            })
+                .then(requestService.successRequest)
+                .catch(requestService.errorLoadingScripts('getOrderDeliveryAddress'));
+        }
+
         return {
-            getSearchable: getSearchable
+            getSearchable: getSearchable,
+            getOrderDeliveryAddress: getOrderDeliveryAddress
         };
     }
 

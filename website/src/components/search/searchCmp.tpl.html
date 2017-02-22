@@ -1,14 +1,19 @@
-<div class="input-group col-xs-12" uib-dropdown keyboard-nav is-open="searchCmpCtrl.displaySearchBox">
-    <div class="input-group-addon" id="searchContainer"><i class="fa fa-search"></i></div>
-    <input id="searchTextId" type="text" class="form-control" placeholder="{{searchCmpCtrl.helpText}}" ng-model="searchCmpCtrl.searchText"
-        ng-change="searchCmpCtrl.searchChange()" uib-dropdown-toggle>
-        <div class="input-group-addon" id="testId">
+<div class="input-group col-xs-12">
+    <md-autocomplete md-search-text="searchCmpCtrl.searchText" md-items="item in searchCmpCtrl.items | filter:searchCmpCtrl.searchText">
+        <md-item-template>
+            <span>{{searchCmpCtrl.getText(item)}}</span>
+        </md-item-template>
+    </md-autocomplete>
+</div>
+
+
+<div class="input-group col-xs-12">
+    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+    <input type="text" class="form-control" placeholder="{{searchCmpCtrl.helpText}}" ng-model="searchCmpCtrl.searchText" ng-change="searchCmpCtrl.searchChange()" ng-blur="searchCmpCtrl.blurSearch()"
+        uib-typeahead="searchCmpCtrl.getText(item) for item in searchCmpCtrl.items | filter:searchCmpCtrl.searchText | limitTo:8" typeahead-on-select="searchCmpCtrl.onSelected($item, $model, $label, $event)">
+        <div class="input-group-addon">
             <button class="transparent-button" ng-click="searchCmpCtrl.searchBussinesText=''">
 						<i class="fa fa-refresh"></i>
 					</button>
         </div>
-
-    <ul class="dropdown-menu col-xs-12" uib-dropdown-menu role="menu">
-        <li role="menuitem" ng-repeat="item in searchCmpCtrl.items | filter:searchCmpCtrl.searchText "><a>{{searchCmpCtrl.getText(item)}}</a></li>
-    </ul>
 </div>
