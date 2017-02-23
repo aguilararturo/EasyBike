@@ -194,6 +194,8 @@
             }
 
             function reload() {
+                AddressService.cleanGetOrderDeliveryAddress();
+                AddressService.getOrderDeliveryAddress().then(loadSearchableBuss);
                 $state.reload();
             }
 
@@ -227,7 +229,7 @@
                 }
             }
 
-            deliveryCtrl.order.orderDelivery.address = direction.address;
+            deliveryCtrl.order.orderDelivery.address = _.clone(direction.address);
 
             console.log('direction change', deliveryCtrl.order.orderDelivery);
             validateDeliveryAddress();
@@ -245,15 +247,25 @@
             if (_.isNil(item)) {
                 return '';
             } else if (_.has(item, 'identifier')) {
+                if (_.isEmpty(item.identifier)) {
+                    return item.address.direction;
+                }
                 return item.identifier + ' ; ' + item.address.direction;
             } else {
                 return item;
             }
         }
 
-        function onBlurSearch(text) {
-            deliveryCtrl.order.orderDelivery.address.direction = text;
+        function onEnterAction(text) {
+            deliveryCtrl.order.orderDelivery.address = {
+                id: '',
+                location: '',
+                date: '',
+                direction: text,
+                displayMap: false
+            };
             validateDeliveryAddress();
+            $scope.$apply();
         }
 
         deliveryCtrl.$onInit = $onInit;
@@ -264,7 +276,7 @@
         deliveryCtrl.searchBusinessChange = searchBusinessChange;
         deliveryCtrl.onDirectionChange = onDirectionChange;
         deliveryCtrl.getItemText = getItemText;
-        deliveryCtrl.onBlurSearch = onBlurSearch;
+        deliveryCtrl.onEnterAction = onEnterAction;
     }
     angular
         .module('EasyBikeApp.Orders')

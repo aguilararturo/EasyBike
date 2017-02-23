@@ -28,19 +28,19 @@ namespace easyBike.Api.Controllers
             return Data;
 
         }
-        
+
         [HttpGet("getSearchable")]
         public IEnumerable<Address> getSearchable()
         {
             var Data = _db.Adresses;
-                
-            return Data.ToArray();        
+
+            return Data.ToArray();
         }
 
         [HttpGet("getOrderDeliveryAddress")]
         public IEnumerable<OrderDelivery> getOrderDeliveryAddress()
         {
-            var ordersWithIdentifier = _db.OrderDeliveries                
+            var datatest= _db.OrderDeliveries
                 .Where(a => a.Identifier != "")
                 .Include(od => od.Address)
                 .Select(o => new OrderDelivery
@@ -48,34 +48,23 @@ namespace easyBike.Api.Controllers
                     Address = o.Address,
                     Id = o.Id,
                     Identifier = o.Identifier,
-                }).ToArrayAsync();
+                });
+
+            var ordersWithIdentifier = new List<OrderDelivery>();
+            ordersWithIdentifier.AddRange(datatest.ToArray());
+
+            var addresses = new List<Address>(ordersWithIdentifier.Select(o => o.Address));
 
             var singleAddress = _db.OrderDeliveries
-                .Where(s=> ! ordersWithIdentifier.Select(o=>o.Address).Contains( s.Address))
-                .Select(o=> new OrderDelivery
+                .Where(s => !addresses.Contains(s.Address))
+                .Select(o => new OrderDelivery
                 {
                     Address = o.Address,
                     Id = o.Id,
                     Identifier = o.Identifier,
-                }).ToArrayAsync();
+                });
 
-            //var listData = _db.OrderDeliveries
-            //    .Where(od=> ids.Contains(od.Address))
-            //    .Include(od => od.Address)    
-
-            //    .Select(o => new OrderDelivery
-            //    {
-            //        Address = o.Address,
-            //        Id = o.Id,
-            //        Identifier = o.Identifier,
-            //    });
-
-            //var deliveryWithoutKey = listData.Where(d => d.Identifier != "");
-
-            var dd = ordersWithIdentifier.ToArray();
-            var dddd = singleAddress.ToArray();
-
-            return dd.Concat(dddd);            
+            return ordersWithIdentifier.Concat(singleAddress.ToArray());
         }
 
         // GET api/values/5

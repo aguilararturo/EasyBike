@@ -22,7 +22,7 @@
                 getItemText: '&?',
                 onSelectedItem: '&?',
                 cleanOnSelect: '=',
-                onBlur: '&?'
+                onEnterAction: '&?'
             },
             scope: true
         };
@@ -75,17 +75,18 @@
             }
         }
 
-        function blurSearch() {
-            if (!_.isUndefined(searchCmpCtrl.onBlur)) {
-                searchCmpCtrl.onBlur()(searchCmpCtrl.inputText);
+        function onKeyEnter() {
+            if (!_.isUndefined(searchCmpCtrl.onEnterAction)) {
+                searchCmpCtrl.onEnterAction()(searchCmpCtrl.inputText);
             }
         }
+
 
         searchCmpCtrl.$onInit = $onInit;
         searchCmpCtrl.searchChange = searchChange;
         searchCmpCtrl.getText = getText;
         searchCmpCtrl.onSelected = onSelected;
-        searchCmpCtrl.blurSearch = blurSearch;
+        searchCmpCtrl.onKeyEnter = onKeyEnter;
     }
     angular
         .module('EasyBikeApp.Components')
