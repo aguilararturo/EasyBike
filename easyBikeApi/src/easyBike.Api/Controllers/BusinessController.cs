@@ -39,30 +39,39 @@ namespace easyBike.Api.Controllers
 
         private IEnumerable<Business> getBusinesses(bool withCategories)
         {
-            List<Business> Data;
+            var configData = _db.Configurations.Where(c => c.Id == ConfigurationsNames.DefaultBusiness.ToString()).FirstOrDefault();
+            var name = string.IsNullOrEmpty(configData.Name) ? string.Empty : configData.Name;
+            List<Business> data;
             if (withCategories)
             {
-                Data = _db.Businesses
+                data = _db.Businesses
                     .Include(item => item.Addresses)
                     .Include(item => item.Phones)
                     .Include(item => item.BusinesCategories)
                     .ThenInclude(bc => bc.ProductCategory)
                     .ToList();
                 
-                foreach (var row in Data)
+                foreach (var row in data)
                 {
                     row.Categories = row.BusinesCategories.Select(bc => bc.ProductCategory).ToList();
                     row.BusinesCategories = null;
+                    row.DefaultBussines = row.Name == name;
                 }
             }
             else
             {
-                Data = _db.Businesses
+                data = _db.Businesses
                     .Include(item => item.Addresses)
                     .Include(item => item.Phones)
                    .ToList();
+
+                foreach (var row in data)
+                {
+                    row.DefaultBussines = row.Name == name;
+                }
             }
-            return Data;
+           
+            return data;
         }
 
         // GET api/values/5

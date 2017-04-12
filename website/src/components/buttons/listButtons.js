@@ -20,7 +20,9 @@
                 edit: '&?',
                 remove: '&?',
                 show: '&?',
-                isDisplayed: '='
+                isDisplayed: '=',
+                buttoms: '<',
+                data: '<'
             },
             scope: true
         };

@@ -20,6 +20,51 @@
             BIKE: 'Moto'
         };
 
+        function pickAddressClick(data) {
+            console.log('pickAddressClick', data);
+            deliveryCtrl.order.orderDelivery.address = _.clone(data);
+        }
+
+        function deliveyAddressClick(data) {
+            console.log('deliveyAddressClick', data);
+            deliveryCtrl.order.deliveryAddress = _.clone(data);
+        }
+
+        deliveryCtrl.addressButtoms = [
+            {
+                click: pickAddressClick,
+                icon: 'fa-hand-scissors-o'
+            },
+            {
+                click: deliveyAddressClick,
+                icon: 'fa-handshake-o'
+            }
+        ];
+
+        deliveryCtrl.clientAddresses = [
+            {
+                id: '',
+                location: '',
+                date: '',
+                direction: 'calle lanza',
+                displayMap: false
+            },
+            {
+                id: '',
+                location: '',
+                date: '',
+                direction: 'calle calama',
+                displayMap: false
+            },
+            {
+                id: '',
+                location: '',
+                date: '',
+                direction: 'calle antofagasta',
+                displayMap: false
+            }
+        ];
+
         /**
          * @function $onInit
          * @memberOf FeaturedBrandsController
@@ -79,7 +124,6 @@
         }
 
         function initializeNewOrder() {
-
             deliveryCtrl.order = {
                 id: '',
                 client: {

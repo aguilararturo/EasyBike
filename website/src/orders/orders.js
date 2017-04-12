@@ -12,13 +12,14 @@
      * @param  {Object} UtilityService Utility Service
      * @param  {Object} _ Lodash lodash
      */
-    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, _, OrderService, ModalUtility, $q, $scope) {
+    function OrdersController(CommonService, BikeEnabledService, BussinessService, ProductService, UtilityService, AddressService, _, OrderService, ModalUtility, $q, $scope, $state) {
         var ordersCtrl = this;
-        var KEYS = {
+        ordersCtrl.KEYS = {
             ORDER: 'Pedido',
             TYPE_ORDER: 'Tipo de orden',
             USER: 'Usuario',
-            BIKE: 'Moto'
+            BIKE: 'Moto',
+            DELIVERY: 'Entregar'
         };
 
         /**
@@ -29,6 +30,8 @@
          */
         function $onInit() {
             ordersCtrl.searchBussinesText = '';
+            ordersCtrl.searchText = '';
+            ordersCtrl.searchableAddress = [];
 
             ordersCtrl.userEnable = false;
             ordersCtrl.oderTypeEnable = false;
@@ -43,33 +46,60 @@
 
             ordersCtrl.showAddProductOrder = false;
 
+            ordersCtrl.pickIcon = 'fa-hand-scissors-o';
+            ordersCtrl.deliveryIcon = 'fa-handshake-o';
+
+            ordersCtrl.addressButtoms = [
+                {
+                    click: pickAddressClick,
+                    icon: ordersCtrl.pickIcon
+                },
+                {
+                    click: deliveyAddressClick,
+                    icon: ordersCtrl.deliveryIcon
+                }
+            ];
+
             ordersCtrl.userTitle = 'Datos Usuario';
             ordersCtrl.number = '';
+            ordersCtrl.defaultBussines = {
+                name: ''
+            };
+
+            ordersCtrl.deliveryStep = {
+                title: ordersCtrl.KEYS.DELIVERY,
+                content: 'fa fa-road',
+                number: '3',
+                selected: true,
+                validated: false
+            };
+
+            ordersCtrl.orderStep = {
+                title: ordersCtrl.KEYS.ORDER,
+                content: 'fa fa-shopping-cart',
+                number: '3',
+                selected: false,
+                validated: false
+            };
 
             ordersCtrl.steps = [
                 {
-                    title: KEYS.TYPE_ORDER,
-                    content: 'fa fa-home',
+                    title: ordersCtrl.KEYS.USER,
+                    content: 'fa fa-user',
                     number: '1',
                     selected: true,
                     validated: false
                 },
                 {
-                    title: KEYS.USER,
-                    content: 'fa fa-user',
+                    title: ordersCtrl.KEYS.TYPE_ORDER,
+                    content: 'fa fa-home',
                     number: '2',
                     selected: false,
                     validated: false
                 },
+                ordersCtrl.deliveryStep,
                 {
-                    title: KEYS.ORDER,
-                    content: 'fa fa-shopping-cart',
-                    number: '3',
-                    selected: false,
-                    validated: false
-                },
-                {
-                    title: KEYS.BIKE,
+                    title: ordersCtrl.KEYS.BIKE,
                     content: 'fa fa-motorcycle',
                     number: '4',
                     selected: false,
@@ -83,6 +113,18 @@
             BussinessService.getBusinessesWithCategories().then(loadBusiness);
             BikeEnabledService.getTodayAvaliableWithouOrder().then(loadTodayBikes);
             initializeNewOrderProduct();
+            AddressService.getOrderDeliveryAddress().then(loadSearchableBuss);
+        }
+
+        function loadSearchableBuss(response) {
+            function getAddress(orderDelivery) {
+                return {
+                    identifier: orderDelivery.identifier,
+                    address: orderDelivery.address
+                };
+            }
+
+            ordersCtrl.searchableAddress = _.map(response, getAddress);
         }
 
         function initializeNewOrder() {
@@ -99,8 +141,23 @@
                 },
                 orderProducts: [],
                 deliveryAddress: {},
-                bike: {}
+                bike: {},
+                orderDelivery: {
+                    id: '',
+                    identifier: '',
+                    address: {
+                        id: '',
+                        location: '',
+                        date: '',
+                        direction: '',
+                        displayMap: false
+                    },
+                    note: ''
+                }
             };
+            ordersCtrl.deliveryAdds = [ordersCtrl.order.deliveryAddress];
+            ordersCtrl.pickAdds = [ordersCtrl.order.orderDelivery.address];
+            ordersCtrl.clientAddresses = [];
         }
 
         function initializeNewOrderProduct() {
@@ -131,9 +188,28 @@
         function loadBusiness(response) {
             function mapBusiness(business) {
                 business.selected = false;
+                if (business.defaultBussines) {
+                    ordersCtrl.defaultBussines = _.clone(business);
+                    ordersCtrl.defaultBussines.id = -1;
+                    ordersCtrl.defaultBussines.selected = true;
+                    selectBusiness(ordersCtrl.defaultBussines);
+                }
             }
             _.map(response, mapBusiness);
+            if (ordersCtrl.defaultBussines.name !== '') {
+                response = _.concat([ordersCtrl.defaultBussines], response);
+            }
             ordersCtrl.businesses = response;
+        }
+
+        function deliverySelected() {
+            if (ordersCtrl.defaultBussines.id === ordersCtrl.selectedBusiness.id) {
+                ordersCtrl.steps[2] = ordersCtrl.deliveryStep;
+            } else {
+                ordersCtrl.steps[2] = ordersCtrl.orderStep;
+            }
+
+            validateUser();
         }
 
         function selectBusiness(business) {
@@ -144,12 +220,15 @@
 
             ordersCtrl.selectedBusiness = business;
             ordersCtrl.businessValidate = true;
-
-            validateStep(KEYS.TYPE_ORDER, true);
+            deliverySelected();
+            validateStep(ordersCtrl.KEYS.TYPE_ORDER, true);
         }
 
         function loadUser(response) {
-            ordersCtrl.order.client = response;
+            if (!_.isEmpty(response)) {
+                ordersCtrl.order.client = response.client;
+                ordersCtrl.clientAddresses = _.concat(response.lastUsed, response.client.addresses);
+            }
         }
 
         function searchUser(number) {
@@ -159,7 +238,7 @@
             }
 
             if (!_.isEmpty(number.toString())) {
-                CommonService.getUserByPhone(number).then(loadUser);
+                CommonService.GetByPhoneLastAddress(number).then(loadUser);
             }
         }
 
@@ -197,7 +276,7 @@
         }
 
         function validatedOrderDetail() {
-            validateStep(KEYS.ORDER, _.size(ordersCtrl.order.orderProducts) > 0);
+            validateStep(ordersCtrl.KEYS.ORDER, _.size(ordersCtrl.order.orderProducts) > 0);
         }
 
         function cancelCartProduct() {
@@ -210,10 +289,11 @@
         }
 
         function selectAddressChange() {
-            ordersCtrl.order.deliveryAddress = UtilityService.getSelected(ordersCtrl.order.client.addresses);
+            ordersCtrl.order.deliveryAddress = _.clone(UtilityService.getSelected(ordersCtrl.order.client.addresses));
+            ordersCtrl.deliveryAdds = [ordersCtrl.order.deliveryAddress];
             if (!_.isUndefined(ordersCtrl.order.deliveryAddress)) {
                 if (!_.isEmpty(ordersCtrl.order.deliveryAddress.location)) {
-                    validateStep(KEYS.USER, true);
+                    validateStep(ordersCtrl.KEYS.USER, true);
                 }
             }
         }
@@ -240,7 +320,7 @@
         function onlyBikeIsNotValidated() {
             var validated = true;
             function verifyStepIgnoringBike(step) {
-                if (step.title !== KEYS.BIKE) {
+                if (step.title !== ordersCtrl.KEYS.BIKE) {
                     validated = step.validated;
                 }
                 return validated;
@@ -268,7 +348,7 @@
                 deferred.reject();
             }
 
-             function reload() {
+            function reload() {
                 $state.reload();
             }
 
@@ -283,14 +363,103 @@
             }
             var bike = _.find(ordersCtrl.todayBikes, findSelectedBike);
             ordersCtrl.order.bike = bike;
-            validateStep(KEYS.BIKE, !_.isUndefined(bike));
+            validateStep(ordersCtrl.KEYS.BIKE, !_.isUndefined(bike));
         }
 
         function searchBusinessChange() {
             console.log('text', ordersCtrl.searchBussinesText);
         }
 
+        function pickAddressClick(data) {
+            console.log('pickAddressClick', data);
+            ordersCtrl.order.orderDelivery.address = _.clone(data);
+            ordersCtrl.pickAdds = [ordersCtrl.order.orderDelivery.address];
+            validateDeliveryAddress();
+
+        }
+
+        function deliveyAddressClick(data) {
+            console.log('deliveyAddressClick', data);
+            ordersCtrl.order.deliveryAddress = _.clone(data);
+            ordersCtrl.deliveryAdds = [ordersCtrl.order.deliveryAddress];
+            validateDeliveryAddress();
+        }
+
+        function getItemText(item) {
+            if (_.isNil(item)) {
+                return '';
+            } else if (_.has(item, 'identifier')) {
+                if (_.isEmpty(item.identifier)) {
+                    return item.address.direction;
+                }
+                return item.identifier + ' ; ' + item.address.direction;
+            } else {
+                return item;
+            }
+        }
+
+        function onEnterAction(text) {
+            ordersCtrl.order.orderDelivery.address = {
+                id: '',
+                location: '',
+                date: '',
+                direction: text,
+                displayMap: false
+            };
+            validateDeliveryAddress();
+            $scope.$apply();
+        }
+
+        function onDirectionChange(direction, searchData) {
+            var itemsToFilter = [direction.identifier, direction.address.direction];
+            var filterRes = $filter('filter')(itemsToFilter, searchData);
+
+            if (_.size(filterRes) == 1) {
+                if (_.isEqual(filterRes[0], direction.identifier)) {
+                    ordersCtrl.order.orderDelivery.identifier = direction.identifier;
+                } else {
+                    ordersCtrl.order.orderDelivery.identifier = '';
+                }
+            }
+
+            ordersCtrl.order.orderDelivery.address = _.clone(direction.address);
+
+            console.log('direction change', ordersCtrl.order.orderDelivery);
+            validateDeliveryAddress();
+        }
+
+        function validateDeliveryAddress() {
+            if (_.isNil(ordersCtrl.order.orderDelivery) || _.isNil(ordersCtrl.order.deliveryAddress)) {
+                validateStep(ordersCtrl.KEYS.DELIVERY, false);
+                return;
+            }
+            var valid = !_.isEmpty(ordersCtrl.order.orderDelivery.address.direction) && !_.isEmpty(ordersCtrl.order.deliveryAddress.direction);
+            validateStep(ordersCtrl.KEYS.DELIVERY, valid);
+        }
+
+        function deliveryAddressesChange(item) {
+            item.id = '';
+            validateDeliveryAddress();
+        }
+
+        function validateUser() {
+            var userIsValid = true;
+            if (_.isEmpty(ordersCtrl.order.client.name) || !_.isNumber(ordersCtrl.order.client.nit) || !_.isNumber(ordersCtrl.order.client.phones[0].number)) {
+                userIsValid = false;
+
+            }
+            validateStep(ordersCtrl.KEYS.USER, userIsValid);
+        }
+
+        function stepChange() {
+            if (ordersCtrl.selectedStep.title === ordersCtrl.KEYS.DELIVERY) {
+                validateUser();
+            }
+        }
+
         ordersCtrl.$onInit = $onInit;
+        ordersCtrl.getItemText = getItemText;
+        ordersCtrl.onEnterAction = onEnterAction;
         ordersCtrl.selectBusiness = selectBusiness;
         ordersCtrl.searchUser = searchUser;
         ordersCtrl.selectedCategoryChange = selectedCategoryChange;
@@ -302,6 +471,10 @@
         ordersCtrl.saveOrder = saveOrder;
         ordersCtrl.selectionBikeChange = selectionBikeChange;
         ordersCtrl.searchBusinessChange = searchBusinessChange;
+        ordersCtrl.onDirectionChange = onDirectionChange;
+        ordersCtrl.validateDeliveryAddress = validateDeliveryAddress;
+        ordersCtrl.deliveryAddressesChange = deliveryAddressesChange;
+        ordersCtrl.stepChange = stepChange;
     }
     angular
         .module('EasyBikeApp.Orders')

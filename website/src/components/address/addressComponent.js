@@ -18,7 +18,12 @@
                 addresses: '=',
                 selectionChange: '&?',
                 enableSelection: '=',
-                onDirectionChange: '&?'
+                onDirectionChange: '&?',
+                customTitle: '<',
+                singleAddress: '@',
+                buttoms: '<',
+                customClass: '<',
+                titleIcon: '<'
             },
             scope: true
         };
@@ -41,9 +46,29 @@
         var addressCompCtrl = this;
 
         function $onInit() {
+            addressCompCtrl.displayMultiple = _.isUndefined(addressCompCtrl.singleAddress);
+
             initDummyAdress();
             if (_.isEmpty(addressCompCtrl.addresses)) {
                 addAddress(addressCompCtrl.newAdress);
+            }
+
+            if (_.isNil(addressCompCtrl.customTitle)) {
+                addressCompCtrl.title = 'Direcciones';
+            }
+            else {
+                addressCompCtrl.title = addressCompCtrl.customTitle;
+            }
+            var removeButtom = {
+                icon: "fa-times red-button",
+                click: removeAddress
+            };
+            if (_.isUndefined(addressCompCtrl.buttoms)) {
+                addressCompCtrl.buttoms = [
+                    removeButtom
+                ];
+            } else if (addressCompCtrl.displayMultiple) {
+                addressCompCtrl.buttoms = _.concat([removeButtom], addressCompCtrl.buttoms);
             }
         }
 

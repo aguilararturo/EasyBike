@@ -15,5 +15,7 @@ namespace easyBike.DataModel.DataClasess
         [NotMapped]
         public List<ProductCategory> Categories { get; set; }
         public User User { get; set; }
+        [NotMapped]
+        public bool DefaultBussines { get; set; }
     }
 }

@@ -1,18 +1,20 @@
 <legend class="control-label col-xs-12 no-width-padding">
-    <span class="col-xs-6 no-width-padding">Direcciones</span>
-    <a class="col-xs-6 no-width-padding right-aligment add-more" href="" ng-click="addressCompCtrl.addAddress(addressCompCtrl.newAdress)">
+    <span class="col-xs-6 no-width-padding">{{addressCompCtrl.title}}
+        <i class="fa" ng-class="addressCompCtrl.titleIcon" ng-if="addressCompCtrl.titleIcon"></i>
+    </span>
+    <a class="col-xs-6 no-width-padding right-aligment add-more" href="" ng-click="addressCompCtrl.addAddress(addressCompCtrl.newAdress)" ng-if="addressCompCtrl.displayMultiple">
         <i class="fa fa-plus-square add-menu-item"></i><span> Agregar nueva direccion</span>
     </a>
 </legend>
 
-<div class="col-xs-12 " ng-repeat="item in addressCompCtrl.addresses">
+<div class="col-xs-12" ng-class="addressCompCtrl.customClass" ng-repeat="item in addressCompCtrl.addresses">
     <div class="input-group">
         <div class="input-group-addon" ng-click="addressCompCtrl.checkAddress(item)" ng-if="addressCompCtrl.enableSelection">
             <input type="checkbox" ng-model="item.selected">
         </div>
         <list-buttons class="input-group-addon no-padding transparent-back" show="addressCompCtrl.showMap(item)" is-displayed="item.displayMap"></list-buttons>
         <input type="text" class="form-control" placeholder="Ingrese Direccion" ng-model="item.direction" ng-change="addressCompCtrl.directionChange(item)">
-        <list-buttons class="input-group-addon no-padding transparent-back" remove="addressCompCtrl.removeAddress(item)"></list-buttons>
+        <list-buttons class="input-group-addon no-padding full-height" buttoms="addressCompCtrl.buttoms" data="item" ></list-buttons>
     </div>
     <div class="col-xs-12 no-width-padding  map-container" ng-if="item.displayMap">
         <my-maps location="item.location" direction="item.direction" ></my-maps>

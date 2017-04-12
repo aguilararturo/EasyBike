@@ -6,7 +6,7 @@
 	<div class="col-xs-12 order-panel" auto-fill-screen>
 		<div class="row col-xs-12" ng-if="deliveryCtrl.steps[0].number == deliveryCtrl.selectedStep.number">
 			<search-cmp items="deliveryCtrl.searchableAddress" clean-on-select="true" search-text="deliveryCtrl.searchText" get-item-text="deliveryCtrl.getItemText" on-selected-item="deliveryCtrl.onDirectionChange" on-enter-action="deliveryCtrl.onEnterAction"></search-cmp>
-			<delivery-adress-cmp order-delivery="deliveryCtrl.order.orderDelivery" on-direction-change="deliveryCtrl.onDirectionChange()" ></delivery-adress-cmp>
+			<delivery-adress-cmp order-delivery="deliveryCtrl.order.orderDelivery" on-direction-change="deliveryCtrl.onDirectionChange()" single-address buttoms="deliveryCtrl.addressButtoms" client-addresses="deliveryCtrl.clientAddresses"></delivery-adress-cmp>
 		</div>
 		<div class="row" ng-if="deliveryCtrl.steps[1].number == deliveryCtrl.selectedStep.number">
 			<div class="row col-xs-12" ng-if="deliveryCtrl.steps[1].number == deliveryCtrl.selectedStep.number">

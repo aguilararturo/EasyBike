@@ -1,15 +1,24 @@
-<div class="col-xs-12 ">
-    <form class="form" name="dataForm" novalidate>
-        <div class="form-group col-xs-12" ng-class="{ 'has-error' : userCompCtrl.errorAddress && userCompCtrl.submited }" ng-validate="userCompCtrl.validateUser()">
-            <address-component addresses="deliveryAdrCmpCtrl.addresses" class="col-xs-12 no-width-padding" on-direction-change="deliveryAdrCmpCtrl.onDirectionChange"></address-component>
-        </div>
-        <div class="form-group col-xs-12">
-            <label class="control-label">Nota</label>
-            <textarea class="form-control" rows="3" type="text" placeholder="Ingrese Description" ng-model="deliveryAdrCmpCtrl.orderDelivery.note"></textarea>
-        </div>
+<form class="form" name="dataForm" novalidate>
+    <div class="form-group col-xs-12 col-md-6 no-left-padding" ng-class="{ 'has-error' : userCompCtrl.errorAddress && userCompCtrl.submited }"
+        ng-validate="userCompCtrl.validateUser()">
+        <address-component addresses="deliveryAdrCmpCtrl.pickAddresses" class="col-xs-12 no-width-padding" on-direction-change="deliveryAdrCmpCtrl.propagateOnChange"
+            custom-title="'Recoger'" single-address title-icon="deliveryAdrCmpCtrl.pickIcon"></address-component>
         <div class="form-group col-xs-12" ng-class="{ 'has-error' : dataForm.clientName.$invalid && userCompCtrl.submited }">
             <label class="control-label">Identificador</label>
             <input type="text" name="clientName" class="form-control" placeholder="Identificador opcional" ng-model="deliveryAdrCmpCtrl.orderDelivery.identifier">
         </div>
-    </form>
-</div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6 no-right-padding" ng-class="{ 'has-error' : userCompCtrl.errorAddress && userCompCtrl.submited }"
+        ng-validate="userCompCtrl.validateUser()">
+        <address-component addresses="deliveryAdrCmpCtrl.deliveryAddresses" class="col-xs-12 no-width-padding" on-direction-change="deliveryAdrCmpCtrl.propagateOnChange"
+            custom-title="'Entregar'" single-address title-icon="deliveryAdrCmpCtrl.deliveryIcon"></address-component>
+    </div>
+    <div class="form-group col-xs-12 no-width-padding">
+        <label class="control-label">Nota</label>
+        <textarea class="form-control" rows="3" type="text" placeholder="Ingrese Description" ng-model="deliveryAdrCmpCtrl.orderDelivery.note"></textarea>
+    </div>
+    <div class="col-xs-12 no-width-padding">
+        <address-component addresses="deliveryAdrCmpCtrl.clientAddresses" custom-class="'col-md-6'" custom-title="'Direcciones de cliente'"
+            single-address buttoms="deliveryAdrCmpCtrl.buttoms"></address-component>
+    </div>
+</form>

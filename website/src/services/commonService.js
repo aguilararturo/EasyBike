@@ -108,6 +108,36 @@
                 .catch(errorLoadingScripts);
         }
 
+        function GetByPhoneLastAddress(phoneNumber) {
+            /**
+            * @function successfullRequest
+            * @author Arturo Aguilar
+            * @desc log a warning when there are a problem loading the orders analytics
+            * @param  {response} response response
+            * @returns {Object} response data
+            */
+            function successfullRequest(response) {
+                return response.data;
+            }
+            /**
+            * @function errorLoadingScripts
+            * @author Arturo Aguilar
+            * @desc log a warning when there are a problem loading the orders analytics
+            * @param  {Object} error details
+            * @return {Promise} Rejected promise with error details.
+            */
+            function errorLoadingScripts(error) {
+                $log.warn('There is a problem getting User by phoneLastAddress.');
+                $log.warn(error);
+                return $q.reject(error);
+            }
+            var getByPhoneURL = BASE_URL + '/client/GetByPhoneLastAddress/';
+
+            return $http.get(getByPhoneURL + phoneNumber + '/' + 3)
+                .then(successfullRequest)
+                .catch(errorLoadingScripts);
+        }
+
         function getProductCategories() {
             /**
             * @function successfullRequest
@@ -173,7 +203,8 @@
             getProductCategories: getProductCategories,
             getMenu: getMenu,
             getUser: getUser,
-            saveUser: saveUser
+            saveUser: saveUser,
+            GetByPhoneLastAddress: GetByPhoneLastAddress
         };
     }
 

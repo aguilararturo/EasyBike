@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using easyBike.DataModel;
 using Microsoft.EntityFrameworkCore;
 using easyBike.DataModel.DataClasess;
+using easyBike.Api.Reports;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -48,6 +49,33 @@ namespace easyBike.Api.Controllers
                 .Include(Client => Client.Phones)
                 .Where(item => item.Phones.Any(phone => phone.Number == phoneNumber));
             return data.FirstOrDefault();
+        }
+
+        [HttpGet("GetByPhoneLastAddress/{phoneNumber}/{count}")]
+        public ClientAddressMostUsed GetByPhoneLastAddress(int phoneNumber, int count)
+        {
+            var data = _db.Clients
+                 .Include(cl => cl.Addresses)
+                 .Include(cl => cl.Phones)
+                 .Where(item => item.Phones.Any(phone => phone.Number == phoneNumber));
+            var client = data.FirstOrDefault();
+            var result = new ClientAddressMostUsed();
+            if (client == null)
+            {
+                return result;
+            }
+            result.Client = client;
+
+            result.LastUsed = _db.Orders
+                .Where(o => o.Client == client)
+                .OrderBy(o => o.DeliverDate)
+                .Select(o => o.DeliveryAddress)
+                .Distinct()
+                .Take(count)
+                .Except(client.Addresses)
+                .ToList();        
+
+            return result;
         }
 
         // POST api/values

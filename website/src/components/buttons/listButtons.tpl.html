@@ -6,3 +6,7 @@
 <button type="button" class="transparent-button big-button" ng-click="lbCtrl.show()" ng-if="lbCtrl.displayShow" >
         <i class="fa" ng-class="lbCtrl.isDisplayed ? 'fa-caret-up' : 'fa-caret-down'"></i>
 </button>
+
+<button type="button" class="full-height" ng-click="item.click(lbCtrl.data, item)"  ng-repeat="item in lbCtrl.buttoms">
+        <i class="big-button fa" ng-class="item.icon"></i>
+</button>

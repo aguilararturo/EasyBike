@@ -1,17 +1,18 @@
 <div class="simple-page">
 	<div class="row col-xs-12 small-h-padding no-width-padding order-header">
-		<step-component steps="ordersCtrl.steps" selected-step="ordersCtrl.selectedStep"></step-component>
+		<step-component steps="ordersCtrl.steps" selected-step="ordersCtrl.selectedStep" step-change="ordersCtrl.stepChange()"></step-component>
 	</div>
 
 	<div class="col-xs-12 order-panel" auto-fill-screen>
-		<div class="row" ng-if="ordersCtrl.steps[0].number == ordersCtrl.selectedStep.number">
+		<div class="row" ng-if="ordersCtrl.KEYS.TYPE_ORDER == ordersCtrl.selectedStep.title">
 			<div class="alert alert-info" role="alert" ng-if="!ordersCtrl.businessValidate">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span> Seleccione una tipo de orden
 			</div>
 			<div class="input-group col-xs-12">
 				<div class="input-group-addon"><i class="fa fa-search"></i></div>
-				<input id="searchTextId" type="text" class="form-control" placeholder="Buscar Empresa" ng-model="ordersCtrl.searchBussinesText" ng-change="ordersCtrl.searchBusinessChange()">
+				<input id="searchTextId" type="text" class="form-control" placeholder="Buscar Empresa" ng-model="ordersCtrl.searchBussinesText"
+				 ng-change="ordersCtrl.searchBusinessChange()">
 				<div class="input-group-addon">
 					<button class="transparent-button" ng-click="ordersCtrl.searchBussinesText=''">
 						<i class="fa fa-refresh"></i>
@@ -19,9 +20,9 @@
 				</div>
 			</div>
 			<business-component business="item" selection-enabled="true" click-action="ordersCtrl.selectBusiness(item)" class="col-sm-6 col-md-4 col-lg-3 item-top-padding"
-				ng-repeat="item in ordersCtrl.businesses  | filter:ordersCtrl.searchBussinesText"></business-component>
+			 ng-repeat="item in ordersCtrl.businesses  | filter:ordersCtrl.searchBussinesText"></business-component>
 		</div>
-		<div class="row col-xs-12" ng-if="ordersCtrl.steps[1].number == ordersCtrl.selectedStep.number">
+		<div class="row col-xs-12" ng-if="ordersCtrl.KEYS.USER == ordersCtrl.selectedStep.title">
 			<div class="form-group col-sx-12">
 				<legend class="control-label">Buscar por telefono</legend>
 				<div class="col-xs-12 no-width-padding">
@@ -30,7 +31,7 @@
 			</div>
 			<user-component class="col-xs-12 col-lg-8" user="ordersCtrl.order.client" text-title="ordersCtrl.userTitle" selection-address-change="ordersCtrl.selectAddressChange()"></user-component>
 		</div>
-		<div class="row col-xs-12" ng-if="ordersCtrl.steps[2].number == ordersCtrl.selectedStep.number">
+		<div class="row col-xs-12" ng-if="ordersCtrl.KEYS.ORDER == ordersCtrl.selectedStep.title">
 			<div class="alert alert-danger" role="alert" ng-if="!ordersCtrl.businessValidate">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span> Seleccione una tipo de orden primero
@@ -46,7 +47,7 @@
 			<div class="col-md-8" ng-if="!ordersCtrl.showAddProductOrder">
 				<legend>Lista de productos - {{ordersCtrl.selectedCategory.name}}</legend>
 				<product-category-component custom-categories="ordersCtrl.selectedBusiness.categories" ng-if="ordersCtrl.businessValidate"
-					selection-change="ordersCtrl.selectedCategoryChange(category)" display-selection-error="true"></product-category-component>
+				 selection-change="ordersCtrl.selectedCategoryChange(category)" display-selection-error="true"></product-category-component>
 				<div class="col-xs-12 no-width-padding">
 
 					<product-component product="item" click-action="ordersCtrl.selectProduct(item)" ng-repeat="item in ordersCtrl.categoryProducts">
@@ -55,10 +56,10 @@
 			</div>
 			<div class="col-md-8" ng-if="ordersCtrl.showAddProductOrder">
 				<add-order-detail order-product="ordersCtrl.newOrderProduct" acept-action="ordersCtrl.addCartProduct(ordersCtrl.newOrderProduct)"
-					cancel-action="ordersCtrl.cancelCartProduct()"></add-order-detail>
+				 cancel-action="ordersCtrl.cancelCartProduct()"></add-order-detail>
 			</div>
 		</div>
-		<div class="row" ng-if="ordersCtrl.steps[3].number == ordersCtrl.selectedStep.number">
+		<div class="row" ng-if="ordersCtrl.KEYS.BIKE == ordersCtrl.selectedStep.title">
 			<div class="col-xs-12 order-bottons text-right">
 				<save-button click-action="ordersCtrl.saveOrder()" text-title="'Guardar Orden'"></save-button>
 			</div>
@@ -66,6 +67,13 @@
 				<legend>Lita de motos habilitadas</legend>
 				<bike-table-component bikes="ordersCtrl.todayBikes" enable-selection="true" selection-change="ordersCtrl.selectionBikeChange()"></bike-table-component>
 			</div>
+		</div>
+		<div class="row" ng-if="ordersCtrl.KEYS.DELIVERY == ordersCtrl.selectedStep.title">
+			<search-cmp items="deliveryCtrl.searchableAddress" clean-on-select="true" search-text="ordersCtrl.searchText" get-item-text="ordersCtrl.getItemText"
+			 on-selected-item="ordersCtrl.onDirectionChange" on-enter-action="ordersCtrl.onEnterAction"></search-cmp>
+			<delivery-adress-cmp order-delivery="ordersCtrl.order.orderDelivery" on-direction-change="ordersCtrl.deliveryAddressesChange"
+			 single-address buttoms="ordersCtrl.addressButtoms" client-addresses="ordersCtrl.clientAddresses" delivery-addresses="ordersCtrl.deliveryAdds"
+			 pick-addresses="ordersCtrl.pickAdds" pick-icon="ordersCtrl.pickIcon" delivery-icon="ordersCtrl.deliveryIcon"></delivery-adress-cmp>
 		</div>
 	</div>
 </div>

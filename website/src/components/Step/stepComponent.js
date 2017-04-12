@@ -16,7 +16,8 @@
             templateUrl: 'components/step/stepComponent.tpl.html',
             bindToController: {
                 steps: '=',
-                selectedStep: '='
+                selectedStep: '=',
+                stepChange: '&?'
             }
         };
     }
@@ -69,6 +70,10 @@
                     stepItem.selected = false;
                 }
                 i++;
+            }
+
+            if(!_.isUndefined(stepsCmpCtrl.stepChange)) {
+                stepsCmpCtrl.stepChange();
             }
         }
 

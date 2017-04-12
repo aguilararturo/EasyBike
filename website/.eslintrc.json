@@ -1,23 +1,34 @@
 {
     "extends": "eslint-config-airbnb-es5",
-    "globals": {
-        "angular": true
-    },
     "parserOptions": {
         "sourceType": "script"
     },
+    "env": {
+        "jasmine": true
+    },
+    "globals": {
+        "angular": true,
+        "$": true,
+        "trackCustomEvent": true
+    },
     "rules": {
+        "no-cond-assign": ["warn"],
+        "no-tabs": ["error"],
+        "no-shadow": ["warn"],
+        "no-undefined": ["off"],
+        "comma-dangle": ["error", "never"],
+        "consistent-return": ["off"],
+        "func-names": ["warn"],
         "indent": ["error", 4, {
             "SwitchCase": 1
         }],
-        "comma-dangle": ["error", "never"],
-        "wrap-iife": ["error", "inside"],
+        "no-param-reassign": ["error", {
+            "props": false
+        }],
         "valid-jsdoc": ["error", {
             "requireReturn": false,
             "requireReturnDescription": false
         }],
-        "no-param-reassign": ["error", { 
-            "props": false 
-        }]
+        "wrap-iife": ["error", "inside"]
     }
 }

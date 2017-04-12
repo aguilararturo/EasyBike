@@ -9,7 +9,13 @@
             controllerAs: 'deliveryAdrCmpCtrl',
             bindToController: {
                 orderDelivery: '=',
-                onDirectionChange: '&?'
+                onDirectionChange: '&?',
+                buttoms: '<',
+                clientAddresses: '<',
+                deliveryAddresses: '<',
+                pickAddresses: '<',
+                pickIcon: '<',
+                deliveryIcon: '<'
             },
             scope: true
         };
@@ -33,9 +39,16 @@
             return deliveryAdrCmpCtrl.orderDelivery.address;
         }
 
+        function propagateOnChange(item) {
+            if (!_.isUndefined(deliveryAdrCmpCtrl.onDirectionChange)) {
+                deliveryAdrCmpCtrl.onDirectionChange()(item);
+            }
+        }
+
         $scope.$watch(getOrderDelivery, initDummyAdress);
 
         deliveryAdrCmpCtrl.$onInit = $onInit;
+        deliveryAdrCmpCtrl.propagateOnChange = propagateOnChange;
 
     }
     angular
