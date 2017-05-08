@@ -57,5 +57,18 @@ namespace easyBike.Api
                 imageUrl = string.Format(IMG_DIR, HttpHelper.getServerUrl(), subFix, fileName)
             };
         }
+
+        private const string ELAC_IMG_DIR = "{0}/elacImages/{1}{2}.png";
+    
+        public static imageData getElacImageName(string subFix)
+        {
+            var fileName = Path.GetRandomFileName();            
+
+            return new imageData()
+            {
+                imageDir = string.Format(ELAC_IMG_DIR, hostingEnvironment.ContentRootPath, subFix, fileName),
+                imageUrl = string.Format(ELAC_IMG_DIR, HttpHelper.getServerUrl(), subFix, fileName)
+            };
+        }
     }
 }

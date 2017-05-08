@@ -31,6 +31,8 @@ namespace easyBike.DataModel
         public DbSet<PriceProduct> PriceProducts{ get; set; }
         public DbSet<OrderDelivery> OrderDeliveries { get; set; }
 
+        public DbSet<ElacUser> ElacUsers{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BusinessCategory>()
