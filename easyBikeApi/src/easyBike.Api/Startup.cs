@@ -89,8 +89,11 @@ namespace easyBike.Api
             app.UseCors(builder => builder.WithOrigins("http://localhost:9000/")
            .AllowAnyHeader());
 
-            app.UseCors(builder => builder.WithOrigins("http://mototaxbolivia.com/")
-           .AllowAnyHeader());
+            app.UseCors(builder => builder.WithOrigins("http://localhost:9090/")
+          .AllowAnyHeader());
+
+            app.UseCors(builder => builder.WithOrigins("http://elacbolivia.com/", "http://mototaxbolivia.com/")
+            .AllowAnyHeader());
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

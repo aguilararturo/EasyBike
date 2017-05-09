@@ -20,9 +20,11 @@ namespace easyBike.Api.Controllers
         // GET: api/values
         [HttpGet]
         public IEnumerable<ElacUser> Get()
-        {
+        {            
             var Data = _db.ElacUsers
                 .OrderBy(item => item.RegDate)
+                .GroupBy(item => item.UserId)
+                .Select(item => item.First())
                 .ToList();
             return Data;
 
