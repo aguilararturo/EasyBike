@@ -24,8 +24,9 @@ namespace easyBike.Api.Controllers
             var Data = _db.ElacUsers
                 .OrderBy(item => item.RegDate)
                 .GroupBy(item => item.UserId)
-                .Select(item => item.First())
-                .ToList();
+                .Select(item => item.Last())
+                .ToList()
+                .OrderBy(item => item.RegDate);
             return Data;
 
         }
